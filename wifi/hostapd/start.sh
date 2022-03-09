@@ -10,10 +10,7 @@ printf "[DEBUG:] starting virtual interface...\n"
 ifconfig hotspot 10.0.0.1
 
 printf "[DEBUG:] launching hostapd...\n"
-hostapd wifiedu.conf
+hostapd network.conf
 
 printf "[DEBUG:] deleting virtual interface...\n"
 iw dev hotspot del
-
-printf "[DEBUG:] stopping opennds...\n"
-ndsctl stop
