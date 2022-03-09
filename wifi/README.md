@@ -29,9 +29,9 @@ The most important one is probably the ```ssid``` one, the name of your hotspot.
 ## Running Waypoint wifi
 ### Option 1: tmux
 If your using tmux, simply run:
- ```
- sudo ./start.sh
- ```
+```
+sudo ./start.sh
+```
 
 #### WARNING:
 Running tmux as root spawns a root shell.  
