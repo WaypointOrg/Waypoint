@@ -1,14 +1,15 @@
 # Waypoint wifi
 
 ## Installation
-### 1. Download or clone this repository
-```
-git clone https://github.com/DanielRoulin/waypoint.git
-```
-### 2. Install dependencies
+### 1. Install dependencies
 Waypoint wifi uses hostapd to generate the wifi hotspot, dnsmasq as a dhcp server and tmux for debugging.
 ```
-sudo apt install hostapd dnsmasq tmux
+sudo apt install hostapd dnsmasq tmux git
+```
+
+### 2. Clone this repository
+```
+git clone https://github.com/DanielRoulin/waypoint.git
 ```
 
 ## Customizing Waypoint wifi
