@@ -1,10 +1,15 @@
-#!/bin/bash
+#!/bin/sh
+#!/bin/sh
+
+interface="wlp110s0"
+
+printf "[DEBUG:] Updating iptables...\n"
+echo "1" > /proc/sys/net/ipv4/ip_forward
+iptables --table nat --append POSTROUTING --out-interface $interface -j MASQUERADE
+iptables --append FORWARD --in-interface hotspot -j ACCEPT
 
 printf "[DEBUG:] creating virtual interface...\n"
 iw phy phy0 interface add hotspot type __ap
-
-printf "[DEBUG:] removing managment from nmcli...\n"
-nmcli device set hotspot managed no
 
 printf "[DEBUG:] starting virtual interface...\n"
 ifconfig hotspot 10.0.0.1
