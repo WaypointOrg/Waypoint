@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using System.Net;
 using System.Net.Sockets;
@@ -250,7 +249,7 @@ public class Client : MonoBehaviour
         packetHandlers = new Dictionary<int, PacketHandler>()
         {
             { (int)ServerPackets.welcome, ClientHandle.Welcome },
-            { (int)ServerPackets.udpTest, ClientHandle.UDPTest }
+            { (int)ServerPackets.spawnPlayer, ClientHandle.SpawnPlayer },
         };
         Debug.Log("Initialized packets.");
     }
