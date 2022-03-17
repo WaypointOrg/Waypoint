@@ -79,6 +79,28 @@ namespace GameServer
                 SendTCPData(_toClient, _packet);
             }
         }
+
+        public static void PlayerPosition(Player _player)
+        {
+            using (Packet _packet = new Packet((int)ServerPackets.playerPosition))
+            {
+                _packet.Write(_player.id);
+                _packet.Write(_player.position);
+
+                SendUDPDataToAll(_packet);
+            }
+        }
+
+        public static void PlayerRotation(Player _player)
+        {
+            using (Packet _packet = new Packet((int)ServerPackets.playerRotation))
+            {
+                _packet.Write(_player.id);
+                _packet.Write(_player.rotation);
+
+                SendUDPDataToAll(_player.id, _packet);
+            }
+        }
         #endregion
     }
 }
