@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Net;
 using System.Net.Sockets;
 
@@ -16,6 +15,8 @@ namespace GameServer
 
         private static TcpListener tcpListener;
         private static UdpClient udpListener;
+
+        public static Scene scene;
 
         public static void Start(int _maxPlayers, int _port)
         {
@@ -114,6 +115,10 @@ namespace GameServer
             {
                 clients.Add(i, new Client(i));
             }
+
+            scene = new Scene();
+            scene.LoadFromFile("Map.unity");
+            Console.WriteLine("Imported scene.");
 
             packetHandlers = new Dictionary<int, PacketHandler>()
             {

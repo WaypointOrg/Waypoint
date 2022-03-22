@@ -1,3 +1,4 @@
+using System;
 using System.Numerics; 
 
 namespace GameServer
@@ -10,8 +11,11 @@ namespace GameServer
         public Vector2 position;
         public float rotation;
 
-        private float moveSpeed = 5f / Constants.TICKS_PER_SEC;
+        private float moveSpeed = 4f / Constants.TICKS_PER_SEC;
         private bool[] inputs;
+
+        public CircleCollider collider;
+        // public RectCollider collider;
 
         public Player(int _id, string _username, Vector2 _spawnPosition)
         {
@@ -21,6 +25,9 @@ namespace GameServer
             rotation = 0f;
 
             inputs = new bool[4];
+
+            collider = new CircleCollider(position, 0.5f);
+            // collider = new RectCollider(position, new Vector2(1, 1));
         }
 
         public void Update()
@@ -48,7 +55,17 @@ namespace GameServer
 
         private void Move(Vector2 _inputDirection)
         {
-            position += _inputDirection * moveSpeed;
+            Vector2 new_position = position + _inputDirection * moveSpeed;
+
+            collider.Move(new_position);
+            foreach (RectCollider obstacle in Server.scene.obstacles)
+            {
+                if (collider.CheckCollision(obstacle)){
+                    return;
+                }
+            }
+
+            position = new_position;
 
             ServerSend.PlayerPosition(this);
             ServerSend.PlayerRotation(this);
