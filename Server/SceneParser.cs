@@ -46,7 +46,7 @@ namespace GameServer
         }
 
         public static List<dynamic> GetTransforms(Dictionary<string, dynamic> objects){
-            List<dynamic> transfroms = new List<dynamic>();
+            List<dynamic> transforms = new List<dynamic>();
             foreach (KeyValuePair<string, dynamic> element in objects)
             {
                 string type = ((IDictionary<String, Object>) element.Value).Keys.First();
@@ -67,12 +67,12 @@ namespace GameServer
                         string component_type = ((IDictionary<String, Object>) component_object).Keys.First();
 
                         if (component_type == "Transform"){
-                            transfroms.Add(component_object.Transform);
+                            transforms.Add(component_object.Transform);
                         }
                     }
                 }
             }
-            return transfroms;
+            return transforms;
         }
 
         public static List<RectCollider> TransfromToCollider(List <dynamic> transforms)
