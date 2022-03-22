@@ -57,3 +57,10 @@ sysinfo.txt
 
 # Crashlytics generated file
 crashlytics-build.properties
+
+
+
+############## Fix by Daniel pour éviter les problèmes de version ##############
+Packages/manifest.json
+Packages/packages-lock.json
+ProjectSettings/ProjectVersion.txt
