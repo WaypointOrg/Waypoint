@@ -10,7 +10,7 @@ namespace GameServer
 {
     class SceneParser 
     {
-        public static List<RectCollider> ParseScene(string path)
+        public List<RectCollider> ParseScene(string path)
         {
             string file = File.ReadAllText(path);
             Dictionary<string, dynamic> objects = ParseFiles(file);
@@ -18,13 +18,13 @@ namespace GameServer
             return TransfromToCollider(transforms);
         }
 
-        public static dynamic ParseYaml(string s)
+        private dynamic ParseYaml(string s)
         {
             var deserializer = new DeserializerBuilder().Build();
             return deserializer.Deserialize<ExpandoObject>(s);
         }
 
-        public static Dictionary<string, dynamic> ParseFiles(string file)
+        private Dictionary<string, dynamic> ParseFiles(string file)
         {
             string[] files_array = file.Split("--- ");
             List<string> files = files_array.ToList<string>();
@@ -45,7 +45,7 @@ namespace GameServer
             return objects;
         }
 
-        public static List<dynamic> GetTransforms(Dictionary<string, dynamic> objects){
+        private List<dynamic> GetTransforms(Dictionary<string, dynamic> objects){
             List<dynamic> transforms = new List<dynamic>();
             foreach (KeyValuePair<string, dynamic> element in objects)
             {
@@ -75,11 +75,19 @@ namespace GameServer
             return transforms;
         }
 
-        public static List<RectCollider> TransfromToCollider(List <dynamic> transforms)
+        private List<RectCollider> TransfromToCollider(List <dynamic> transforms)
         {
             List<RectCollider> colliders = new List<RectCollider>();
             foreach (var transform in transforms)
             {
+                if (float.Parse(transform["m_LocalRotation"]["x"]) != 0 || 
+                    float.Parse(transform["m_LocalRotation"]["y"]) != 0 || 
+                    float.Parse(transform["m_LocalRotation"]["z"]) != 0)
+                    {
+                        Console.WriteLine($"[Import Error]: A GameObject Transform had a rotation associated with it. This is not supported. The object was ignored");
+                        continue;
+                    }
+
                 colliders.Add(new RectCollider(
                     new Vector2(float.Parse(transform["m_LocalPosition"]["x"]), float.Parse(transform["m_LocalPosition"]["y"])),
                     new Vector2(float.Parse(transform["m_LocalScale"]["x"]),    float.Parse(transform["m_LocalScale"]["y"]))
