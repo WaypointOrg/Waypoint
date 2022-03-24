@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerAnimationManager : MonoBehaviour
 {
     // Start is called before the first frame update
-    public Animator animator;
+    public ExanimationManager animator;
     SpriteRenderer spriteRenderer;
     void Start()
     {
@@ -18,17 +18,17 @@ public class PlayerAnimationManager : MonoBehaviour
         if(Input.GetAxis("Vertical") > 0)
         {
             //back
-            animator.SetInteger("State", 1);
+            animator.Run("backwards");
         }else
         if(Input.GetAxis("Vertical") < 0)
         {
             //forw
-            animator.SetInteger("State", 0);
+            animator.Run("forward");
         }else
         if(Input.GetAxis("Horizontal") > 0)
         {
             //right
-            animator.SetInteger("State", 2);
+            animator.Run("side");
             if(!spriteRenderer.flipX)
             {
                 spriteRenderer.flipX = true;
@@ -38,14 +38,14 @@ public class PlayerAnimationManager : MonoBehaviour
         if(Input.GetAxis("Horizontal") < 0)
         {
             //left
-            animator.SetInteger("State", 2);
+            animator.Run("side");
             if(spriteRenderer.flipX)
             {
                 spriteRenderer.flipX = false;
             }
         }else
         {
-            animator.SetInteger("State", 3);
+            animator.Run("idle");
         }
     }
 }

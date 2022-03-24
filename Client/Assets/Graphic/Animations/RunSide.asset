@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e44b1495fe93dd1ccb4fd9b745374f48, type: 3}
+  m_Name: RunSide
+  m_EditorClassIdentifier: 
+  _name: side
+  sprites:
+  - {fileID: 21300000, guid: c6a18c3641f88417db668cd7b0fe0129, type: 3}
+  - {fileID: 21300000, guid: f5c9821b1459d2487b0f8eab6d8359fa, type: 3}
+  - {fileID: 21300000, guid: f138aaa569295c2b1b5a15f450774094, type: 3}
+  - {fileID: 21300000, guid: 147b8b7420cc779d0b689cb13966f117, type: 3}
+  loop: 1

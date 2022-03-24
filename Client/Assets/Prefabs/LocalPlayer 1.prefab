@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4402603727477916463}
   - component: {fileID: 4402603727477916462}
-  - component: {fileID: 4402603727477916449}
   - component: {fileID: 4402603727477916448}
+  - component: {fileID: 105306203123700840}
   m_Layer: 0
   m_Name: PlayerSprite
   m_TagString: Untagged
@@ -85,25 +85,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!95 &4402603727477916449
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4402603727477916451}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 89ab195c8b4173f9b963bb98acbc4a81, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &4402603727477916448
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -116,7 +97,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: feb130b0af2546ec1836d4a952c15f1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 4402603727477916449}
+  animator: {fileID: 105306203123700840}
+--- !u!114 &105306203123700840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4402603727477916451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4619f8757a23bdcee93c974fb1196987, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteRenderer: {fileID: 4402603727477916462}
+  clips:
+  - {fileID: 11400000, guid: 85a407393d2eb445cac7abbed83df8a9, type: 2}
+  - {fileID: 11400000, guid: d2d207ff6734adc428e822c4e2298ccd, type: 2}
+  - {fileID: 11400000, guid: 5701921e36573195596088ae50c547d4, type: 2}
+  - {fileID: 11400000, guid: 46a391e2f936797d6b8031c5ef8b07d0, type: 2}
+  spacing: 0.1
 --- !u!1 &5134383627964505411
 GameObject:
   m_ObjectHideFlags: 0
