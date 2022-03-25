@@ -57,7 +57,8 @@ public class ClientHandle : MonoBehaviour
         int _itemID = _packet.ReadInt();
         int _byPlayer = _packet.ReadInt();
 
+        // TODO: Add item to player.
         GameManager.items[_itemID].ItemPickedUp();
-        GameManager.players[_byPlayer].items.Add(GameManager.items[_itemID]);
+        GameManager.items.Remove(_itemID);
     }
 }

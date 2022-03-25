@@ -17,7 +17,7 @@ namespace GameServer
             }
 
             // Items
-            if (Server.nextItemTime <= 0)
+            if (Server.nextItemTime <= 0 && Server.items.Count < Server.maxItems)
             {
                 int _index = 0;
                 while (true)

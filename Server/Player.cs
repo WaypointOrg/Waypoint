@@ -1,5 +1,6 @@
 using System;
 using System.Numerics; 
+using System.Collections.Generic; 
 
 namespace GameServer
 {
@@ -17,6 +18,8 @@ namespace GameServer
         public CircleCollider collider;
         // public RectCollider collider;
 
+        public List<Item> items;
+
         public Player(int _id, string _username, Vector2 _spawnPosition)
         {
             id = _id;
@@ -28,6 +31,7 @@ namespace GameServer
 
             collider = new CircleCollider(position, 0.5f);
             // collider = new RectCollider(position, new Vector2(1, 1));
+            items = new List<Item>();
         }
 
         public void Update()
@@ -51,6 +55,7 @@ namespace GameServer
             }
 
             Move(_inputDirection);
+            AttemptPickUp();
         }
 
         private void Move(Vector2 _inputDirection)
@@ -69,6 +74,22 @@ namespace GameServer
 
             ServerSend.PlayerPosition(this);
             ServerSend.PlayerRotation(this);
+        }
+
+        private void AttemptPickUp()
+        {
+            foreach (Item item in Server.items.Values)
+            {
+                if (collider.CheckCollision(item.collider)){
+                    Server.items.Remove(item.itemId);
+                    items.Add(item);
+
+                    // TODO: Check if player already has item.
+                    Console.WriteLine($"Player {username} has {items.Count} items.");
+
+                    ServerSend.ItemPickedUp(item, this);
+                }
+            } 
         }
 
         public void SetInput(bool[] _inputs, float _rotation)

@@ -115,16 +115,16 @@ namespace GameServer
             }
         }
 
-        // public static void ItemPickedUp(int _spawnerId, int _byPlayer)
-        // {
-        //     using (Packet _packet = new Packet((int)ServerPackets.itemPickedUp))
-        //     {
-        //         _packet.Write(_spawnerId);
-        //         _packet.Write(_byPlayer);
+        public static void ItemPickedUp(Item _item, Player _player)
+        {
+            using (Packet _packet = new Packet((int)ServerPackets.itemPickedUp))
+            {
+                _packet.Write(_item.itemId);
+                _packet.Write(_player.id);
 
-        //         SendTCPDataToAll(_packet);
-        //     }
-        // }
+                SendTCPDataToAll(_packet);
+            }
+        }
         #endregion
     }
 }
