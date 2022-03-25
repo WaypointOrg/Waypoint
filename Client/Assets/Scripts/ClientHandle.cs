@@ -42,4 +42,22 @@ public class ClientHandle : MonoBehaviour
 
         GameManager.players[_id].transform.eulerAngles = new Vector3(0, 0, _rotation);
     }
+
+    public static void ItemSpawned(Packet _packet)
+    {
+        int _itemID = _packet.ReadInt();
+        Vector2 _position = _packet.ReadVector2();
+        int _type = _packet.ReadInt();
+
+        GameManager.instance.ItemSpawned(_itemID, _position, _type);
+    }
+
+    // public static void ItemPickedUp(Packet _packet)
+    // {
+    //     int _spawnerId = _packet.ReadInt();
+    //     int _byPlayer = _packet.ReadInt();
+
+    //     GameManager.items[_spawnerId].ItemPickedUp();
+    //     GameManager.players[_byPlayer].itemCount++;
+    // }
 }
