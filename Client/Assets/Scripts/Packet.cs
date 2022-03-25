@@ -12,7 +12,7 @@ public enum ServerPackets
     playerPosition,
     playerRotation,
     itemSpawned,
-    // itemPickedUp
+    itemPickedUp,
 }
 
 /// <summary>Sent from client to server.</summary>

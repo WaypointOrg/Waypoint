@@ -52,12 +52,12 @@ public class ClientHandle : MonoBehaviour
         GameManager.instance.ItemSpawned(_itemID, _position, _type);
     }
 
-    // public static void ItemPickedUp(Packet _packet)
-    // {
-    //     int _spawnerId = _packet.ReadInt();
-    //     int _byPlayer = _packet.ReadInt();
+    public static void ItemPickedUp(Packet _packet)
+    {
+        int _itemID = _packet.ReadInt();
+        int _byPlayer = _packet.ReadInt();
 
-    //     GameManager.items[_spawnerId].ItemPickedUp();
-    //     GameManager.players[_byPlayer].itemCount++;
-    // }
+        GameManager.items[_itemID].ItemPickedUp();
+        GameManager.players[_byPlayer].items.Add(GameManager.items[_itemID]);
+    }
 }

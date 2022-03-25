@@ -279,6 +279,7 @@ public class Client : MonoBehaviour
             { (int)ServerPackets.playerPosition, ClientHandle.PlayerPosition },
             { (int)ServerPackets.playerRotation, ClientHandle.PlayerRotation },
             { (int)ServerPackets.itemSpawned, ClientHandle.ItemSpawned },
+            { (int)ServerPackets.itemPickedUp, ClientHandle.ItemPickedUp },
         };
         Debug.Log("Initialized packets.");
     }
