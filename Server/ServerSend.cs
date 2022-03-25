@@ -1,4 +1,5 @@
-﻿
+﻿using System.Numerics;
+
 namespace GameServer
 {
     class ServerSend
@@ -101,6 +102,29 @@ namespace GameServer
                 SendUDPDataToAll(_player.id, _packet);
             }
         }
+
+        public static void ItemSpawned(Item _item)
+        {
+            using (Packet _packet = new Packet((int)ServerPackets.itemSpawned))
+            {
+                _packet.Write(_item.itemId);
+                _packet.Write(_item.position);
+                _packet.Write((int) _item.type);
+
+                SendTCPDataToAll(_packet);
+            }
+        }
+
+        // public static void ItemPickedUp(int _spawnerId, int _byPlayer)
+        // {
+        //     using (Packet _packet = new Packet((int)ServerPackets.itemPickedUp))
+        //     {
+        //         _packet.Write(_spawnerId);
+        //         _packet.Write(_byPlayer);
+
+        //         SendTCPDataToAll(_packet);
+        //     }
+        // }
         #endregion
     }
 }

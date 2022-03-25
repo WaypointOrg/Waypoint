@@ -18,6 +18,11 @@ namespace GameServer
 
         public static Scene scene;
 
+        public static Dictionary<int, Item> items = new Dictionary<int, Item>();
+        // Delay between items, in ticks.
+        public static int itemSpawnDelay = 5 * 30;
+        public static int nextItemTime = itemSpawnDelay;
+
         public static void Start(int _maxPlayers, int _port)
         {
             MaxPlayers = _maxPlayers;
