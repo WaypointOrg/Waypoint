@@ -12,9 +12,9 @@ namespace GameServer
 
         public enum ItemType
         {
-            Orange,
-            Green,
-            Pink
+            Orange = 0,
+            Green  = 1,
+            Pink   = 2,
         }
         public ItemType type;
 
