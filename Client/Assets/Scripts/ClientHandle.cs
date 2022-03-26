@@ -71,11 +71,18 @@ public class ClientHandle : MonoBehaviour
         GameManager.instance.ProjectileSpawned(_projectileId, _position, _type);
     }
 
+    public static void ProjectilePosition(Packet _packet)
+    {
+        int _projectileId = _packet.ReadInt();
+        Vector2 _position = _packet.ReadVector2();
+
+        GameManager.projectiles[_projectileId].transform.position = _position;
+    }
+
     public static void ProjectileDestroy(Packet _packet)
     {
         int _projectileId = _packet.ReadInt();
-        int _byPlayer = _packet.ReadInt();
-
         GameManager.projectiles[_projectileId].Destroy();
+        GameManager.projectiles.Remove(_projectileId);
     }
 }

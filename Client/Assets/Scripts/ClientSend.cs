@@ -28,7 +28,7 @@ public class ClientSend : MonoBehaviour
         }
     }
 
-    public static void PlayerMovement(bool[] _inputs)
+    public static void PlayerMovement(bool[] _inputs, float _rotation)
     {
         using (Packet _packet = new Packet((int)ClientPackets.playerMovement))
         {
@@ -37,15 +37,15 @@ public class ClientSend : MonoBehaviour
             {
                 _packet.Write(_input);
             }
-            _packet.Write(GameManager.players[Client.instance.myId].transform.rotation.eulerAngles.z);
+            _packet.Write(_rotation);
 
             SendUDPData(_packet);
         }
     }
     
-    public static void ProjectileShoot()
+    public static void Shoot()
     {
-        using (Packet _packet = new Packet((int)ClientPackets.playerMovement))
+        using (Packet _packet = new Packet((int)ClientPackets.playerShoot))
         {
             SendUDPData(_packet);
         }

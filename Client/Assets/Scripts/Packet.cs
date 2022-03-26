@@ -14,6 +14,7 @@ public enum ServerPackets
     itemSpawned,
     itemPickedUp,
     projectileSpawned,
+    projectilePosition,
     projectileDestroyed,
 }
 
@@ -22,7 +23,7 @@ public enum ClientPackets
 {
     welcomeReceived = 1,
     playerMovement,
-    projectileShoot,
+    playerShoot,
 }
 
 public class Packet : IDisposable

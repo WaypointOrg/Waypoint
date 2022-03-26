@@ -13,14 +13,18 @@ namespace GameServer
         playerPosition,
         playerRotation,
         itemSpawned,
-        itemPickedUp
+        itemPickedUp,
+        projectileSpawned,
+        projectilePosition,
+        projectileDestroyed,
     }
 
     /// <summary>Sent from client to server.</summary>
     public enum ClientPackets
     {
         welcomeReceived = 1,
-        playerMovement
+        playerMovement,
+        playerShoot,
     }
 
     public class Packet : IDisposable

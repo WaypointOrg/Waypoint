@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public float rotation;
+
     public Transform gun;
     private void FixedUpdate()
     {
@@ -9,12 +11,20 @@ public class PlayerController : MonoBehaviour
         SendInputToServer();
     }
 
+    void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            ClientSend.Shoot();
+        }
+    }
+
     private void LookAtMouse()
     {
         Vector3 difference = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
         difference.Normalize();
-        float rotation_z = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
-        gun.rotation = Quaternion.Euler(0f, 0f, rotation_z);
+        rotation = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
+        gun.rotation = Quaternion.Euler(0f, 0f, rotation);
     }
 
     private void SendInputToServer()
@@ -27,6 +37,6 @@ public class PlayerController : MonoBehaviour
             Input.GetKey(KeyCode.D),
         };
 
-        ClientSend.PlayerMovement(_inputs);
+        ClientSend.PlayerMovement(_inputs, rotation);
     }
 }

@@ -7,24 +7,28 @@ namespace GameServer
 {
     class Server
     {
+        // Networking
         public static int MaxPlayers { get; private set; }
         public static int Port { get; private set; }
         public static Dictionary<int, Client> clients = new Dictionary<int, Client>();
         public delegate void PacketHandler(int _fromClient, Packet _packet);
         public static Dictionary<int, PacketHandler> packetHandlers;
-
         public static int connectedPlayers = 0;
-
         private static TcpListener tcpListener;
         private static UdpClient udpListener;
 
+        // Scene
         public static Scene scene;
 
+        // Items
         public static Dictionary<int, Item> items = new Dictionary<int, Item>();
         public static int maxItems = 5;
-        // Delay between items, in ticks.
-        public static int itemSpawnDelay = 5 * 30;
+        public static int itemSpawnDelay = 5 * Constants.TICKS_PER_SEC; // Delay between items, in ticks.
         public static int nextItemTime = itemSpawnDelay;
+
+        // Projectiles
+        public static Dictionary<int, Projectile> projectiles = new Dictionary<int, Projectile>();
+
 
         public static void Start(int _maxPlayers, int _port)
         {
@@ -131,7 +135,8 @@ namespace GameServer
             packetHandlers = new Dictionary<int, PacketHandler>()
             {
                 { (int)ClientPackets.welcomeReceived, ServerHandle.WelcomeReceived },
-                { (int)ClientPackets.playerMovement,  ServerHandle.PlayerMovement}
+                { (int)ClientPackets.playerMovement,  ServerHandle.PlayerMovement},
+                { (int)ClientPackets.playerShoot,  ServerHandle.PlayerShoot},
             };
             Console.WriteLine("Initialized packets.");
         }

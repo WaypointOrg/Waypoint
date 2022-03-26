@@ -6,17 +6,18 @@ public class Projectile : MonoBehaviour
 {
     public int projectileId;
     public int type;
-    private Vector2 position;
+    public GameObject explosionPrefab;
+
 
     public void Initialize(int _projectileId, int _type)
     {
         projectileId = _projectileId;
         type = _type;
-        position = transform.position;
     }
 
     public void Destroy()
     {
+        Instantiate(explosionPrefab, transform.position, explosionPrefab.transform.rotation);
         Destroy(gameObject);
     }
 }

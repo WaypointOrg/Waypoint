@@ -125,6 +125,40 @@ namespace GameServer
                 SendTCPDataToAll(_packet);
             }
         }
+
+        public static void ProjectileSpawned(Projectile _projectile)
+        {
+            using (Packet _packet = new Packet((int)ServerPackets.projectileSpawned))
+            {
+                _packet.Write(_projectile.projectileId);
+                _packet.Write(_projectile.position);
+                _packet.Write((int) _projectile.type);
+
+                SendTCPDataToAll(_packet);
+            }
+        }
+
+        public static void ProjectilePosition(Projectile _projectile)
+        {
+            using (Packet _packet = new Packet((int)ServerPackets.projectilePosition))
+            {
+                _packet.Write(_projectile.projectileId);
+                _packet.Write(_projectile.position);
+
+                SendTCPDataToAll(_packet);
+            }
+        }
+
+        public static void ProjectileDestroy(Projectile _projectile)
+        {
+            using (Packet _packet = new Packet((int)ServerPackets.projectileDestroyed))
+            {
+                _packet.Write(_projectile.projectileId);
+
+                SendTCPDataToAll(_packet);
+            }
+        }
+
         #endregion
     }
 }

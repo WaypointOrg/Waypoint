@@ -6,6 +6,7 @@ namespace GameServer
 {
     class Player
     {
+        public float radius = 0.5f;
         public int id;
         public string username;
 
@@ -29,7 +30,7 @@ namespace GameServer
 
             inputs = new bool[4];
 
-            collider = new CircleCollider(position, 0.5f);
+            collider = new CircleCollider(position, radius);
             // collider = new RectCollider(position, new Vector2(1, 1));
             items = new List<Item>();
         }
@@ -99,6 +100,27 @@ namespace GameServer
         {
             inputs = _inputs;
             rotation = _rotation;
+        }
+
+        public void Shoot()
+        {
+            int _index = 0;
+            while (true)
+            {
+                if (Server.projectiles.TryAdd(_index, new Projectile()))
+                {
+                    Vector2 _direction = new Vector2(
+                        (float) Math.Cos(rotation * (Math.PI / 180)),
+                        (float) Math.Sin(rotation * (Math.PI / 180)));
+
+                    // TODO: shoot correct projectile type
+                    Projectile _projectile = Server.projectiles[_index];
+                    _projectile.Spawn(_index, position + _direction * (radius + _projectile.radius), _direction, Projectile.ProjectileType.normal);
+                    ServerSend.ProjectileSpawned(_projectile);
+                    break;
+                }
+                _index += 1;
+            }
         }
     }
 }

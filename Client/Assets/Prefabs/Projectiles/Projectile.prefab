@@ -97,3 +97,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectileId: 0
   type: 0
+  explosionPrefab: {fileID: 3054179495669604345, guid: c3d89132451525076a2068f34dc0b268, type: 3}

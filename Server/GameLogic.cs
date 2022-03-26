@@ -35,6 +35,12 @@ namespace GameServer
                 Server.nextItemTime = Server.itemSpawnDelay;
             }
             Server.nextItemTime -= 1;
+
+            // Projectiles
+            foreach (Projectile projectile in Server.projectiles.Values)
+            {
+                projectile.Update();
+            }
             
             ThreadManager.UpdateMain();
         }

@@ -59,7 +59,7 @@ namespace GameServer
             float distY = position.Y - testY;
             float distance = (float) Math.Sqrt((distX*distX) + (distY*distY));
 
-            return distance <= radius;
+            return distance < radius;
         }
 
         public bool CheckCollision(CircleCollider collider)
@@ -67,7 +67,7 @@ namespace GameServer
             float distX = position.X - collider.position.X;
             float distY = position.Y - collider.position.Y;
             float distance = (float) Math.Sqrt((distX*distX) + (distY*distY));
-            return distance <= radius + collider.radius;
+            return distance < radius + collider.radius;
         }
     }
 }

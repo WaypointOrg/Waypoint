@@ -281,6 +281,7 @@ public class Client : MonoBehaviour
             { (int)ServerPackets.itemSpawned, ClientHandle.ItemSpawned },
             { (int)ServerPackets.itemPickedUp, ClientHandle.ItemPickedUp },
             { (int)ServerPackets.projectileSpawned, ClientHandle.ProjectileSpawned },
+            { (int)ServerPackets.projectilePosition, ClientHandle.ProjectilePosition },
             { (int)ServerPackets.projectileDestroyed, ClientHandle.ProjectileDestroy },
         };
         Debug.Log("Initialized packets.");

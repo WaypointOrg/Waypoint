@@ -30,5 +30,10 @@ namespace GameServer
 
             Server.clients[_fromClient].player.SetInput(_inputs, _rotation);
         }
+
+        public static void PlayerShoot(int _fromClient, Packet _packet)
+        {
+            Server.clients[_fromClient].player.Shoot();
+        }
     }
 }
