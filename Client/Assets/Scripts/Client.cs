@@ -280,6 +280,8 @@ public class Client : MonoBehaviour
             { (int)ServerPackets.playerRotation, ClientHandle.PlayerRotation },
             { (int)ServerPackets.itemSpawned, ClientHandle.ItemSpawned },
             { (int)ServerPackets.itemPickedUp, ClientHandle.ItemPickedUp },
+            { (int)ServerPackets.projectileSpawned, ClientHandle.ProjectileSpawned },
+            { (int)ServerPackets.projectileDestroyed, ClientHandle.ProjectileDestroy },
         };
         Debug.Log("Initialized packets.");
     }

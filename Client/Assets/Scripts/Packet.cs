@@ -13,13 +13,16 @@ public enum ServerPackets
     playerRotation,
     itemSpawned,
     itemPickedUp,
+    projectileSpawned,
+    projectileDestroyed,
 }
 
 /// <summary>Sent from client to server.</summary>
 public enum ClientPackets
 {
     welcomeReceived = 1,
-    playerMovement
+    playerMovement,
+    projectileShoot,
 }
 
 public class Packet : IDisposable
