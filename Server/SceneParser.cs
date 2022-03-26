@@ -5,6 +5,7 @@ using System.IO;
 using YamlDotNet.Serialization;
 using System.Linq;
 using System.Numerics;
+using System.Globalization;
 
 namespace GameServer 
 {
@@ -89,8 +90,8 @@ namespace GameServer
                     }
 
                 colliders.Add(new RectCollider(
-                    new Vector2(float.Parse(transform["m_LocalPosition"]["x"]), float.Parse(transform["m_LocalPosition"]["y"])),
-                    new Vector2(float.Parse(transform["m_LocalScale"]["x"]),    float.Parse(transform["m_LocalScale"]["y"]))
+                    new Vector2(float.Parse(transform["m_LocalPosition"]["x"], CultureInfo.InvariantCulture), float.Parse(transform["m_LocalPosition"]["y"], CultureInfo.InvariantCulture)),
+                    new Vector2(float.Parse(transform["m_LocalScale"]["x"],    CultureInfo.InvariantCulture), float.Parse(transform["m_LocalScale"]["y"],    CultureInfo.InvariantCulture))
                 ));
             }
 
