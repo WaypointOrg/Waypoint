@@ -53,15 +53,18 @@ namespace GameServer
             {
                 _inputDirection.X += 1;
             }
-
-            Move(_inputDirection);
+            
+            if (_inputDirection != Vector2.Zero)
+            {
+                Move(Vector2.Normalize(_inputDirection));
+            }
+            
             AttemptPickUp();
         }
 
         private void Move(Vector2 _inputDirection)
         {
             Vector2 new_position = position + _inputDirection * moveSpeed;
-
             collider.Move(new_position);
             foreach (RectCollider obstacle in Server.scene.obstacles)
             {
