@@ -210,6 +210,8 @@ namespace GameServer
                     ServerSend.SpawnPlayer(_client.id, player);
                 }
             }
+
+            Server.connectedPlayers += 1;
         }
 
         private void Disconnect()
@@ -220,6 +222,8 @@ namespace GameServer
 
             tcp.Disconnect();
             udp.Disconnect();
+
+            Server.connectedPlayers -= 1;
         }
     }
 }

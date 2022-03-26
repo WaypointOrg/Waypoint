@@ -17,7 +17,9 @@ namespace GameServer
             }
 
             // Items
-            if (Server.nextItemTime <= 0 && Server.items.Count < Server.maxItems)
+            if (Server.nextItemTime <= 0 &&
+                Server.items.Count < Server.maxItems &&
+                Server.connectedPlayers > 0)
             {
                 int _index = 0;
                 while (true)
