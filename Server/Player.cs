@@ -122,5 +122,55 @@ namespace GameServer
                 _index += 1;
             }
         }
+
+        /*
+        void Shoot()
+        {
+            Projectile proj = spellManager.myproj;
+            number = proj.number;
+            angle = proj.angle;
+
+            if (number % 2 == 1)
+            {
+                //the number is odd
+                float side = Mathf.Floor(number / 2);
+
+                GameObject pr1 = Instantiate(projectile, shooPos.position, transform.rotation);
+                projs.Add(pr1);
+
+                for (int i = 0; i < side; i++)
+                {
+                    GameObject pr2 = Instantiate(projectile, shooPos.position, Quaternion.Euler(new Vector3(0, 0, transform.eulerAngles.z + angle * (i + 1))));
+                    GameObject pr3 = Instantiate(projectile, shooPos.position, Quaternion.Euler(new Vector3(0, 0, transform.eulerAngles.z - angle * (i + 1))));
+
+                    projs.Add(pr2);
+                    projs.Add(pr3);
+                }
+            }
+            else
+            {
+                //the number is even
+                float side = number / 2;
+
+                for (int i = 0; i < side; i++)
+                {
+                    GameObject pr4 = Instantiate(projectile, shooPos.position, Quaternion.Euler(new Vector3(0, 0, transform.eulerAngles.z + angle * i + angle / 2)));
+                    GameObject pr5 = Instantiate(projectile, shooPos.position, Quaternion.Euler(new Vector3(0, 0, transform.eulerAngles.z - angle * i - angle / 2)));
+
+                    projs.Add(pr4);
+                    projs.Add(pr5);
+                }
+            }
+
+            foreach (GameObject p in projs)
+            {
+                Projectile projScript = p.GetComponent<Projectile>();
+                projScript.updateValues(proj.speed, proj.size, (int)proj.number, proj.angle, proj.frequency, proj.height, proj.seek);
+            }
+
+            projs.Clear();
+            spellManager.ResetProj();
+        }
+        */
     }
 }
