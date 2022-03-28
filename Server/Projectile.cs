@@ -6,8 +6,13 @@ namespace GameServer
     class Projectile
     {
         public float radius = 0.3f;
-        private float speed = 10f / Constants.TICKS_PER_SEC;
+        private float speed = 1f / Constants.TICKS_PER_SEC;
 
+        private float height = 4f;
+
+        private float frequency = 4f;
+
+        private Vector2 initialPos;
         public int projectileId;
         public Vector2 position;
         public Vector2 direction;
@@ -25,6 +30,7 @@ namespace GameServer
         {
             projectileId = _projectileId;
             position = _position;
+            initialPos = _position;
             direction = _direction;
             type = _type;
 
@@ -34,7 +40,33 @@ namespace GameServer
         public void Update()
         {
             // TODO: Type-specific behavior.
-            position += direction * speed;
+            Vector2 dist = position - initialPos;
+            float totaldist = MathF.Abs(MathF.Sqrt(dist.X * dist.X + dist.Y * dist.Y));
+
+            Vector2 perp;
+            if(direction.Y == 0)
+            {
+                perp = new Vector2(0,1);
+            }else
+            {
+                perp = new Vector2(1, -direction.X/direction.Y);
+            }
+
+            float lenght = MathF.Sqrt(perp.X * perp.X + perp.Y * perp.Y);
+            perp = new Vector2(perp.X/lenght, perp.Y/lenght);
+
+            float crossZ = direction.X * perp.Y - perp.X * direction.Y;
+
+            if(crossZ < 0)
+            {
+                //HOLY JESUS CHRIST!!! SHIT GOING TO HAPPEN!!!
+                perp = new Vector2(-perp.X, -perp.Y);
+            }
+
+            float mod = position.X/direction.X;
+
+            position += direction * speed * 2;
+            position += perp * speed * MathF.Cos(totaldist * frequency) * height;
             collider.Move(position);
 
             foreach (RectCollider obstacle in Server.scene.obstacles)

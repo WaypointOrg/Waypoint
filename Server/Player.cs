@@ -104,23 +104,109 @@ namespace GameServer
 
         public void Shoot()
         {
+            Vector2 _direction = new Vector2(
+                        (float) Math.Cos(rotation * (Math.PI / 180)),
+                        (float) Math.Sin(rotation * (Math.PI / 180)));
+
+            float number = 5;
+            float angle = 10;
+
+            if (number % 2 == 1)
+            {
+                //the number is odd
+                float side = MathF.Floor(number / 2);
+                
+                SummonProjectile(_direction);
+
+                for (int i = 0; i < side; i++)
+                {
+                    Vector2 deltaDir1 = new Vector2((float) Math.Cos((rotation + angle * (i + 1)) * (Math.PI / 180)), (float) Math.Sin((rotation + angle * (i + 1)) * (Math.PI / 180)));
+                    Vector2 deltaDir2 = new Vector2((float) Math.Cos((rotation - angle * (i + 1)) * (Math.PI / 180)), (float) Math.Sin((rotation - angle * (i + 1)) * (Math.PI / 180)));
+                    SummonProjectile(deltaDir1);
+                    SummonProjectile(deltaDir2);
+                }
+            }
+            else
+            {
+                //the number is even
+                float side = number / 2;
+
+                for (int i = 0; i < side; i++)
+                {
+                    Vector2 deltaDir1 = new Vector2((float) Math.Cos((rotation + angle * (i + 1)) * (Math.PI / 180)), (float) Math.Sin((rotation + angle * (i + 1)) * (Math.PI / 180)));
+                    Vector2 deltaDir2 = new Vector2((float) Math.Cos((rotation - angle * (i + 1)) * (Math.PI / 180)), (float) Math.Sin((rotation - angle * (i + 1)) * (Math.PI / 180)));
+                    SummonProjectile(deltaDir1);
+                    SummonProjectile(deltaDir2);
+                }
+            }
+        }
+
+        void SummonProjectile(Vector2 direction)
+        {
             int _index = 0;
             while (true)
             {
                 if (Server.projectiles.TryAdd(_index, new Projectile()))
                 {
-                    Vector2 _direction = new Vector2(
-                        (float) Math.Cos(rotation * (Math.PI / 180)),
-                        (float) Math.Sin(rotation * (Math.PI / 180)));
-
                     // TODO: shoot correct projectile type
                     Projectile _projectile = Server.projectiles[_index];
-                    _projectile.Spawn(_index, position + _direction * (radius + _projectile.radius), _direction, Projectile.ProjectileType.normal);
+                    _projectile.Spawn(_index, position + direction * (radius + _projectile.radius), direction, Projectile.ProjectileType.normal);
                     ServerSend.ProjectileSpawned(_projectile);
                     break;
                 }
                 _index += 1;
             }
         }
+
+
+
+        /*
+        void Shoot()
+        {
+            number = proj.number;
+            angle = proj.angle;
+
+            if (number % 2 == 1)
+            {
+                //the number is odd
+                float side = Mathf.Floor(number / 2);
+
+                GameObject pr1 = Instantiate(projectile, shooPos.position, transform.rotation);
+                projs.Add(pr1);
+
+                for (int i = 0; i < side; i++)
+                {
+                    GameObject pr2 = Instantiate(projectile, shooPos.position, Quaternion.Euler(new Vector3(0, 0, transform.eulerAngles.z + angle * (i + 1))));
+                    GameObject pr3 = Instantiate(projectile, shooPos.position, Quaternion.Euler(new Vector3(0, 0, transform.eulerAngles.z - angle * (i + 1))));
+
+                    projs.Add(pr2);
+                    projs.Add(pr3);
+                }
+            }
+            else
+            {
+                //the number is even
+                float side = number / 2;
+
+                for (int i = 0; i < side; i++)
+                {
+                    GameObject pr4 = Instantiate(projectile, shooPos.position, Quaternion.Euler(new Vector3(0, 0, transform.eulerAngles.z + angle * i + angle / 2)));
+                    GameObject pr5 = Instantiate(projectile, shooPos.position, Quaternion.Euler(new Vector3(0, 0, transform.eulerAngles.z - angle * i - angle / 2)));
+
+                    projs.Add(pr4);
+                    projs.Add(pr5);
+                }
+            }
+
+            foreach (GameObject p in projs)
+            {
+                Projectile projScript = p.GetComponent<Projectile>();
+                projScript.updateValues(proj.speed, proj.size, (int)proj.number, proj.angle, proj.frequency, proj.height, proj.seek);
+            }
+
+            projs.Clear();
+            spellManager.ResetProj();
+        }
+        */
     }
 }
