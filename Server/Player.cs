@@ -104,18 +104,53 @@ namespace GameServer
 
         public void Shoot()
         {
+            Vector2 _direction = new Vector2(
+                        (float) Math.Cos(rotation * (Math.PI / 180)),
+                        (float) Math.Sin(rotation * (Math.PI / 180)));
+
+            float number = 5;
+            float angle = 10;
+
+            if (number % 2 == 1)
+            {
+                //the number is odd
+                float side = MathF.Floor(number / 2);
+                
+                SummonProjectile(_direction);
+
+                for (int i = 0; i < side; i++)
+                {
+                    Vector2 deltaDir1 = new Vector2((float) Math.Cos((rotation + angle * (i + 1)) * (Math.PI / 180)), (float) Math.Sin((rotation + angle * (i + 1)) * (Math.PI / 180)));
+                    Vector2 deltaDir2 = new Vector2((float) Math.Cos((rotation - angle * (i + 1)) * (Math.PI / 180)), (float) Math.Sin((rotation - angle * (i + 1)) * (Math.PI / 180)));
+                    SummonProjectile(deltaDir1);
+                    SummonProjectile(deltaDir2);
+                }
+            }
+            else
+            {
+                //the number is even
+                float side = number / 2;
+
+                for (int i = 0; i < side; i++)
+                {
+                    Vector2 deltaDir1 = new Vector2((float) Math.Cos((rotation + angle * (i + 1)) * (Math.PI / 180)), (float) Math.Sin((rotation + angle * (i + 1)) * (Math.PI / 180)));
+                    Vector2 deltaDir2 = new Vector2((float) Math.Cos((rotation - angle * (i + 1)) * (Math.PI / 180)), (float) Math.Sin((rotation - angle * (i + 1)) * (Math.PI / 180)));
+                    SummonProjectile(deltaDir1);
+                    SummonProjectile(deltaDir2);
+                }
+            }
+        }
+
+        void SummonProjectile(Vector2 direction)
+        {
             int _index = 0;
             while (true)
             {
                 if (Server.projectiles.TryAdd(_index, new Projectile()))
                 {
-                    Vector2 _direction = new Vector2(
-                        (float) Math.Cos(rotation * (Math.PI / 180)),
-                        (float) Math.Sin(rotation * (Math.PI / 180)));
-
                     // TODO: shoot correct projectile type
                     Projectile _projectile = Server.projectiles[_index];
-                    _projectile.Spawn(_index, position + _direction * (radius + _projectile.radius), _direction, Projectile.ProjectileType.normal);
+                    _projectile.Spawn(_index, position + direction * (radius + _projectile.radius), direction, Projectile.ProjectileType.normal);
                     ServerSend.ProjectileSpawned(_projectile);
                     break;
                 }
@@ -123,10 +158,11 @@ namespace GameServer
             }
         }
 
+
+
         /*
         void Shoot()
         {
-            Projectile proj = spellManager.myproj;
             number = proj.number;
             angle = proj.angle;
 
