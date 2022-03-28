@@ -34,16 +34,17 @@ public class GameManager : MonoBehaviour
         GameObject _player;
         if (_id == Client.instance.myId)
         {
-            _player = Instantiate(localPlayerPrefab, _position, Quaternion.AngleAxis(_rotation, Vector3.forward));
+            _player = Instantiate(localPlayerPrefab, _position, localPlayerPrefab.transform.rotation);
         }
         else
         {
-            _player = Instantiate(playerPrefab, _position, Quaternion.AngleAxis(_rotation, Vector3.forward));
+            _player = Instantiate(playerPrefab, _position, playerPrefab.transform.rotation);
         }
 
-        _player.GetComponent<PlayerManager>().id = _id;
-        _player.GetComponent<PlayerManager>().username = _username;
-        players.Add(_id, _player.GetComponent<PlayerManager>());
+        PlayerManager _playerManager = _player.GetComponent<PlayerManager>();
+        _playerManager.Initialize(_id, _username);
+
+        players.Add(_id, _playerManager);
     }
 
     public void ItemSpawned(int _itemId, Vector2 _position, int _type)

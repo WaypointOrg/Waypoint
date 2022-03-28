@@ -35,12 +35,14 @@ public class ClientHandle : MonoBehaviour
         GameManager.players[_id].transform.position = _position;
     }
 
+    // Only received from other players.
     public static void PlayerRotation(Packet _packet)
     {
         int _id = _packet.ReadInt();
         float _rotation = _packet.ReadFloat();
 
-        GameManager.players[_id].transform.eulerAngles = new Vector3(0, 0, _rotation);
+        Debug.Log(_rotation);
+        GameManager.players[_id].gun.rotation = Quaternion.Euler(0f, 0f, _rotation);
     }
 
     public static void ItemSpawned(Packet _packet)

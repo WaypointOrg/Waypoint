@@ -145,7 +145,7 @@ namespace GameServer
                 _packet.Write(_projectile.projectileId);
                 _packet.Write(_projectile.position);
 
-                SendTCPDataToAll(_packet);
+                SendUDPDataToAll(_packet);
             }
         }
 

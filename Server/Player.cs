@@ -59,6 +59,8 @@ namespace GameServer
             {
                 Move(Vector2.Normalize(_inputDirection));
             }
+
+            ServerSend.PlayerRotation(this);
             
             AttemptPickUp();
         }
@@ -75,9 +77,7 @@ namespace GameServer
             }
 
             position = new_position;
-
             ServerSend.PlayerPosition(this);
-            ServerSend.PlayerRotation(this);
         }
 
         private void AttemptPickUp()
