@@ -9,6 +9,7 @@ public enum ServerPackets
 {
     welcome = 1,
     spawnPlayer,
+    startGame,
     playerPosition,
     playerRotation,
     itemSpawned,

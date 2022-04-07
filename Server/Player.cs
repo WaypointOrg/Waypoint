@@ -65,6 +65,14 @@ namespace GameServer
             AttemptPickUp();
         }
 
+        public void Teleport(Vector2 _position)
+        {
+            position = _position;
+            collider.position = position;
+
+            ServerSend.PlayerPosition(this);
+        }
+
         private void Move(Vector2 _inputDirection)
         {
             Vector2 new_position = position + _inputDirection * moveSpeed;

@@ -27,7 +27,11 @@ public class GameManager : MonoBehaviour
             Destroy(this);
         }
     }
-
+    
+    public void StartGame()
+    {
+        Camera.main.transform.position = new Vector3(0f, 0f, -10f);
+    }
 
     public void SpawnPlayer(int _id, string _username, Vector2 _position, float _rotation)
     {

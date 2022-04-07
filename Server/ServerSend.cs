@@ -81,6 +81,14 @@ namespace GameServer
             }
         }
 
+        public static void StartGame()
+        {
+            using (Packet _packet = new Packet((int)ServerPackets.startGame))
+            {
+                SendTCPDataToAll(_packet);
+            }
+        }
+
         public static void PlayerPosition(Player _player)
         {
             using (Packet _packet = new Packet((int)ServerPackets.playerPosition))

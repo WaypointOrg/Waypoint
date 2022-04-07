@@ -27,6 +27,12 @@ public class ClientHandle : MonoBehaviour
         GameManager.instance.SpawnPlayer(_id, _username, _position, _rotation);
     }
 
+    public static void StartGame(Packet _packet)
+    {
+        Debug.Log("Starting game...");
+        GameManager.instance.StartGame();
+    }
+
     public static void PlayerPosition(Packet _packet)
     {
         int _id = _packet.ReadInt();

@@ -13,9 +13,13 @@ namespace GameServer
         public static Dictionary<int, Client> clients = new Dictionary<int, Client>();
         public delegate void PacketHandler(int _fromClient, Packet _packet);
         public static Dictionary<int, PacketHandler> packetHandlers;
-        public static int connectedPlayers = 0;
         private static TcpListener tcpListener;
         private static UdpClient udpListener;
+        
+        // Logic
+        public static int connectedPlayers = 0;
+        public static int minPlayers = 1; // Minimum amount of players needed to start the game
+        public static bool gameStarted = false;
 
         // Scene
         public static Scene scene;
@@ -128,8 +132,7 @@ namespace GameServer
                 clients.Add(i, new Client(i));
             }
 
-            scene = new Scene();
-            scene.LoadFromFile("Map.unity");
+            scene = new Scene("Main.unity");
             Console.WriteLine("Imported scene.");
 
             packetHandlers = new Dictionary<int, PacketHandler>()
