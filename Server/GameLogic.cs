@@ -12,11 +12,11 @@ namespace GameServer
                 Server.gameStarted = true;
                 ServerSend.StartGame();
 
-                // TODO: TP Players to spawn points
                 foreach (Client _client in Server.clients.Values)
                 {
                     if (_client.player == null) continue;
-                    _client.player.Teleport(new Vector2(0, 0));
+                    Vector2 _position = Utilities.RandomFreeCirclePosition(_client.player.radius);
+                    _client.player.Teleport(_position);
                 }
             }
 

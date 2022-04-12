@@ -46,8 +46,6 @@ public class ClientHandle : MonoBehaviour
     {
         int _id = _packet.ReadInt();
         float _rotation = _packet.ReadFloat();
-
-        Debug.Log(_rotation);
         GameManager.players[_id].gun.rotation = Quaternion.Euler(0f, 0f, _rotation);
     }
 

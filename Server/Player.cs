@@ -88,6 +88,12 @@ namespace GameServer
             ServerSend.PlayerPosition(this);
         }
 
+        public void Hit()
+        {
+            Vector2 _position = Utilities.RandomFreeCirclePosition(radius);
+            Teleport(_position);
+        }
+
         private void AttemptPickUp()
         {
             foreach (Item item in Server.items.Values)
@@ -158,6 +164,7 @@ namespace GameServer
                 {
                     // TODO: shoot correct projectile type
                     Projectile _projectile = Server.projectiles[_index];
+                    // TODO: Reference player in projectile for counting kills
                     _projectile.Spawn(_index, position + direction * (radius + _projectile.radius), direction, Projectile.ProjectileType.normal);
                     ServerSend.ProjectileSpawned(_projectile);
                     break;

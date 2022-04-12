@@ -83,7 +83,7 @@ namespace GameServer
                 {
                     if (collider.CheckCollision(client.player.collider)){
                         
-                        // TODO: Player Damage
+                        client.player.Hit();
 
                         Destroy();
                         return;
