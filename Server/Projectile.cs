@@ -26,13 +26,16 @@ namespace GameServer
 
         public CircleCollider collider;
 
-        public void Spawn(int _projectileId, Vector2 _position, Vector2 _direction, ProjectileType _type)
+        public Player owner;
+
+        public void Spawn(int _projectileId, Vector2 _position, Vector2 _direction, ProjectileType _type, Player _owner)
         {
             projectileId = _projectileId;
             position = _position;
             initialPos = _position;
             direction = _direction;
             type = _type;
+            owner = _owner;
 
             collider = new CircleCollider(position, radius);
         }
@@ -81,12 +84,13 @@ namespace GameServer
             {
                 if (client.player != null)
                 {
-                    if (collider.CheckCollision(client.player.collider)){
-                        
-                        client.player.Hit();
-
-                        Destroy();
-                        return;
+                    if (collider.CheckCollision(client.player.collider))
+                    {
+                        if (client.player.Hit(owner))
+                        {
+                            Destroy();
+                            return;
+                        }
                     }
                 }
             }

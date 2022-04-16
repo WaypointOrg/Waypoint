@@ -17,9 +17,11 @@ namespace GameServer
         private bool[] inputs;
 
         public CircleCollider collider;
-        // public RectCollider collider;
 
         public List<Item> items;
+
+        public int invicibilityTimer; 
+        public int invicibilityTime = (int) 1.5 * Constants.TICKS_PER_SEC;
 
         public Player(int _id, string _username, Vector2 _spawnPosition)
         {
@@ -31,8 +33,9 @@ namespace GameServer
             inputs = new bool[4];
 
             collider = new CircleCollider(position, radius);
-            // collider = new RectCollider(position, new Vector2(1, 1));
             items = new List<Item>();
+
+            invicibilityTimer = 0;
         }
 
         public void Update()
@@ -63,6 +66,8 @@ namespace GameServer
             ServerSend.PlayerRotation(this);
             
             AttemptPickUp();
+
+            invicibilityTimer -= 1;
         }
 
         public void Teleport(Vector2 _position)
@@ -88,10 +93,17 @@ namespace GameServer
             ServerSend.PlayerPosition(this);
         }
 
-        public void Hit()
+        public bool Hit(Player _player)
         {
+            if (invicibilityTimer > 0) return false;
+            if (_player.id == id) return false;
+
             Vector2 _position = Utilities.RandomFreeCirclePosition(radius);
             Teleport(_position);
+            
+            invicibilityTimer = invicibilityTime;
+
+            return true;
         }
 
         private void AttemptPickUp()
@@ -164,8 +176,12 @@ namespace GameServer
                 {
                     // TODO: shoot correct projectile type
                     Projectile _projectile = Server.projectiles[_index];
-                    // TODO: Reference player in projectile for counting kills
-                    _projectile.Spawn(_index, position + direction * (radius + _projectile.radius), direction, Projectile.ProjectileType.normal);
+                    _projectile.Spawn(
+                        _index,
+                        position + direction * (radius + _projectile.radius),
+                        direction,
+                        Projectile.ProjectileType.normal,
+                        this);
                     ServerSend.ProjectileSpawned(_projectile);
                     break;
                 }
