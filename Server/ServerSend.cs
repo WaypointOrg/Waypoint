@@ -111,6 +111,27 @@ namespace GameServer
             }
         }
 
+        public static void PlayerRespawned(Player _player)
+        {
+            using (Packet _packet = new Packet((int)ServerPackets.playerRespawned))
+            {
+                _packet.Write(_player.id);
+
+                SendTCPDataToAll(_packet);
+            }
+        }
+
+        public static void PlayerHit(Player _player, Player _by)
+        {
+            using (Packet _packet = new Packet((int)ServerPackets.playerHit))
+            {
+                _packet.Write(_player.id);
+                _packet.Write(_by.id);
+
+                SendTCPDataToAll(_packet);
+            }
+        }
+
         public static void ItemSpawned(Item _item)
         {
             using (Packet _packet = new Packet((int)ServerPackets.itemSpawned))

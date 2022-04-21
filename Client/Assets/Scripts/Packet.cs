@@ -12,6 +12,8 @@ public enum ServerPackets
     startGame,
     playerPosition,
     playerRotation,
+    playerHit,
+    playerRespawned,
     itemSpawned,
     itemPickedUp,
     projectileSpawned,

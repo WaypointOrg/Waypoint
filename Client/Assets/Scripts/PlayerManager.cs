@@ -15,4 +15,18 @@ public class PlayerManager : MonoBehaviour
         username = _username;
         usernameText.text = _username;
     }
+
+    public void Respawn()
+    {
+        // TODO: Respawn animation + Invincibility anims
+        gameObject.SetActive(true);
+        Debug.Log($"Player {id} respawned");
+    }
+
+    public void Hit()
+    {
+        //TODO: hit animation
+        gameObject.SetActive(false);
+        Debug.Log($"Player {id} got hit, ouch!");
+    }
 }

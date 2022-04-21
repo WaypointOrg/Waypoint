@@ -279,6 +279,8 @@ public class Client : MonoBehaviour
             { (int)ServerPackets.startGame, ClientHandle.StartGame},
             { (int)ServerPackets.playerPosition, ClientHandle.PlayerPosition },
             { (int)ServerPackets.playerRotation, ClientHandle.PlayerRotation },
+            { (int)ServerPackets.playerHit, ClientHandle.PlayerHit },
+            { (int)ServerPackets.playerRespawned, ClientHandle.PlayerRespawned },
             { (int)ServerPackets.itemSpawned, ClientHandle.ItemSpawned },
             { (int)ServerPackets.itemPickedUp, ClientHandle.ItemPickedUp },
             { (int)ServerPackets.projectileSpawned, ClientHandle.ProjectileSpawned },

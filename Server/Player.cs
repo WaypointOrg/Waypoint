@@ -19,9 +19,15 @@ namespace GameServer
         public CircleCollider collider;
 
         public List<Item> items;
+        
+        // Time before respawn after a hit
+        public int respawnTime = (int)(0.5 * Constants.TICKS_PER_SEC);
+        public int respawnTimer; 
+        public bool isRespawning;
 
+        // Duration of invicibility after respawn
+        public int invicibilityTime = (int)(1.5 * Constants.TICKS_PER_SEC);
         public int invicibilityTimer; 
-        public int invicibilityTime = (int) 1.5 * Constants.TICKS_PER_SEC;
 
         public Player(int _id, string _username, Vector2 _spawnPosition)
         {
@@ -36,6 +42,8 @@ namespace GameServer
             items = new List<Item>();
 
             invicibilityTimer = 0;
+            respawnTimer = 0;
+            isRespawning = false;
         }
 
         public void Update()
@@ -60,14 +68,28 @@ namespace GameServer
             
             if (_inputDirection != Vector2.Zero)
             {
-                Move(Vector2.Normalize(_inputDirection));
+                _inputDirection = Vector2.Normalize(_inputDirection);
             }
+
+            Move(_inputDirection);
 
             ServerSend.PlayerRotation(this);
             
             AttemptPickUp();
 
-            invicibilityTimer -= 1;
+            if (invicibilityTimer > 0) invicibilityTimer -= 1;
+            if (respawnTimer > 0) respawnTimer -= 1;
+
+            if (isRespawning && respawnTimer == 0)
+            {
+                ServerSend.PlayerRespawned(this);
+
+                Vector2 _position = Utilities.RandomFreeCirclePosition(radius);
+                Teleport(_position);
+
+                invicibilityTimer = invicibilityTime;
+                isRespawning = false;
+            }
         }
 
         public void Teleport(Vector2 _position)
@@ -93,15 +115,16 @@ namespace GameServer
             ServerSend.PlayerPosition(this);
         }
 
-        public bool Hit(Player _player)
+        public bool Hit(Player _by)
         {
-            if (invicibilityTimer > 0) return false;
-            if (_player.id == id) return false;
+            if (invicibilityTimer > 0 || isRespawning) return false;
 
-            Vector2 _position = Utilities.RandomFreeCirclePosition(radius);
-            Teleport(_position);
-            
-            invicibilityTimer = invicibilityTime;
+            // Friendly Fire
+            // if (_by.id == id) return false;
+
+            ServerSend.PlayerHit(this, _by);
+            respawnTimer = respawnTime;
+            isRespawning = true;
 
             return true;
         }

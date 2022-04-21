@@ -49,6 +49,21 @@ public class ClientHandle : MonoBehaviour
         GameManager.players[_id].gun.rotation = Quaternion.Euler(0f, 0f, _rotation);
     }
 
+    public static void PlayerRespawned(Packet _packet)
+    {
+        int _id = _packet.ReadInt();
+
+        GameManager.players[_id].Respawn();
+    }
+
+    public static void PlayerHit(Packet _packet)
+    {
+        int _id = _packet.ReadInt();
+        int _by = _packet.ReadInt();
+
+        GameManager.players[_id].Hit();
+    }
+
     public static void ItemSpawned(Packet _packet)
     {
         int itemId = _packet.ReadInt();
