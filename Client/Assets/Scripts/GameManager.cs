@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
     public List<GameObject> itemsPrefab;
     public GameObject projectilePrefab;
 
+    public Leaderboard leaderboard;
+
     private void Awake()
     {
         if (instance == null)
@@ -31,6 +33,8 @@ public class GameManager : MonoBehaviour
     public void StartGame()
     {
         Camera.main.transform.position = new Vector3(0f, 0f, -10f);
+
+        leaderboard.AddPlayers(players);
     }
 
     public void SpawnPlayer(int _id, string _username, Vector2 _position, float _rotation)

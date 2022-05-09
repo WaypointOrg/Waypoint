@@ -5,6 +5,7 @@ public class PlayerManager : MonoBehaviour
 {
     public int id;
     public string username;
+    public int kills;
 
     public TextMesh usernameText;
     public Transform gun;
@@ -14,6 +15,7 @@ public class PlayerManager : MonoBehaviour
         id = _id;
         username = _username;
         usernameText.text = _username;
+        kills = 0;
     }
 
     public void Respawn()
