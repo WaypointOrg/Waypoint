@@ -20,9 +20,17 @@ namespace GameServer
         private bool[] inputs;
 
         public CircleCollider collider;
-        // public RectCollider collider;
 
         public List<Item> items;
+        
+        // Time before respawn after a hit
+        public int respawnTime = (int)(0.5 * Constants.TICKS_PER_SEC);
+        public int respawnTimer; 
+        public bool isRespawning;
+
+        // Duration of invicibility after respawn
+        public int invicibilityTime = (int)(1.5 * Constants.TICKS_PER_SEC);
+        public int invicibilityTimer; 
 
         public Player(int _id, string _username, Vector2 _spawnPosition)
         {
@@ -35,8 +43,11 @@ namespace GameServer
             inputs = new bool[4];
 
             collider = new CircleCollider(position, radius);
-            // collider = new RectCollider(position, new Vector2(1, 1));
             items = new List<Item>();
+
+            invicibilityTimer = 0;
+            respawnTimer = 0;
+            isRespawning = false;
         }
 
         public void Update()
@@ -61,10 +72,36 @@ namespace GameServer
             
             if (_inputDirection != Vector2.Zero)
             {
-                Move(Vector2.Normalize(_inputDirection));
+                _inputDirection = Vector2.Normalize(_inputDirection);
             }
+
+            Move(_inputDirection);
+
+            ServerSend.PlayerRotation(this);
             
             AttemptPickUp();
+
+            if (invicibilityTimer > 0) invicibilityTimer -= 1;
+            if (respawnTimer > 0) respawnTimer -= 1;
+
+            if (isRespawning && respawnTimer == 0)
+            {
+                ServerSend.PlayerRespawned(this);
+
+                Vector2 _position = Utilities.RandomFreeCirclePosition(radius);
+                Teleport(_position);
+
+                invicibilityTimer = invicibilityTime;
+                isRespawning = false;
+            }
+        }
+
+        public void Teleport(Vector2 _position)
+        {
+            position = _position;
+            collider.position = position;
+
+            ServerSend.PlayerPosition(this);
         }
 
         private void Move(Vector2 _inputDirection)
@@ -79,9 +116,21 @@ namespace GameServer
             }
 
             position = new_position;
-
             ServerSend.PlayerPosition(this);
-            ServerSend.PlayerRotation(this);
+        }
+
+        public bool Hit(Player _by)
+        {
+            if (invicibilityTimer > 0 || isRespawning) return false;
+
+            // Friendly Fire
+            // if (_by.id == id) return false;
+
+            ServerSend.PlayerHit(this, _by);
+            respawnTimer = respawnTime;
+            isRespawning = true;
+
+            return true;
         }
 
         private void AttemptPickUp()
@@ -156,7 +205,12 @@ namespace GameServer
                 {
                     // TODO: shoot correct projectile type
                     Projectile _projectile = Server.projectiles[_index];
-                    _projectile.Spawn(_index, position + direction * (radius + _projectile.radius), direction, Projectile.ProjectileType.normal);
+                    _projectile.Spawn(
+                        _index,
+                        position + direction * (radius + _projectile.radius),
+                        direction,
+                        Projectile.ProjectileType.normal,
+                        this);
                     ServerSend.ProjectileSpawned(_projectile);
                     break;
                 }

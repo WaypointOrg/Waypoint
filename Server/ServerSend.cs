@@ -81,6 +81,14 @@ namespace GameServer
             }
         }
 
+        public static void StartGame()
+        {
+            using (Packet _packet = new Packet((int)ServerPackets.startGame))
+            {
+                SendTCPDataToAll(_packet);
+            }
+        }
+
         public static void PlayerPosition(Player _player)
         {
             using (Packet _packet = new Packet((int)ServerPackets.playerPosition))
@@ -100,6 +108,27 @@ namespace GameServer
                 _packet.Write(_player.rotation);
 
                 SendUDPDataToAll(_player.id, _packet);
+            }
+        }
+
+        public static void PlayerRespawned(Player _player)
+        {
+            using (Packet _packet = new Packet((int)ServerPackets.playerRespawned))
+            {
+                _packet.Write(_player.id);
+
+                SendTCPDataToAll(_packet);
+            }
+        }
+
+        public static void PlayerHit(Player _player, Player _by)
+        {
+            using (Packet _packet = new Packet((int)ServerPackets.playerHit))
+            {
+                _packet.Write(_player.id);
+                _packet.Write(_by.id);
+
+                SendTCPDataToAll(_packet);
             }
         }
 
@@ -145,7 +174,7 @@ namespace GameServer
                 _packet.Write(_projectile.projectileId);
                 _packet.Write(_projectile.position);
 
-                SendTCPDataToAll(_packet);
+                SendUDPDataToAll(_packet);
             }
         }
 

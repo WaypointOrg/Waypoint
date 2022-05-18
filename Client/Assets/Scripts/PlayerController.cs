@@ -3,8 +3,8 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public float rotation;
-
     public Transform gun;
+
     private void FixedUpdate()
     {
         LookAtMouse();

@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
     public List<GameObject> itemsPrefab;
     public GameObject projectilePrefab;
 
+    public Leaderboard leaderboard;
+
     private void Awake()
     {
         if (instance == null)
@@ -27,23 +29,30 @@ public class GameManager : MonoBehaviour
             Destroy(this);
         }
     }
+    
+    public void StartGame()
+    {
+        Camera.main.transform.position = new Vector3(0f, 0f, -10f);
 
+        leaderboard.AddPlayers(players);
+    }
 
     public void SpawnPlayer(int _id, string _username, Vector2 _position, float _rotation)
     {
         GameObject _player;
         if (_id == Client.instance.myId)
         {
-            _player = Instantiate(localPlayerPrefab, _position, Quaternion.AngleAxis(_rotation, Vector3.forward));
+            _player = Instantiate(localPlayerPrefab, _position, localPlayerPrefab.transform.rotation);
         }
         else
         {
-            _player = Instantiate(playerPrefab, _position, Quaternion.AngleAxis(_rotation, Vector3.forward));
+            _player = Instantiate(playerPrefab, _position, playerPrefab.transform.rotation);
         }
 
-        _player.GetComponent<PlayerManager>().id = _id;
-        _player.GetComponent<PlayerManager>().username = _username;
-        players.Add(_id, _player.GetComponent<PlayerManager>());
+        PlayerManager _playerManager = _player.GetComponent<PlayerManager>();
+        _playerManager.Initialize(_id, _username);
+
+        players.Add(_id, _playerManager);
     }
 
     public void ItemSpawned(int _itemId, Vector2 _position, int _type)

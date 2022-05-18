@@ -190,7 +190,7 @@ namespace GameServer
 
         public void SendIntoGame(string _playerName)
         {
-            player = new Player(id, _playerName, new Vector2(0, 0));
+            player = new Player(id, _playerName, new Vector2(-34.5f, 0));
 
             foreach (Client _client in Server.clients.Values)
             {

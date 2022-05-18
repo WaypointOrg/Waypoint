@@ -27,6 +27,12 @@ public class ClientHandle : MonoBehaviour
         GameManager.instance.SpawnPlayer(_id, _username, _position, _rotation);
     }
 
+    public static void StartGame(Packet _packet)
+    {
+        Debug.Log("Starting game...");
+        GameManager.instance.StartGame();
+    }
+
     public static void PlayerPosition(Packet _packet)
     {
         int _id = _packet.ReadInt();
@@ -35,12 +41,29 @@ public class ClientHandle : MonoBehaviour
         GameManager.players[_id].transform.position = _position;
     }
 
+    // Only received from other players.
     public static void PlayerRotation(Packet _packet)
     {
         int _id = _packet.ReadInt();
         float _rotation = _packet.ReadFloat();
+        GameManager.players[_id].gun.rotation = Quaternion.Euler(0f, 0f, _rotation);
+    }
 
-        GameManager.players[_id].transform.eulerAngles = new Vector3(0, 0, _rotation);
+    public static void PlayerRespawned(Packet _packet)
+    {
+        int _id = _packet.ReadInt();
+
+        GameManager.players[_id].Respawn();
+    }
+
+    public static void PlayerHit(Packet _packet)
+    {
+        int _id = _packet.ReadInt();
+        int _by = _packet.ReadInt();
+
+        GameManager.players[_by].kills += 1;
+        GameManager.players[_id].Hit();
+        GameManager.instance.leaderboard.IncreaseKillCount(_by);
     }
 
     public static void ItemSpawned(Packet _packet)

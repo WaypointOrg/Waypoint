@@ -19,6 +19,19 @@ public class Client : MonoBehaviour
     private delegate void PacketHandler(Packet _packet);
     private static Dictionary<int, PacketHandler> packetHandlers;
 
+    public List<string> defaultNames = new List<string>() {
+        "Alice",
+        "Bob",
+        "Vroumm",
+        "Theel",
+        "Rothkir",
+        "Daru",
+        "Tractor",
+        "Hendrick",
+        "DeltaX",
+        "TMS"
+    };
+
     private void Awake()
     {
         if (instance == null)
@@ -276,8 +289,11 @@ public class Client : MonoBehaviour
         {
             { (int)ServerPackets.welcome, ClientHandle.Welcome },
             { (int)ServerPackets.spawnPlayer, ClientHandle.SpawnPlayer },
+            { (int)ServerPackets.startGame, ClientHandle.StartGame},
             { (int)ServerPackets.playerPosition, ClientHandle.PlayerPosition },
             { (int)ServerPackets.playerRotation, ClientHandle.PlayerRotation },
+            { (int)ServerPackets.playerHit, ClientHandle.PlayerHit },
+            { (int)ServerPackets.playerRespawned, ClientHandle.PlayerRespawned },
             { (int)ServerPackets.itemSpawned, ClientHandle.ItemSpawned },
             { (int)ServerPackets.itemPickedUp, ClientHandle.ItemPickedUp },
             { (int)ServerPackets.projectileSpawned, ClientHandle.ProjectileSpawned },
