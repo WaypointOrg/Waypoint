@@ -12,6 +12,9 @@ namespace GameServer
 
         public Vector2 position;
         public float rotation;
+        public string trajectory;
+        public float shotgun;
+        //public float dmg;
 
         private float moveSpeed = 4f / Constants.TICKS_PER_SEC;
         private bool[] inputs;
@@ -27,6 +30,7 @@ namespace GameServer
             username = _username;
             position = _spawnPosition;
             rotation = 0f;
+
 
             inputs = new bool[4];
 
@@ -104,6 +108,8 @@ namespace GameServer
 
         public void Shoot()
         {
+            //todo: get shotgun & spawn projectile + ask for trajectory
+
             Vector2 _direction = new Vector2(
                         (float) Math.Cos(rotation * (Math.PI / 180)),
                         (float) Math.Sin(rotation * (Math.PI / 180)));
