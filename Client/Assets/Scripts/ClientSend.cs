@@ -29,6 +29,16 @@ public class ClientSend : MonoBehaviour
         }
     }
 
+    public static void NameChanged(string name)
+    {
+        using (Packet _packet = new Packet((int)ClientPackets.playerName))
+        {
+            _packet.Write(name);
+
+            SendUDPData(_packet);
+        }
+    }
+
     public static void PlayerMovement(bool[] _inputs, float _rotation)
     {
         using (Packet _packet = new Packet((int)ClientPackets.playerMovement))

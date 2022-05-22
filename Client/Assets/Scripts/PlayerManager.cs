@@ -18,6 +18,12 @@ public class PlayerManager : MonoBehaviour
         kills = 0;
     }
 
+    public void SetName(string _name)
+    {
+        username = _name;
+        usernameText.text = _name;
+    }
+
     public void Respawn()
     {
         // TODO: Respawn animation + Invincibility anims

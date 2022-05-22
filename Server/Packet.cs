@@ -10,6 +10,7 @@ namespace GameServer
     {
         welcome = 1,
         spawnPlayer,
+        setName,
         startGame,
         playerPosition,
         playerRotation,
@@ -26,6 +27,7 @@ namespace GameServer
     public enum ClientPackets
     {
         welcomeReceived = 1,
+        playerName,
         playerMovement,
         playerShoot,
     }

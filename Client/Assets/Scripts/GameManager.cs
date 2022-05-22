@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -35,6 +36,11 @@ public class GameManager : MonoBehaviour
         Camera.main.transform.position = new Vector3(0f, 0f, -10f);
 
         leaderboard.AddPlayers(players);
+    }
+
+    public void NameChanged(InputField input)
+    {
+        ClientSend.NameChanged(input.text);
     }
 
     public void SpawnPlayer(int _id, string _username, Vector2 _position, float _rotation)

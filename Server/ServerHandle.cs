@@ -19,6 +19,15 @@ namespace GameServer
             Server.clients[_fromClient].SendIntoGame(_username);
         }
 
+        public static void PlayerName(int _fromClient, Packet _packet)
+        {
+            string _name = _packet.ReadString();
+
+            Server.clients[_fromClient].player.username = _name;
+
+            ServerSend.SetName(Server.clients[_fromClient].player);
+        }
+
         public static void PlayerMovement(int _fromClient, Packet _packet)
         {
             bool[] _inputs = new bool[_packet.ReadInt()];
