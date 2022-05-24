@@ -122,6 +122,7 @@ namespace GameServer
         public bool Hit(Player _by)
         {
             if (invicibilityTimer > 0 || isRespawning) return false;
+            if (!Server.gameStarted) return false;
 
             // Friendly Fire
             if (_by.id == id) return false;
