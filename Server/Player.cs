@@ -1,6 +1,6 @@
 using System;
-using System.Numerics; 
-using System.Collections.Generic; 
+using System.Numerics;
+using System.Collections.Generic;
 
 namespace GameServer
 {
@@ -12,7 +12,6 @@ namespace GameServer
 
         public Vector2 position;
         public float rotation;
-        public string trajectory;
         public float shotgun;
         //public float dmg;
 
@@ -21,16 +20,16 @@ namespace GameServer
 
         public CircleCollider collider;
 
-        public List<Item> items;
-        
+        public Constants.Trajectories trajectory;
+
         // Time before respawn after a hit
         public int respawnTime = (int)(0.5 * Constants.TICKS_PER_SEC);
-        public int respawnTimer; 
+        public int respawnTimer;
         public bool isRespawning;
 
         // Duration of invicibility after respawn
         public int invicibilityTime = (int)(1.5 * Constants.TICKS_PER_SEC);
-        public int invicibilityTimer; 
+        public int invicibilityTimer;
 
         public Player(int _id, string _username, Vector2 _spawnPosition)
         {
@@ -43,7 +42,7 @@ namespace GameServer
             inputs = new bool[4];
 
             collider = new CircleCollider(position, radius);
-            items = new List<Item>();
+            trajectory = Constants.Trajectories.Straight;
 
             invicibilityTimer = 0;
             respawnTimer = 0;
@@ -69,7 +68,7 @@ namespace GameServer
             {
                 _inputDirection.X += 1;
             }
-            
+
             if (_inputDirection != Vector2.Zero)
             {
                 _inputDirection = Vector2.Normalize(_inputDirection);
@@ -78,7 +77,7 @@ namespace GameServer
             Move(_inputDirection);
 
             ServerSend.PlayerRotation(this);
-            
+
             AttemptPickUp();
 
             if (invicibilityTimer > 0) invicibilityTimer -= 1;
@@ -110,7 +109,8 @@ namespace GameServer
             collider.Move(new_position);
             foreach (RectCollider obstacle in Server.scene.obstacles)
             {
-                if (collider.CheckCollision(obstacle)){
+                if (collider.CheckCollision(obstacle))
+                {
                     return;
                 }
             }
@@ -124,7 +124,7 @@ namespace GameServer
             if (invicibilityTimer > 0 || isRespawning) return false;
 
             // Friendly Fire
-            // if (_by.id == id) return false;
+            if (_by.id == id) return false;
 
             ServerSend.PlayerHit(this, _by);
             respawnTimer = respawnTime;
@@ -137,16 +137,14 @@ namespace GameServer
         {
             foreach (Item item in Server.items.Values)
             {
-                if (collider.CheckCollision(item.collider)){
+                if (collider.CheckCollision(item.collider))
+                {
                     Server.items.Remove(item.itemId);
-                    items.Add(item);
-
-                    // TODO: Check if player already has item.
-                    Console.WriteLine($"Player {username} has {items.Count} items.");
+                    trajectory = item.type;
 
                     ServerSend.ItemPickedUp(item, this);
                 }
-            } 
+            }
         }
 
         public void SetInput(bool[] _inputs, float _rotation)
@@ -160,8 +158,8 @@ namespace GameServer
             //todo: get shotgun & spawn projectile + ask for trajectory
 
             Vector2 _direction = new Vector2(
-                        (float) Math.Cos(rotation * (Math.PI / 180)),
-                        (float) Math.Sin(rotation * (Math.PI / 180)));
+                        (float)Math.Cos(rotation * (Math.PI / 180)),
+                        (float)Math.Sin(rotation * (Math.PI / 180)));
 
             float number = 5;
             float angle = 10;
@@ -170,13 +168,13 @@ namespace GameServer
             {
                 //the number is odd
                 float side = MathF.Floor(number / 2);
-                
+
                 SummonProjectile(_direction);
 
                 for (int i = 0; i < side; i++)
                 {
-                    Vector2 deltaDir1 = new Vector2((float) Math.Cos((rotation + angle * (i + 1)) * (Math.PI / 180)), (float) Math.Sin((rotation + angle * (i + 1)) * (Math.PI / 180)));
-                    Vector2 deltaDir2 = new Vector2((float) Math.Cos((rotation - angle * (i + 1)) * (Math.PI / 180)), (float) Math.Sin((rotation - angle * (i + 1)) * (Math.PI / 180)));
+                    Vector2 deltaDir1 = new Vector2((float)Math.Cos((rotation + angle * (i + 1)) * (Math.PI / 180)), (float)Math.Sin((rotation + angle * (i + 1)) * (Math.PI / 180)));
+                    Vector2 deltaDir2 = new Vector2((float)Math.Cos((rotation - angle * (i + 1)) * (Math.PI / 180)), (float)Math.Sin((rotation - angle * (i + 1)) * (Math.PI / 180)));
                     SummonProjectile(deltaDir1);
                     SummonProjectile(deltaDir2);
                 }
@@ -188,12 +186,15 @@ namespace GameServer
 
                 for (int i = 0; i < side; i++)
                 {
-                    Vector2 deltaDir1 = new Vector2((float) Math.Cos((rotation + angle * (i + 1)) * (Math.PI / 180)), (float) Math.Sin((rotation + angle * (i + 1)) * (Math.PI / 180)));
-                    Vector2 deltaDir2 = new Vector2((float) Math.Cos((rotation - angle * (i + 1)) * (Math.PI / 180)), (float) Math.Sin((rotation - angle * (i + 1)) * (Math.PI / 180)));
+                    Vector2 deltaDir1 = new Vector2((float)Math.Cos((rotation + angle * (i + 1)) * (Math.PI / 180)), (float)Math.Sin((rotation + angle * (i + 1)) * (Math.PI / 180)));
+                    Vector2 deltaDir2 = new Vector2((float)Math.Cos((rotation - angle * (i + 1)) * (Math.PI / 180)), (float)Math.Sin((rotation - angle * (i + 1)) * (Math.PI / 180)));
                     SummonProjectile(deltaDir1);
                     SummonProjectile(deltaDir2);
                 }
             }
+
+            trajectory = Constants.Trajectories.Straight;
+
         }
 
         void SummonProjectile(Vector2 direction)
@@ -209,7 +210,7 @@ namespace GameServer
                         _index,
                         position + direction * (radius + _projectile.radius),
                         direction,
-                        Projectile.ProjectileType.normal,
+                        trajectory,
                         this);
                     ServerSend.ProjectileSpawned(_projectile);
                     break;

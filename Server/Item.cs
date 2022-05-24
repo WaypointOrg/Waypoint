@@ -10,20 +10,14 @@ namespace GameServer
         public int itemId;
         public Vector2 position;
 
-        public enum ItemType
-        {
-            Orange = 0,
-            Green  = 1,
-            Pink   = 2,
-        }
-        public ItemType type;
+        public Constants.Trajectories type;
 
         public CircleCollider collider;
 
         public void Spawn(int _itemId)
         {
             itemId = _itemId;
-            type = (Item.ItemType) Utilities.RandomInt(Enum.GetNames(typeof(Item.ItemType)).Length);            
+            type = (Constants.Trajectories) Utilities.RandomInt(Enum.GetNames(typeof(Constants.Trajectories)).Length);            
             position = Utilities.RandomFreeCirclePosition(radius);
             collider = new CircleCollider(position, radius);
             ServerSend.ItemSpawned(this);

@@ -16,6 +16,12 @@ namespace GameServer
             return new Vector2(_x, _y);
         }
 
+        public static float RandomFloat(float min, float max)
+        {
+            Random _random = new Random();
+            return min + (float) _random.NextDouble() * (max - min);
+        }
+
         public static int RandomInt(int _max)
         {
             Random _random = new Random();

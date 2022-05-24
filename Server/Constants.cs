@@ -7,5 +7,12 @@
 
         public const float WIDTH = 16.0F;
         public const float HEIGHT = 9.0F;
+
+        public enum Trajectories
+        {
+           Straight,
+           Wavy,
+           Random
+        }
     }
 }
