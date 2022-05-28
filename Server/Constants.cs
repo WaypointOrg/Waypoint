@@ -12,7 +12,8 @@
         {
            Straight,
            Wavy,
-           Random
+           Random,
+           Spyral
         }
     }
 }
