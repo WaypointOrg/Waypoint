@@ -76,6 +76,36 @@ namespace GameServer
             else
             if (type == Constants.Trajectories.Random)
             {
+                Vector2 dist = position - initialPos;
+                float totaldist = MathF.Abs(MathF.Sqrt(dist.X * dist.X + dist.Y * dist.Y));
+
+                Vector2 perp;
+                if (direction.Y == 0)
+                {
+                    perp = new Vector2(0, 1);
+                }
+                else
+                {
+                    perp = new Vector2(1, -direction.X / direction.Y);
+                }
+
+                float lenght = MathF.Sqrt(perp.X * perp.X + perp.Y * perp.Y);
+                perp = new Vector2(perp.X / lenght, perp.Y / lenght);
+
+                float crossZ = direction.X * perp.Y - perp.X * direction.Y;
+
+                if (crossZ < 0)
+                {
+                    //HOLY JESUS CHRIST!!! SHIT GOING TO HAPPEN!!!
+                    perp = new Vector2(-perp.X, -perp.Y);
+                }
+
+                float mod = position.X / direction.X;
+
+                position += direction * speed * MathF.Sin(totaldist * frequency) * height;
+                position += perp * speed * MathF.Cos(totaldist * frequency) * height;
+
+                /*
                 float angle = Utilities.RandomFloat(0, MathF.PI * 2);
 
                 float x_ = MathF.Cos(angle);
@@ -83,8 +113,40 @@ namespace GameServer
 
                 Vector2 newpos = position + new Vector2(x_,y_);
 
-                position += newpos * speed / 2;                
+                position += newpos * speed / 2;    */            
+            }else
+            if (type == Constants.Trajectories.Spyral)
+            {
+                Vector2 dist = position - initialPos;
+                float totaldist = MathF.Abs(MathF.Sqrt(dist.X * dist.X + dist.Y * dist.Y));
+
+                Vector2 perp;
+                if (direction.Y == 0)
+                {
+                    perp = new Vector2(0, 1);
+                }
+                else
+                {
+                    perp = new Vector2(1, -direction.X / direction.Y);
+                }
+
+                float lenght = MathF.Sqrt(perp.X * perp.X + perp.Y * perp.Y);
+                perp = new Vector2(perp.X / lenght, perp.Y / lenght);
+
+                float crossZ = direction.X * perp.Y - perp.X * direction.Y;
+
+                if (crossZ < 0)
+                {
+                    //HOLY JESUS CHRIST!!! SHIT GOING TO HAPPEN!!!
+                    perp = new Vector2(-perp.X, -perp.Y);
+                }
+
+                float mod = position.X / direction.X;
+
+                position += direction * speed * MathF.Sin(totaldist * frequency) * height;
+                position += perp * speed * MathF.Cos(totaldist * frequency) * height;
             }
+
 
             // TODO: Type-specific behavior.
             collider.Move(position);

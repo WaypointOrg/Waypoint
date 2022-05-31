@@ -16,7 +16,8 @@ namespace GameServer
         {
            Straight,
            Wavy,
-           Random
+           Random,
+           Spyral
         }
     }
 }
