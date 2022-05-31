@@ -38,6 +38,13 @@ public class GameManager : MonoBehaviour
         leaderboard.AddPlayers(players);
     }
 
+    public void EndGame()
+    {
+        Camera.main.transform.position = new Vector3(-23 - CameraSC.width/2, 0f, -10f);
+
+        // TODO: Handle leaderboard
+    }
+
     public void NameChanged(InputField input)
     {
         ClientSend.NameChanged(input.text);

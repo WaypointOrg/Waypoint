@@ -7,6 +7,7 @@ namespace GameServer
     {
         public static void Update()
         {
+            // Logic
             if (StartingConditionsMet())
             {
                 Server.gameStarted = true;
@@ -19,6 +20,20 @@ namespace GameServer
                     _client.player.Teleport(_position);
                 }
             }
+            if (Server.gameStarted) Server.gameTime -= 1;
+            if (Server.gameTime == 0 &&
+                Server.gameStarted)
+            {
+                Console.WriteLine("Game ended");
+                Server.gameStarted = false;
+                ServerSend.EndGame();
+
+                foreach (Client _client in Server.clients.Values)
+                {
+                    if (_client.player == null) continue;
+                    _client.player.Teleport(Constants.WAITING_ROOM_SPAWN);
+                }
+            }
 
             // Clients
             foreach (Client _client in Server.clients.Values)
@@ -28,27 +43,25 @@ namespace GameServer
             }
 
             // Items
-            if (Server.nextItemTime <= 0 &&
-                Server.items.Count < Server.maxItems &&
-                Server.gameStarted == true)
+            if (Server.gameStarted)
             {
-
-                // TODO: Method to add value to first integer key.
-                int _index = 0;
-                while (true)
+                if (Server.nextItemTime <= 0 &&
+                    Server.items.Count < Server.maxItems)
                 {
-                    if (Server.items.TryAdd(_index, new Item()))
+                    // TODO: Method to add value to first integer key.
+                    int _index = 0;
+                    while (true)
                     {
-                        Server.items[_index].Spawn(_index);
-                        break;
+                        if (Server.items.TryAdd(_index, new Item()))
+                        {
+                            Server.items[_index].Spawn(_index);
+                            break;
+                        }
+                        _index += 1;
                     }
-                    _index += 1;
-                }
 
-                Server.nextItemTime = Server.itemSpawnDelay;
-            }
-            if (Server.gameStarted == true)
-            {
+                    Server.nextItemTime = Server.itemSpawnDelay;
+                }
                 Server.nextItemTime -= 1;
             }
 
