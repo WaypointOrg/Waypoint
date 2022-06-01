@@ -100,6 +100,14 @@ namespace GameServer
             }
         }
 
+        public static void EndGame()
+        {
+            using (Packet _packet = new Packet((int)ServerPackets.endGame))
+            {
+                SendTCPDataToAll(_packet);
+            }
+        }
+
         public static void PlayerPosition(Player _player)
         {
             using (Packet _packet = new Packet((int)ServerPackets.playerPosition))

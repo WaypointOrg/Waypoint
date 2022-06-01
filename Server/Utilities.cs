@@ -6,6 +6,7 @@ namespace GameServer
 {
     class Utilities
     {
+        #region Random
         public static Vector2 RandomVector2(float width, float height)
         {
             Random _random = new Random();
@@ -49,7 +50,7 @@ namespace GameServer
             }
             return position;
         }
-
+        #endregion
         // public static dynamic Insert(this Dictionary<int, dynamic> dict, Type element)
         // {
         //     // Dictionary<int, string> d = new Dictionary<int, string>();

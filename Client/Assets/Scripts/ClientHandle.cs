@@ -41,6 +41,12 @@ public class ClientHandle : MonoBehaviour
         GameManager.instance.StartGame();
     }
 
+    public static void EndGame(Packet _packet)
+    {
+        Debug.Log("Ending game...");
+        GameManager.instance.EndGame();
+    }
+
     public static void PlayerPosition(Packet _packet)
     {
         int _id = _packet.ReadInt();

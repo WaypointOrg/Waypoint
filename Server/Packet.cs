@@ -12,6 +12,7 @@ namespace GameServer
         spawnPlayer,
         setName,
         startGame,
+        endGame,
         playerPosition,
         playerRotation,
         playerHit,
