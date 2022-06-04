@@ -35,8 +35,8 @@ namespace GameServer
             bool _placeable = false;
             while (!_placeable)
             {
-                CircleCollider _collider = new CircleCollider(position, _radius);
                 position = Utilities.RandomVector2(Constants.WIDTH, Constants.HEIGHT);
+                CircleCollider _collider = new CircleCollider(position, _radius);
 
                 _placeable = !IsCollidingWithObstacles(_collider);
                 // TODO: Not spawn close to players
