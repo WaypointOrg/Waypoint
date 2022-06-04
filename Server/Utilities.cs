@@ -35,22 +35,39 @@ namespace GameServer
             bool _placeable = false;
             while (!_placeable)
             {
-                position = Utilities.RandomVector2(Constants.WIDTH, Constants.HEIGHT);
                 CircleCollider _collider = new CircleCollider(position, _radius);
+                position = Utilities.RandomVector2(Constants.WIDTH, Constants.HEIGHT);
 
-                _placeable = true;
-                foreach (RectCollider obstacle in Server.scene.obstacles)
-                {
-                    if (_collider.CheckCollision(obstacle)){
-                        _placeable = false;
-                        break;
-                    }
-                }
+                _placeable = !IsCollidingWithObstacles(_collider);
                 // TODO: Not spawn close to players
             }
             return position;
         }
         #endregion
+
+        public static bool IsCollidingWithObstacles(RectCollider collider)
+        {
+            foreach (RectCollider obstacle in Server.scene.obstacles)
+            {
+                if (collider.CheckCollision(obstacle))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public static bool IsCollidingWithObstacles(CircleCollider collider)
+        {
+            foreach (RectCollider obstacle in Server.scene.obstacles)
+            {
+                if (collider.CheckCollision(obstacle))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
         // public static dynamic Insert(this Dictionary<int, dynamic> dict, Type element)
         // {
         //     // Dictionary<int, string> d = new Dictionary<int, string>();

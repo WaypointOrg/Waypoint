@@ -147,18 +147,14 @@ namespace GameServer
                 position += perp * speed * MathF.Cos(totaldist * frequency) * height;
             }
 
-
-            // TODO: Type-specific behavior.
             collider.Move(position);
 
-            foreach (RectCollider obstacle in Server.scene.obstacles)
+            if (Utilities.IsCollidingWithObstacles(collider))
             {
-                if (collider.CheckCollision(obstacle))
-                {
-                    Destroy();
-                    return;
-                }
+                Destroy();
+                return;
             }
+            
 
             foreach (Client client in Server.clients.Values)
             {

@@ -103,19 +103,26 @@ namespace GameServer
             ServerSend.PlayerPosition(this);
         }
 
-        private void Move(Vector2 _inputDirection)
+        private void Move(Vector2 _direction)
         {
-            Vector2 new_position = position + _inputDirection * moveSpeed;
-            collider.Move(new_position);
-            foreach (RectCollider obstacle in Server.scene.obstacles)
+            Vector2 movement = Vector2.Zero;
+            Vector2 movement_x = new Vector2(_direction.X * moveSpeed, 0);
+            Vector2 movement_y = new Vector2(0, _direction.Y * moveSpeed);
+
+            collider.Move(position + movement_x);
+            if (!Utilities.IsCollidingWithObstacles(collider))
             {
-                if (collider.CheckCollision(obstacle))
-                {
-                    return;
-                }
+                movement += movement_x;
+            }
+            
+            // Console.WriteLine(movement_y);
+            collider.Move(position + movement_y);
+            if (!Utilities.IsCollidingWithObstacles(collider))
+            {
+                movement += movement_y;
             }
 
-            position = new_position;
+            position = position + movement;
             ServerSend.PlayerPosition(this);
         }
 
