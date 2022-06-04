@@ -1731,7 +1731,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &477681956
 Transform:
   m_ObjectHideFlags: 0
@@ -1785,6 +1785,7 @@ MonoBehaviour:
   - {fileID: 7260137573280828978, guid: d5fbfa6f0a1df401f82d1bb0b2905280, type: 3}
   - {fileID: 7260137573280828978, guid: 720a1b5a8e0f49270bd0c7f09498a4e6, type: 3}
   - {fileID: 7260137573280828978, guid: 49400108acaf326b3a4129055cf31c4c, type: 3}
+  - {fileID: 7260137573280828978, guid: ed461e1ca2cbd4ab085f433868159cfe, type: 3}
   projectilePrefab: {fileID: 997374906591739097, guid: fab0494cac13888aaba7658dc097d983, type: 3}
   leaderboard: {fileID: 1210559575}
 --- !u!4 &485103470
@@ -2638,7 +2639,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &672474296
 Transform:
   m_ObjectHideFlags: 0
@@ -19235,7 +19236,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1911929761
 Transform:
   m_ObjectHideFlags: 0
