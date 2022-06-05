@@ -31,7 +31,16 @@ public class Leaderboard : MonoBehaviour
             entries[pair.Key] = entry;
         }
         
-        SortLeaderboard(false);
+        SortLeaderboard(animated:false);
+    }
+
+    public void Clear()
+    {
+        foreach (KeyValuePair<int, LeaderboardEntry> entry in entries)
+        {
+            Destroy(entry.Value.gameObject);
+        }
+        entries.Clear();
     }
 
     public void IncreaseKillCount(int id)
@@ -39,7 +48,7 @@ public class Leaderboard : MonoBehaviour
         LeaderboardEntry entry = entries[id];
         entry.kills.text = (int.Parse(entry.kills.text) + 1).ToString();
 
-        SortLeaderboard(true);
+        SortLeaderboard(animated:true);
     }
 
     // Sets the rank and targetPositions of each LeaderboardEntry in entries according to their kills (Ascending)

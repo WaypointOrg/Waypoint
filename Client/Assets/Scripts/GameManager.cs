@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
     {
         Camera.main.transform.position = new Vector3(-23 - CameraSC.width/2, 0f, -10f);
 
-        // TODO: Handle leaderboard
+        leaderboard.Clear();
     }
 
     public void NameChanged(InputField input)
