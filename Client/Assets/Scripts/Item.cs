@@ -14,9 +14,4 @@ public class Item : MonoBehaviour
         type = _type;
         position = transform.position;
     }
-
-    public void ItemPickedUp()
-    {
-        Destroy(gameObject);
-    }
 }

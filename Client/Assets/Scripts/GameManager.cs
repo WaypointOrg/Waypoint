@@ -18,6 +18,10 @@ public class GameManager : MonoBehaviour
 
     public Leaderboard leaderboard;
 
+    public bool gameStarted = false;
+    public float gameTime;
+    public Text gameTimeText;
+
     private void Awake()
     {
         if (instance == null)
@@ -30,12 +34,25 @@ public class GameManager : MonoBehaviour
             Destroy(this);
         }
     }
+
+    void Update()
+    {
+        if (gameStarted)
+        {
+            gameTime -= Time.deltaTime;
+            gameTimeText.text = Mathf.CeilToInt(gameTime).ToString();
+        }
+    }
     
-    public void StartGame()
+    public void StartGame(float _duration)
     {
         Camera.main.transform.position = new Vector3(0f, 0f, -10f);
 
         leaderboard.AddPlayers(players);
+
+        gameStarted = true;
+        gameTime = _duration;
+        gameTimeText.gameObject.SetActive(true);
     }
 
     public void EndGame()
@@ -43,6 +60,15 @@ public class GameManager : MonoBehaviour
         Camera.main.transform.position = new Vector3(-23 - CameraSC.width/2, 0f, -10f);
 
         leaderboard.Clear();
+
+        foreach (KeyValuePair<int, Item> item in items)
+        {
+            Destroy(item.Value.gameObject);
+        }
+        items.Clear();
+
+        gameStarted = false;
+        gameTimeText.gameObject.SetActive(false);
     }
 
     public void NameChanged(InputField input)

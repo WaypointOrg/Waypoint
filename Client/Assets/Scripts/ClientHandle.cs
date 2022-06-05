@@ -37,8 +37,8 @@ public class ClientHandle : MonoBehaviour
 
     public static void StartGame(Packet _packet)
     {
-        Debug.Log("Starting game...");
-        GameManager.instance.StartGame();
+        float _duration = _packet.ReadFloat();
+        GameManager.instance.StartGame(_duration);
     }
 
     public static void EndGame(Packet _packet)
@@ -95,7 +95,7 @@ public class ClientHandle : MonoBehaviour
         int _byPlayer = _packet.ReadInt();
 
         // TODO: Add item to player.
-        GameManager.items[_itemId].ItemPickedUp();
+        Destroy(GameManager.items[_itemId].gameObject);
         GameManager.items.Remove(_itemId);
     }
 

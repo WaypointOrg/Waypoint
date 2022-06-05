@@ -22,7 +22,6 @@ namespace GameServer
         public static bool gameStarted = false;
 
         public static int gameDuration = 60  * Constants.TICKS_PER_SEC; // Duration of a game, in ticks.
-        // public static int gameDuration = 60  * Constants.TICKS_PER_SEC; // Duration of a game, in ticks.
         public static int gameTime = gameDuration; // Time left of the game, in ticks.
 
         // Scene
