@@ -1,14 +1,25 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
     public float rotation;
     public Transform gun;
+    public InputField inputField;
+
+    void Start()
+    {
+        GameObject _gameobject = GameObject.Find("InputField");
+        inputField = _gameobject.GetComponent<InputField>();
+    }
 
     private void FixedUpdate()
     {
         LookAtMouse();
-        SendInputToServer();
+        if (!inputField.isFocused)
+        {
+            SendInputToServer();
+        }
     }
 
     void Update()
