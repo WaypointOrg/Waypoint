@@ -11,7 +11,7 @@ public class StartMenu : MonoBehaviour
         gameObject.SetActive(false);
         Client.instance.ConnectToServer();
 
-        Camera.main.transform.position = new Vector3(-23 - CameraSC.width/2, 0f, -10f);
+        GameManager.instance.MoveToMap(0);
 
         float waitingRoomWidth = CameraSC.width - 23;
         waitingRoom.sizeDelta = new Vector2(waitingRoomWidth, 20);

@@ -37,6 +37,18 @@ namespace GameServer
             }
             float _rotation = _packet.ReadFloat();
 
+            // Exeption can happen here: 
+            // Exception has occurred: CLR/System.NullReferenceException
+            // An exception of type 'System.NullReferenceException' occurred in GameServer.dll but was not handled in user code: 'Object reference not set to an instance of an object.'
+            //    at GameServer.ServerHandle.PlayerMovement(Int32 _fromClient, Packet _packet) in /home/daniel/Waypoint/Server/ServerHandle.cs:line 40
+            //    at GameServer.Client.UDP.<>c__DisplayClass5_0.<HandleData>b__0() in /home/daniel/Waypoint/Server/Client.cs:line 180
+            //    at GameServer.ThreadManager.UpdateMain() in /home/daniel/Waypoint/Server/ThreadManager.cs:line 45
+            //    at GameServer.GameLogic.Update() in /home/daniel/Waypoint/Server/GameLogic.cs:line 51
+            //    at GameServer.Program.MainThread() in /home/daniel/Waypoint/Server/Program.cs:line 30
+            //    at System.Threading.ThreadHelper.ThreadStart_Context(Object state)
+            //    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+
+            // probably should check if player == null
             Server.clients[_fromClient].player.SetInput(_inputs, _rotation);
         }
 

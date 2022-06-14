@@ -92,11 +92,12 @@ namespace GameServer
             }
         }
 
-        public static void StartGame(float _duration)
+        public static void StartGame(float _duration, int _mapId)
         {
             using (Packet _packet = new Packet((int)ServerPackets.startGame))
             {
                 _packet.Write(_duration);
+                _packet.Write(_mapId);
 
                 SendTCPDataToAll(_packet);
             }

@@ -29,13 +29,13 @@ namespace GameServer
             return _random.Next(_max);
         }
 
-        public static Vector2 RandomFreeCirclePosition(float _radius)
+        public static Vector2 RandomFreeCirclePositionInMap(float _radius)
         {
             Vector2 position = new Vector2();
             bool _placeable = false;
             while (!_placeable)
             {
-                position = Utilities.RandomVector2(Constants.WIDTH, Constants.HEIGHT);
+                position = Utilities.RandomVector2(Constants.WIDTH, Constants.HEIGHT) + Server.scene.mapCenters[Server.currentMapId];
                 CircleCollider _collider = new CircleCollider(position, _radius);
 
                 _placeable = !IsCollidingWithObstacles(_collider);

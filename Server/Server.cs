@@ -21,11 +21,14 @@ namespace GameServer
         public static int minPlayers = 1; // Minimum amount of players needed to start the game
         public static bool gameStarted = false;
 
-        public static int gameDuration = 60  * Constants.TICKS_PER_SEC; // Duration of a game, in ticks.
+        public static int gameDuration = 5  * Constants.TICKS_PER_SEC; // Duration of a game, in ticks.
         public static int gameTime = gameDuration; // Time left of the game, in ticks.
 
         // Scene
         public static Scene scene;
+
+        // Map 0 is waiting room, then it goes counterclockwise from the bottom left
+        public static int currentMapId = 0;
 
         // Items
         public static Dictionary<int, Item> items = new Dictionary<int, Item>();
@@ -135,6 +138,7 @@ namespace GameServer
                 clients.Add(i, new Client(i));
             }
 
+            Console.WriteLine("Importing scene...");
             scene = new Scene("Main.unity");
             Console.WriteLine("Imported scene.");
 

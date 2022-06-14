@@ -18,7 +18,7 @@ namespace GameServer
         {
             itemId = _itemId;
             type = (Constants.Trajectories) Utilities.RandomInt(Enum.GetNames(typeof(Constants.Trajectories)).Length);            
-            position = Utilities.RandomFreeCirclePosition(radius);
+            position = Utilities.RandomFreeCirclePositionInMap(radius);
             collider = new CircleCollider(position, radius);
             ServerSend.ItemSpawned(this);
 

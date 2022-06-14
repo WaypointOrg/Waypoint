@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour
     public float gameTime;
     public Text gameTimeText;
 
+    public List<Transform> cameraTargets;
+
     private void Awake()
     {
         if (instance == null)
@@ -43,10 +45,23 @@ public class GameManager : MonoBehaviour
             gameTimeText.text = Mathf.CeilToInt(gameTime).ToString();
         }
     }
-    
-    public void StartGame(float _duration)
+
+    // Map 0 is waiting room, then it goes counterclockwise from the bottom left
+    public void MoveToMap(int _mapId)
     {
-        Camera.main.transform.position = new Vector3(0f, 0f, -10f);
+        if (_mapId == 0)
+        {
+            Camera.main.transform.position = new Vector3(-23 - CameraSC.width/2, 0f, -10f);
+        } 
+        else 
+        {
+            Camera.main.transform.position = cameraTargets[_mapId - 1].position + new Vector3(0, 0, -10);
+        }
+    }
+    
+    public void StartGame(float _duration, int _mapId)
+    {
+        MoveToMap(_mapId);
 
         leaderboard.AddPlayers(players);
 
@@ -57,7 +72,7 @@ public class GameManager : MonoBehaviour
 
     public void EndGame()
     {
-        Camera.main.transform.position = new Vector3(-23 - CameraSC.width/2, 0f, -10f);
+        MoveToMap(0);
 
         leaderboard.Clear();
 

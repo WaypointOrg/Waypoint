@@ -38,7 +38,8 @@ public class ClientHandle : MonoBehaviour
     public static void StartGame(Packet _packet)
     {
         float _duration = _packet.ReadFloat();
-        GameManager.instance.StartGame(_duration);
+        int _mapId = _packet.ReadInt();
+        GameManager.instance.StartGame(_duration, _mapId);
     }
 
     public static void EndGame(Packet _packet)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Numerics;
+using System.Collections.Generic;
 
 namespace GameServer
 {
@@ -74,6 +75,7 @@ namespace GameServer
             ServerSend.EndGame();
 
             Server.items.Clear();
+            Server.projectiles.Clear();
 
             foreach (Client _client in Server.clients.Values)
             {
@@ -87,12 +89,28 @@ namespace GameServer
         {
             Server.gameStarted = true;
             Server.gameTime = Server.gameDuration;
-            ServerSend.StartGame(Server.gameDuration / Constants.TICKS_PER_SEC);
+            Server.nextItemTime = Server.itemSpawnDelay;
+            Server.currentMapId = Utilities.RandomInt(Server.scene.mapCount) + 1;
+
+            ServerSend.StartGame(Server.gameDuration / Constants.TICKS_PER_SEC, Server.currentMapId);
+
+            List<int> possibilites = new List<int>();
+            for(int i = 0; i < Server.scene.mapSpawns[Server.currentMapId].Count; i++)  possibilites.Add(i);
 
             foreach (Client _client in Server.clients.Values)
             {
                 if (_client.player == null) continue;
-                Vector2 _position = Utilities.RandomFreeCirclePosition(_client.player.radius);
+
+                Vector2 _position;
+                if (possibilites.Count != 0)
+                {
+                    int _index = Utilities.RandomInt(possibilites.Count);
+                    _position = Server.scene.mapSpawns[Server.currentMapId][possibilites[_index]];
+                    possibilites.RemoveAt(_index);
+                } else {
+                    _position = Utilities.RandomFreeCirclePositionInMap(_client.player.radius);
+                }
+
                 _client.player.Teleport(_position);
             }
         }
