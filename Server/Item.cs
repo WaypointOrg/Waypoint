@@ -10,19 +10,17 @@ namespace GameServer
         public int itemId;
         public Vector2 position;
 
-        public Constants.Trajectories type;
+        public int type;
 
         public CircleCollider collider;
 
         public void Spawn(int _itemId)
         {
             itemId = _itemId;
-            type = (Constants.Trajectories) Utilities.RandomInt(Enum.GetNames(typeof(Constants.Trajectories)).Length);            
+            type = (int)Utilities.RandomInt(Constants.guns.Length);          
             position = Utilities.RandomFreeCirclePositionInMap(radius);
             collider = new CircleCollider(position, radius);
             ServerSend.ItemSpawned(this);
-
-            // Console.WriteLine($"Spawned item {type} at ({position.X}, {position.Y})");
         }
     }
 }

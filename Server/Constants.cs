@@ -19,5 +19,29 @@ namespace GameServer
            Random,
            Spyral
         }
+
+        public static Gun[] guns = new Gun[]
+        {new Gun("pistol", 0, 1, 1, 1),
+        new Gun("shotgun", 0, 5, 1, 2),
+        new Gun("sniper", 0, 1, 3, 2),
+        new Gun("minigun", 1, 1, 1, 0.5f)};
+    }
+
+    public class Gun
+    {
+        public string _name;
+        public int trajectory;
+        public int bulletNumber;
+        public float bulletSpeed;
+        public float cooldown;
+
+        public Gun(string name_, int trajectory_, int bulletNumber_, float bulletSpeed_, float cooldown_)
+        {
+            _name = name_;
+            trajectory = trajectory_;
+            bulletNumber = bulletNumber_;
+            bulletSpeed = bulletSpeed_;
+            cooldown = cooldown_;
+        }
     }
 }

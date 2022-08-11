@@ -160,7 +160,7 @@ namespace GameServer
             {
                 _packet.Write(_item.itemId);
                 _packet.Write(_item.position);
-                _packet.Write((int) _item.type);
+                _packet.Write((int)_item.type);
 
                 SendTCPDataToAll(_packet);
             }

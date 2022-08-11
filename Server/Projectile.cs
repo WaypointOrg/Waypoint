@@ -11,6 +11,7 @@ namespace GameServer
         private float height = 4f;
 
         private float frequency = 4f;
+        int curve;
 
         private Vector2 initialPos;
         public int projectileId;
@@ -23,26 +24,28 @@ namespace GameServer
 
         public Player owner;
 
-        public void Spawn(int _projectileId, Vector2 _position, Vector2 _direction, Constants.Trajectories _type, Player _owner)
+        public void Spawn(int _projectileId, Vector2 _position, Vector2 _direction, int _curve, float _speed, Player _owner)
         {
             projectileId = _projectileId;
             position = _position;
             initialPos = _position;
             direction = _direction;
-            type = _type;
+            //type = _type;
             owner = _owner;
+            speed = (4f / Constants.TICKS_PER_SEC) * _speed;
+            curve = _curve;
 
             collider = new CircleCollider(position, radius);
         }
 
         public void Update()
         {
-            if (type == Constants.Trajectories.Straight)
+            if (curve == 0)
             {
                 position += direction * speed * 2;
             }
             else
-            if (type == Constants.Trajectories.Wavy)
+            if (curve == 1)
             {
                 Vector2 dist = position - initialPos;
                 float totaldist = MathF.Abs(MathF.Sqrt(dist.X * dist.X + dist.Y * dist.Y));
@@ -74,7 +77,7 @@ namespace GameServer
                 position += perp * speed * MathF.Cos(totaldist * frequency) * height;
             }
             else
-            if (type == Constants.Trajectories.Random)
+            if (curve == 2)
             {
                 Vector2 dist = position - initialPos;
                 float totaldist = MathF.Abs(MathF.Sqrt(dist.X * dist.X + dist.Y * dist.Y));
@@ -115,7 +118,7 @@ namespace GameServer
 
                 position += newpos * speed / 2;    */            
             }else
-            if (type == Constants.Trajectories.Spyral)
+            if (curve == 3)
             {
                 Vector2 dist = position - initialPos;
                 float totaldist = MathF.Abs(MathF.Sqrt(dist.X * dist.X + dist.Y * dist.Y));

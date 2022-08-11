@@ -12,15 +12,14 @@ namespace GameServer
 
         public Vector2 position;
         public float rotation;
-        public float shotgun;
+
+        public Gun currentGun = Constants.guns[0];
         //public float dmg;
 
         private float moveSpeed = 4f / Constants.TICKS_PER_SEC;
         private bool[] inputs;
 
         public CircleCollider collider;
-
-        public Constants.Trajectories trajectory;
 
         // Time before respawn after a hit
         public int respawnTime = (int)(0.5 * Constants.TICKS_PER_SEC);
@@ -38,11 +37,9 @@ namespace GameServer
             position = _spawnPosition;
             rotation = 0f;
 
-
             inputs = new bool[4];
 
             collider = new CircleCollider(position, radius);
-            trajectory = Constants.Trajectories.Straight;
 
             invicibilityTimer = 0;
             respawnTimer = 0;
@@ -149,7 +146,10 @@ namespace GameServer
                 if (collider.CheckCollision(item.collider))
                 {
                     Server.items.Remove(item.itemId);
-                    trajectory = item.type;
+
+                    //BIG TODO
+                    currentGun = Constants.guns[item.type];
+                    Console.WriteLine(username + " now has a " + currentGun._name);
 
                     ServerSend.ItemPickedUp(item, this);
                 }
@@ -167,10 +167,10 @@ namespace GameServer
             //todo: get shotgun & spawn projectile + ask for trajectory
 
             Vector2 _direction = new Vector2(
-                        (float)Math.Cos(rotation * (Math.PI / 180)),
-                        (float)Math.Sin(rotation * (Math.PI / 180)));
+            (float)Math.Cos(rotation * (Math.PI / 180)),
+            (float)Math.Sin(rotation * (Math.PI / 180)));
 
-            float number = 5;
+            float number = currentGun.bulletNumber;
             float angle = 10;
 
             if (number % 2 == 1)
@@ -201,9 +201,6 @@ namespace GameServer
                     SummonProjectile(deltaDir2);
                 }
             }
-
-            trajectory = Constants.Trajectories.Straight;
-
         }
 
         void SummonProjectile(Vector2 direction)
@@ -219,7 +216,8 @@ namespace GameServer
                         _index,
                         position + direction * (radius + _projectile.radius),
                         direction,
-                        trajectory,
+                        currentGun.trajectory,
+                        currentGun.bulletSpeed,
                         this);
                     ServerSend.ProjectileSpawned(_projectile);
                     break;

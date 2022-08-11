@@ -80,7 +80,7 @@ namespace GameServer
             foreach (Client _client in Server.clients.Values)
             {
                 if (_client.player == null) continue;
-                _client.player.trajectory = Constants.Trajectories.Straight;
+                _client.player.currentGun = Constants.guns[0];
                 _client.player.Teleport(Constants.WAITING_ROOM_SPAWN);
             }
         }
