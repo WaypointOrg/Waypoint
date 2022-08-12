@@ -81,6 +81,12 @@ public class ClientHandle : MonoBehaviour
         GameManager.instance.leaderboard.IncreaseKillCount(_by);
     }
 
+    public static void PlayerAmmo(Packet _packet)
+    {
+        int _ammo = _packet.ReadInt();
+        GameManager.instance.UpdateAmmo(_ammo);
+    }
+
     public static void ItemSpawned(Packet _packet)
     {
         int itemId = _packet.ReadInt();

@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     public GameObject projectilePrefab;
 
     public Leaderboard leaderboard;
+    public Text ammoText;
 
     public bool gameStarted = false;
     public float gameTime;
@@ -89,6 +90,11 @@ public class GameManager : MonoBehaviour
     public void NameChanged(InputField input)
     {
         ClientSend.NameChanged(input.text);
+    }
+
+    public void UpdateAmmo(int ammo_)
+    {
+        ammoText.text = "ammo: " + ammo_.ToString();
     }
 
     public void SpawnPlayer(int _id, string _username, Vector2 _position, float _rotation)

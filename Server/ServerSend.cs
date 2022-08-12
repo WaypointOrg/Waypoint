@@ -154,6 +154,16 @@ namespace GameServer
             }
         }
 
+        public static void PlayerAmmo(Player _player)
+        {
+            using (Packet _packet = new Packet((int)ServerPackets.PlayerAmmo))
+            {
+                _packet.Write(_player.myAmmo);
+
+                SendTCPData(_player.id, _packet);
+            }
+        }
+
         public static void ItemSpawned(Item _item)
         {
             using (Packet _packet = new Packet((int)ServerPackets.itemSpawned))

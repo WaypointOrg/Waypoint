@@ -16,6 +16,7 @@ namespace GameServer
         playerPosition,
         playerRotation,
         playerHit,
+        PlayerAmmo,
         playerRespawned,
         itemSpawned,
         itemPickedUp,

@@ -14,6 +14,7 @@ namespace GameServer
         public float rotation;
 
         public Gun currentGun = Constants.guns[0];
+        public int myAmmo = Constants.guns[0].ammo;
         //public float dmg;
 
         private float moveSpeed = 4f / Constants.TICKS_PER_SEC;
@@ -44,6 +45,7 @@ namespace GameServer
             invicibilityTimer = 0;
             respawnTimer = 0;
             isRespawning = false;
+            ServerSend.PlayerAmmo(this);
         }
 
         public void Update()
@@ -149,6 +151,8 @@ namespace GameServer
 
                     //BIG TODO
                     currentGun = Constants.guns[item.type];
+                    myAmmo = currentGun.ammo;
+                    ServerSend.PlayerAmmo(this);
                     Console.WriteLine(username + " now has a " + currentGun._name);
 
                     ServerSend.ItemPickedUp(item, this);
@@ -163,7 +167,15 @@ namespace GameServer
         }
 
         public void Shoot()
-        {
+        { 
+            if(myAmmo <= 0)
+            {
+                return;
+            }else
+            {
+                myAmmo -= 1;
+                ServerSend.PlayerAmmo(this);
+            }
             //todo: get shotgun & spawn projectile + ask for trajectory
 
             Vector2 _direction = new Vector2(
