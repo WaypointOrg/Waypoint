@@ -15,6 +15,8 @@ namespace GameServer
 
         public Gun currentGun = Constants.guns[0];
         public int myAmmo = Constants.guns[0].ammo;
+        bool canShoot = true;
+        float shootDelay = Constants.guns[0].cooldown * Constants.TICKS_PER_SEC;
         //public float dmg;
 
         private float moveSpeed = 4f / Constants.TICKS_PER_SEC;
@@ -93,6 +95,17 @@ namespace GameServer
                 invicibilityTimer = invicibilityTime;
                 isRespawning = false;
             }
+
+            if(!canShoot)
+            {
+                shootDelay -= 1;
+            }
+
+            if(shootDelay <= 0)
+            {
+                shootDelay = currentGun.cooldown * Constants.TICKS_PER_SEC;
+                canShoot = true;
+            }
         }
 
         public void Teleport(Vector2 _position)
@@ -153,6 +166,8 @@ namespace GameServer
                     currentGun = Constants.guns[item.type];
                     myAmmo = currentGun.ammo;
                     ServerSend.PlayerAmmo(this);
+                    shootDelay = currentGun.cooldown * Constants.TICKS_PER_SEC;
+                    canShoot = true;
                     Console.WriteLine(username + " now has a " + currentGun._name);
 
                     ServerSend.ItemPickedUp(item, this);
@@ -168,6 +183,14 @@ namespace GameServer
 
         public void Shoot()
         { 
+            if(!canShoot)
+            {
+                return;
+            }else
+            {
+                canShoot = false;
+            }
+
             if(myAmmo <= 0)
             {
                 return;
