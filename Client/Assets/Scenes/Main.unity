@@ -3966,6 +3966,8 @@ MonoBehaviour:
   - {fileID: 1147394359939581775, guid: 0158ec5cd48ddd2669b57947b8fef602, type: 3}
   - {fileID: 6873346953774209776, guid: 14ad96c94f0758816b0fe4655868f3dd, type: 3}
   - {fileID: 258411825994838532, guid: ab2711f0ea65e42d49162aa783bcf07c, type: 3}
+  - {fileID: 2249250767768142850, guid: 11725fd48b6adc183987777b30b42554, type: 3}
+  - {fileID: 1396250628144989861, guid: 238dd2b9ae602e6ffa8d408ca243635c, type: 3}
   projectilePrefab: {fileID: 997374906591739097, guid: fab0494cac13888aaba7658dc097d983, type: 3}
   leaderboard: {fileID: 1210559575}
   ammoText: {fileID: 1823417753}

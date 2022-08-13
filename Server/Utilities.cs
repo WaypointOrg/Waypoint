@@ -29,6 +29,19 @@ namespace GameServer
             return _random.Next(_max);
         }
 
+        public static int RandomSign()
+        {
+            int rndm = RandomInt(1);
+
+            if(rndm == 0)
+            {
+                return 1;
+            }else
+            {
+                return -1;
+            }
+        }
+
         public static Vector2 RandomFreeCirclePositionInMap(float _radius)
         {
             Vector2 position = new Vector2();

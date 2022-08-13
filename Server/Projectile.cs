@@ -42,11 +42,13 @@ namespace GameServer
         {
             if (curve == 0)
             {
+                //normal
                 position += direction * speed * 2;
             }
             else
             if (curve == 1)
             {
+                //Wawy
                 Vector2 dist = position - initialPos;
                 float totaldist = MathF.Abs(MathF.Sqrt(dist.X * dist.X + dist.Y * dist.Y));
 
@@ -79,6 +81,7 @@ namespace GameServer
             else
             if (curve == 2)
             {
+                //Spin
                 Vector2 dist = position - initialPos;
                 float totaldist = MathF.Abs(MathF.Sqrt(dist.X * dist.X + dist.Y * dist.Y));
 
@@ -123,31 +126,16 @@ namespace GameServer
                 Vector2 dist = position - initialPos;
                 float totaldist = MathF.Abs(MathF.Sqrt(dist.X * dist.X + dist.Y * dist.Y));
 
-                Vector2 perp;
-                if (direction.Y == 0)
+                if(totaldist >= 3)
                 {
-                    perp = new Vector2(0, 1);
-                }
-                else
-                {
-                    perp = new Vector2(1, -direction.X / direction.Y);
-                }
-
-                float lenght = MathF.Sqrt(perp.X * perp.X + perp.Y * perp.Y);
-                perp = new Vector2(perp.X / lenght, perp.Y / lenght);
-
-                float crossZ = direction.X * perp.Y - perp.X * direction.Y;
-
-                if (crossZ < 0)
-                {
-                    //HOLY JESUS CHRIST!!! SHIT GOING TO HAPPEN!!!
-                    perp = new Vector2(-perp.X, -perp.Y);
+                    float angle = Utilities.RandomFloat(0, (2 * MathF.PI));
+                    float dx = MathF.Cos((float)angle);
+                    float dy = MathF.Sin((float)angle);
+                    direction = new Vector2(dx, dy);
+                    initialPos = position;
                 }
 
-                float mod = position.X / direction.X;
-
-                position += direction * speed * MathF.Sin(totaldist * frequency) * height;
-                position += perp * speed * MathF.Cos(totaldist * frequency) * height;
+                position += direction * speed * 2;
             }
 
             collider.Move(position);
