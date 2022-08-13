@@ -6,6 +6,16 @@ namespace GameServer
 {
     class Utilities
     {
+        #region ID
+        public static int currentID = 0;
+
+        public static int GetID()
+        {
+            currentID += 1;
+            return currentID;
+        }
+        #endregion
+
         #region Random
         public static Vector2 RandomVector2(float width, float height)
         {

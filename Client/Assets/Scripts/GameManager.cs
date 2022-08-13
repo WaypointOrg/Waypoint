@@ -57,6 +57,7 @@ public class GameManager : MonoBehaviour
         else 
         {
             Camera.main.transform.position = cameraTargets[_mapId - 1].position + new Vector3(0, 0, -10);
+            Camera.main.GetComponent<CameraSC>().setTarget(cameraTargets[_mapId - 1]);
         }
     }
     
@@ -69,6 +70,7 @@ public class GameManager : MonoBehaviour
         gameStarted = true;
         gameTime = _duration;
         gameTimeText.gameObject.SetActive(true);
+        Camera.main.GetComponent<CameraSC>().SetMainPlayer(players[Client.instance.myId].gameObject.transform);
     }
 
     public void EndGame()

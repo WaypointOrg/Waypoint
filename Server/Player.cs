@@ -248,24 +248,20 @@ namespace GameServer
 
         void SummonProjectile(Vector2 direction)
         {
-            int _index = 0;
-            while (true)
+            int id_ = Utilities.GetID();
+
+            if (Server.projectiles.TryAdd(id_, new Projectile()))
             {
-                if (Server.projectiles.TryAdd(_index, new Projectile()))
-                {
-                    // TODO: shoot correct projectile type
-                    Projectile _projectile = Server.projectiles[_index];
-                    _projectile.Spawn(
-                        _index,
-                        position + direction * (radius + _projectile.radius),
-                        direction,
-                        currentGun.trajectory,
-                        currentGun.bulletSpeed,
-                        this);
-                    ServerSend.ProjectileSpawned(_projectile);
-                    break;
-                }
-                _index += 1;
+                // TODO: shoot correct projectile type
+                Projectile _projectile = Server.projectiles[id_];
+                _projectile.Spawn(
+                    id_,
+                    position + direction * (radius + _projectile.radius),
+                    direction,
+                    currentGun.trajectory,
+                    currentGun.bulletSpeed,
+                    this);
+                ServerSend.ProjectileSpawned(_projectile);
             }
         }
 
