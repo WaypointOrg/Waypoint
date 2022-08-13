@@ -163,11 +163,19 @@ namespace GameServer
                     Server.items.Remove(item.itemId);
 
                     //BIG TODO
-                    currentGun = Constants.guns[item.type];
-                    myAmmo = currentGun.ammo;
+                    if(Constants.guns[item.type]._name == currentGun._name)
+                    {
+                        myAmmo += Constants.guns[item.type].ammo;
+                    }else
+                    {
+                        currentGun = Constants.guns[item.type];
+                        myAmmo = currentGun.ammo;
+                        shootDelay = currentGun.cooldown * Constants.TICKS_PER_SEC;
+                        canShoot = true;
+                    }
+                    
                     ServerSend.PlayerAmmo(this);
-                    shootDelay = currentGun.cooldown * Constants.TICKS_PER_SEC;
-                    canShoot = true;
+            
                     Console.WriteLine(username + " now has a " + currentGun._name);
 
                     ServerSend.ItemPickedUp(item, this);

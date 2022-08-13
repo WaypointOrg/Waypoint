@@ -24,7 +24,11 @@ namespace GameServer
         {new Gun("pistol", 0, 1, 1, 1, 10),
         new Gun("shotgun", 0, 5, 1, 2, 5),
         new Gun("sniper", 0, 1, 3, 2, 3),
-        new Gun("minigun", 1, 1, 1, 0.5f, 10)};
+        new Gun("minigun", 1, 1, 1, 0.5f, 10),
+        new Gun("carabine", 1, 2, 1.5f, 1f, 7),
+        new Gun("rifle", 0, 1, 1, 0.1f, 15),
+        new Gun("flame thrower", 2, 5, 0.5f, 1.5f, 10),
+        new Gun("blowgun", 0, 20, 0.5f, 3f, 3)};
     }
 
     public class Gun
