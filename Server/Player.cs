@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace GameServer
 {
-    class Player
+    public class Player
     {
         public float radius = 0.5f;
         public int id;
