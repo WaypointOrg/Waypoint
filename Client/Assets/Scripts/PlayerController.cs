@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         LookAtMouse();
+
         if (!inputField.isFocused)
         {
             SendInputToServer();
@@ -26,6 +27,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+            //StartCoroutine(Camera.main.GetComponent<CameraShake>().Shake(0.1f, 0.5f));
             ClientSend.Shoot();
         }
     }

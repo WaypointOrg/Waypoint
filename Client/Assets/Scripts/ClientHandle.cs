@@ -102,8 +102,11 @@ public class ClientHandle : MonoBehaviour
         int _byPlayer = _packet.ReadInt();
 
         // TODO: Add item to player.
-        Destroy(GameManager.items[_itemId].gameObject);
-        GameManager.items.Remove(_itemId);
+        if(GameManager.items.ContainsKey(_itemId))
+        {
+            Destroy(GameManager.items[_itemId].gameObject);
+            GameManager.items.Remove(_itemId);
+        }
     }
 
     public static void ProjectileSpawned(Packet _packet)

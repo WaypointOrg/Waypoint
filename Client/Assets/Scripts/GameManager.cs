@@ -76,6 +76,7 @@ public class GameManager : MonoBehaviour
     public void EndGame()
     {
         MoveToMap(0);
+        Camera.main.GetComponent<CameraSC>().setTarget(null);
 
         leaderboard.Clear();
 
@@ -96,7 +97,7 @@ public class GameManager : MonoBehaviour
 
     public void UpdateAmmo(int ammo_)
     {
-        ammoText.text = "ammo: " + ammo_.ToString();
+        ammoText.text = ammo_.ToString();
     }
 
     public void SpawnPlayer(int _id, string _username, Vector2 _position, float _rotation)

@@ -5,10 +5,12 @@ using UnityEngine;
 public class CameraSC : MonoBehaviour
 {
     [SerializeField] Transform mainPlayer;
+    
     [SerializeField] Transform currentTarget;
     [SerializeField] Vector2 mapSize = new Vector2(16, 10);
     [SerializeField] float speed = 1;
     [SerializeField] Rigidbody2D rb;
+    [SerializeField] Vector3 Spawnpos;
     Camera cam;
     public static float width;
 
@@ -28,12 +30,11 @@ public class CameraSC : MonoBehaviour
     public void setTarget(Transform target)
     {
         currentTarget = target;
-        Debug.Log(currentTarget.position);
     }
 
     void Update()
     {
-        if(mainPlayer != null)
+        if(mainPlayer != null && currentTarget != null)
         {
             float height_ = 2f * cam.orthographicSize;
             //float width_ = height_ * cam.aspect;
@@ -48,6 +49,26 @@ public class CameraSC : MonoBehaviour
             tests[2].position = LowerLeft;
             tests[3].position = LowerRight;
 
+            Vector3 targetPos = new Vector3(mainPlayer.position.x, mainPlayer.position.y, -10);
+
+            float halfcamx = Mathf.Abs(UpperRight.x - transform.position.x);
+            float halfcamy = Mathf.Abs(UpperRight.y - transform.position.y);
+
+            if((mainPlayer.position.x + halfcamx) > (currentTarget.position.x + mapSize.x))
+            {
+                targetPos = new Vector3((currentTarget.position.x + mapSize.x) - halfcamx, targetPos.y, -10);
+            }else if((mainPlayer.position.x - halfcamx) < (currentTarget.position.x - mapSize.x))
+            {
+                targetPos = new Vector3((currentTarget.position.x - mapSize.x) + halfcamx, targetPos.y, -10);
+            }
+
+            if((mainPlayer.position.y + halfcamy) > (currentTarget.position.y + mapSize.y))
+            {  
+                targetPos = new Vector3(targetPos.x, (currentTarget.position.y + mapSize.y) - halfcamy, -10);
+            }else if((mainPlayer.position.y - halfcamy) < (currentTarget.position.y - mapSize.y))
+            {
+                targetPos = new Vector3(targetPos.x, (currentTarget.position.y - mapSize.y) + halfcamy, -10);
+            }
             /*transform.position = new Vector3(mainPlayer.position.x, mainPlayer.position.y, -10);
 
             if((mainPlayer.position.x + Mathf.Abs(UpperRight.x - transform.position.x)) > (currentTarget.position.x + mapSize.x))
@@ -75,9 +96,12 @@ public class CameraSC : MonoBehaviour
                 transform.position = new Vector3(mainPlayer.position.x, (currentTarget.position.y - mapSize.y) + Mathf.Abs(UpperRight.y - transform.position.y), -10);
             }*/
 
-            Vector2 dist = mainPlayer.position - transform.position;
+            Vector2 dist = targetPos - transform.position;
             rb.AddForce(dist * speed);
             
+        }else
+        {
+            transform.position = Spawnpos;
         }
     }
 }
