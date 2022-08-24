@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 
 public class GameManager : MonoBehaviour
 {
@@ -47,23 +49,19 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // Map 0 is waiting room, then it goes counterclockwise from the bottom left
-    public void MoveToMap(int _mapId)
+    public void LoadWaitingRoom()
     {
-        if (_mapId == 0)
-        {
-            Camera.main.transform.position = new Vector3(-23 - CameraSC.width/2, 0f, -10f);
-        } 
-        else 
-        {
-            Camera.main.transform.position = cameraTargets[_mapId - 1].position + new Vector3(0, 0, -10);
-            Camera.main.GetComponent<CameraSC>().setTarget(cameraTargets[_mapId - 1]);
-        }
+        SceneManager.LoadScene("WaitingRoom");
+    }
+
+    public void LoadMap(int _mapId)
+    {
+        SceneManager.LoadScene("Map" + _mapId.ToString());
     }
     
     public void StartGame(float _duration, int _mapId)
     {
-        MoveToMap(_mapId);
+        LoadMap(_mapId);
 
         leaderboard.AddPlayers(players);
 
@@ -75,7 +73,7 @@ public class GameManager : MonoBehaviour
 
     public void EndGame()
     {
-        MoveToMap(0);
+        LoadWaitingRoom();
         Camera.main.GetComponent<CameraSC>().setTarget(null);
 
         leaderboard.Clear();

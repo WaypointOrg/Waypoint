@@ -10,7 +10,9 @@ namespace GameServer
         public const float WIDTH = 16.0F;   
         public const float HEIGHT = 9.0F;
 
-        public static Vector2 WAITING_ROOM_SPAWN = new Vector2(-34.5f, 0);
+        public static Vector2 WAITING_ROOM_SPAWN = new Vector2(5, 3);
+        // TODO: Use waiting room spawn points
+        // void SendToWaitingRoom() ?
 
         public enum Trajectories
         {

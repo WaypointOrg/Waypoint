@@ -72,6 +72,7 @@ namespace GameServer
         {
             Console.WriteLine("Game ended");
             Server.gameStarted = false;
+            Server.currentMap = Server.maps[0];
             ServerSend.EndGame();
 
             Server.items.Clear();
@@ -83,6 +84,8 @@ namespace GameServer
                 _client.player.currentGun = Constants.guns[0];
                 _client.player.myAmmo = 10;
                 ServerSend.PlayerAmmo(_client.player);
+
+                // FIXME
                 _client.player.Teleport(Constants.WAITING_ROOM_SPAWN);
             }
         }
@@ -92,12 +95,14 @@ namespace GameServer
             Server.gameStarted = true;
             Server.gameTime = Server.gameDuration;
             Server.nextItemTime = Server.itemSpawnDelay;
-            Server.currentMapId = Utilities.RandomInt(Server.scene.mapCount) + 1;
 
-            ServerSend.StartGame(Server.gameDuration / Constants.TICKS_PER_SEC, Server.currentMapId);
+            // -1 to not include the waiting room, +1 because maps start at 1
+            int randomMapId = Utilities.RandomInt(Server.maps.Count - 1) + 1;
+            Server.currentMap = Server.maps[randomMapId];
+            ServerSend.StartGame(Server.gameDuration / Constants.TICKS_PER_SEC, randomMapId);
 
             List<int> possibilites = new List<int>();
-            for(int i = 0; i < Server.scene.mapSpawns[Server.currentMapId].Count; i++)  possibilites.Add(i);
+            for(int i = 0; i < Server.currentMap.mapSpawns.Count; i++)  possibilites.Add(i);
 
             foreach (Client _client in Server.clients.Values)
             {
@@ -107,7 +112,7 @@ namespace GameServer
                 if (possibilites.Count != 0)
                 {
                     int _index = Utilities.RandomInt(possibilites.Count);
-                    _position = Server.scene.mapSpawns[Server.currentMapId][possibilites[_index]];
+                    _position = Server.currentMap.mapSpawns[possibilites[_index]];
                     possibilites.RemoveAt(_index);
                 } else {
                     _position = Utilities.RandomFreeCirclePositionInMap(_client.player.radius);
@@ -120,11 +125,13 @@ namespace GameServer
         public static bool StartingConditionsMet()
         {
             if (Server.connectedPlayers < Server.minPlayers) return false;
+            if (Server.gameStarted) return false;
+
             foreach (Client _client in Server.clients.Values)
             {
                 if (_client.player == null) continue;
 
-                if (!_client.player.collider.CheckCollision(Server.scene.trigger))
+                if (!_client.player.collider.CheckCollision(Server.currentMap.trigger))
                 {
                     return false;
                 }

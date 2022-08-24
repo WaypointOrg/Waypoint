@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
+using System.IO;
 
 namespace GameServer
 {
@@ -25,10 +26,13 @@ namespace GameServer
         public static int gameTime = gameDuration; // Time left of the game, in ticks.
 
         // Scene
-        public static Scene scene;
-
-        // Map 0 is waiting room, then it goes counterclockwise from the bottom left
-        public static int currentMapId = 0;
+        public static string scenesPath = "Scenes";
+        public static Map currentMap;
+        public static Dictionary<int, Map> maps = new Dictionary<int, Map>();
+        // public static Map waitingRoomMap;
+        // TODO: When checking collisions, if player not in game, check against waitingroom
+        // => When coordinates, bool isinwaitingroom
+        // For now, joining in the middle of a game spawns you in the game
 
         // Items
         public static Dictionary<int, Item> items = new Dictionary<int, Item>();
@@ -138,9 +142,19 @@ namespace GameServer
                 clients.Add(i, new Client(i));
             }
 
-            Console.WriteLine("Importing scene...");
-            scene = new Scene("Main.unity");
-            Console.WriteLine("Imported scene.");
+            Console.WriteLine("Importing maps...");
+
+            string mapsPath = Path.Join(scenesPath, "Maps");
+            foreach (string path in Directory.GetFiles(mapsPath)) {
+                int index = int.Parse(path.Substring(path.Length - 7, 1));
+                maps[index] = new Map(path);
+            }
+            string waitingRoomMapPath = Path.Join(scenesPath, "WaitingRoom.unity");
+            maps[0] = new Map(waitingRoomMapPath);
+            currentMap = maps[0];
+            // waitingRoomMap = new Map(waitingRoomMapPath);
+      
+            Console.WriteLine("Imported maps.");
 
             packetHandlers = new Dictionary<int, PacketHandler>()
             {

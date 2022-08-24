@@ -58,7 +58,7 @@ namespace GameServer
             bool _placeable = false;
             while (!_placeable)
             {
-                position = Utilities.RandomVector2(Constants.WIDTH, Constants.HEIGHT) + Server.scene.mapCenters[Server.currentMapId];
+                position = Utilities.RandomVector2(Constants.WIDTH, Constants.HEIGHT);
                 CircleCollider _collider = new CircleCollider(position, _radius);
 
                 _placeable = !IsCollidingWithObstacles(_collider);
@@ -70,7 +70,7 @@ namespace GameServer
 
         public static bool IsCollidingWithObstacles(RectCollider collider)
         {
-            foreach (RectCollider obstacle in Server.scene.obstacles)
+            foreach (RectCollider obstacle in Server.currentMap.obstacles)
             {
                 if (collider.CheckCollision(obstacle))
                 {
@@ -82,7 +82,7 @@ namespace GameServer
 
         public static bool IsCollidingWithObstacles(CircleCollider collider)
         {
-            foreach (RectCollider obstacle in Server.scene.obstacles)
+            foreach (RectCollider obstacle in Server.currentMap.obstacles)
             {
                 if (collider.CheckCollision(obstacle))
                 {
