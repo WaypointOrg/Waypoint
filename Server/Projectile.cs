@@ -136,6 +136,11 @@ namespace GameServer
                 }
 
                 position += direction * speed * 2;
+            }else
+            if(curve == 4)
+            {
+                Vector2 newDirection = new Vector2(MathF.Round(direction.X), MathF.Round(direction.Y));
+                position += newDirection * speed * 2;
             }
 
             collider.Move(position);
