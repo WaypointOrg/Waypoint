@@ -17,10 +17,11 @@ public class PlayerController : MonoBehaviour
     {
         LookAtMouse();
 
-        if (!inputField.isFocused)
-        {
-            SendInputToServer();
-        }
+        // FIXME
+        // if (!inputField.isFocused)
+        // {
+        SendInputToServer();
+        // }
     }
 
     void Update()

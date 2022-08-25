@@ -10,6 +10,11 @@ public class PlayerManager : MonoBehaviour
     public TextMesh usernameText;
     public Transform gun;
 
+    public void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
+
     public void Initialize(int _id, string _username)
     {
         id = _id;

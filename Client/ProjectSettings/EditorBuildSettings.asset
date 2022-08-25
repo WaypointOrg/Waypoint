@@ -8,4 +8,22 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Main.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/WaitingRoom.unity
+    guid: 17da0903fcea727b4a5be3fc87a37c6a
+  - enabled: 1
+    path: Assets/Scenes/Maps/Map1.unity
+    guid: a726558bc0819f410b4e82186720867c
+  - enabled: 1
+    path: Assets/Scenes/Maps/Map2.unity
+    guid: 800cb6cdd1cf701ab87f9edc7222a611
+  - enabled: 1
+    path: Assets/Scenes/Maps/Map3.unity
+    guid: 7b3459996c0aa86c3a9c1733cc4e3e7b
+  - enabled: 1
+    path: Assets/Scenes/Maps/Map4.unity
+    guid: d314825655b22aaf39ed26d0e15cfdef
+  - enabled: 1
+    path: Assets/Scenes/Maps/Map5.unity
+    guid: 9bc51549e9f14ba1f93dd95b793f6ba0
   m_configObjects: {}

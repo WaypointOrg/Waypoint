@@ -9,20 +9,21 @@ using System.Globalization;
 
 namespace GameServer
 {
-    class Scene
+    class Map
     {
         public List<RectCollider> obstacles = new List<RectCollider>();
-        public RectCollider trigger;
-        public Dictionary<int, Vector2> mapCenters = new Dictionary<int, Vector2>();
-        public Dictionary<int, List<Vector2>> mapSpawns = new Dictionary<int, List<Vector2>>();
-        public int mapCount;
+
+        // Optional: Waiting room is the only room with trigger
+        public RectCollider trigger = null;
+        public List<Vector2> mapSpawns = new List<Vector2>();
 
         private string path;
         private Dictionary<string, dynamic> objects;
 
-        public Scene(string _path)
+        public Map(string _path)
         {
             path = _path;
+            Console.WriteLine("Loading scene " + path);
             LoadFromFile();
         }
 
@@ -76,37 +77,24 @@ namespace GameServer
                         case "ServerTrigger":
                             trigger = ObjectToCollider(gameObject);
                             break;
-                        case "ServerMapCenters":
-                            Vector2 center_position = ObjectToVector2(gameObject);
-                            string center_name = gameObject["m_Name"];
-                            int center_index = int.Parse(center_name.Substring(center_name.Length - 1));
-                            mapCenters[center_index] = center_position;
-                            break;
+                        // case "ServerMapCenters":
+                        //     Vector2 center_position = ObjectToVector2(gameObject);
+                        //     string center_name = gameObject["m_Name"];
+                        //     int center_index = int.Parse(center_name.Substring(center_name.Length - 1));
+                        //     mapCenters[center_index] = center_position;
+                        //     break;
                         case "ServerSpawn":
-                            Vector2 spawn_position = ObjectToVector2(gameObject);
-                            string spawn_name = gameObject["m_Name"];
-                            int spawn_index = int.Parse(spawn_name.Substring(spawn_name.Length - 1));
-
-                            if (!mapSpawns.ContainsKey(spawn_index))
-                            {
-                                mapSpawns[spawn_index] = new List<Vector2>();
-                            }
-                            
-                            mapSpawns[spawn_index].Add(spawn_position);
+                            Vector2 spawn_position = ObjectToVector2(gameObject);                            
+                            mapSpawns.Add(spawn_position);
                             break;
                     }
 
                 }
             }
-            if (trigger == null)
-            {
-                throw new Exception($"No trigger found in scene {path}");
-            }
             if (!obstacles.Any())
             {
                 throw new Exception($"No obstacles found in scene {path}");
             }
-            mapCount = mapCenters.Count;
         }
 
         private RectCollider ObjectToCollider(dynamic gameObject)
