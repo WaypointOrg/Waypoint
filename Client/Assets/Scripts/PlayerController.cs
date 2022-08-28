@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         GameObject _gameobject = GameObject.Find("InputField");
-        inputField = _gameobject.GetComponent<InputField>();
+        // inputField = _gameobject.GetComponent<InputField>();
     }
 
     private void FixedUpdate()
