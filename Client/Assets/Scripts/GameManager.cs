@@ -25,8 +25,7 @@ public class GameManager : MonoBehaviour
     public float gameTime;
     public Text gameTimeText;
 
-    public GameObject endUI;
-    public GameObject gameUI;
+    public List<Transform> cameraTargets;
 
     private void Awake()
     {
@@ -55,11 +54,6 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("WaitingRoom");
     }
 
-    public void LoadEndScreen()
-    {
-        SceneManager.LoadScene("End Screen");
-    }
-
     public void LoadMap(int _mapId)
     {
         SceneManager.LoadScene("Map" + _mapId.ToString());
@@ -68,8 +62,6 @@ public class GameManager : MonoBehaviour
     public void StartGame(float _duration, int _mapId)
     {
         LoadMap(_mapId);
-
-        gameUI.SetActive(true);
 
         leaderboard.AddPlayers(players);
 
@@ -81,19 +73,10 @@ public class GameManager : MonoBehaviour
 
     public void EndGame()
     {
-        LoadEndScreen();
-
-        endUI.SetActive(true);
-        gameUI.SetActive(false);
-
+        LoadWaitingRoom();
         Camera.main.GetComponent<CameraSC>().setTarget(null);
 
         leaderboard.Clear();
-
-        foreach (KeyValuePair<int, PlayerManager> player in players)
-        {
-            player.Value.gameObject.SetActive(false);
-        }
 
         foreach (KeyValuePair<int, Item> item in items)
         {
