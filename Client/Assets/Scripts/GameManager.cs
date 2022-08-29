@@ -25,7 +25,6 @@ public class GameManager : MonoBehaviour
     public float gameTime;
     public Text gameTimeText;
 
-    public GameObject endUI;
     public GameObject gameUI;
 
     private void Awake()
@@ -82,8 +81,6 @@ public class GameManager : MonoBehaviour
     public void EndGame()
     {
         LoadEndScreen();
-
-        endUI.SetActive(true);
         gameUI.SetActive(false);
 
         Camera.main.GetComponent<CameraSC>().setTarget(null);

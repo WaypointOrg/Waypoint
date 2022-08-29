@@ -12,12 +12,7 @@ public class Menu : MonoBehaviour
     {
         startMenu.SetActive(false);
 
-        foreach (KeyValuePair<int, PlayerManager> player in GameManager.players)
-        {
-            player.Value.gameObject.SetActive(true);
-        }
-
-        if (!Client.instance.isConnected) Client.instance.ConnectToServer();
+        Client.instance.ConnectToServer();
 
         GameManager.instance.LoadWaitingRoom();
     }
