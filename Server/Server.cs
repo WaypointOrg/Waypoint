@@ -22,7 +22,7 @@ namespace GameServer
         public static int minPlayers = 1; // Minimum amount of players needed to start the game
         public static bool gameStarted = false;
 
-        public static int gameDuration = 1  * Constants.TICKS_PER_SEC; // Duration of a game, in ticks.
+        public static int gameDuration = 30  * Constants.TICKS_PER_SEC; // Duration of a game, in ticks.
         public static int gameTime = gameDuration; // Time left of the game, in ticks.
 
         // Scene
@@ -162,6 +162,7 @@ namespace GameServer
                 { (int)ClientPackets.playerName, ServerHandle.PlayerName },
                 { (int)ClientPackets.playerMovement,  ServerHandle.PlayerMovement},
                 { (int)ClientPackets.playerShoot,  ServerHandle.PlayerShoot},
+                { (int)ClientPackets.playerEndGame,  ServerHandle.PlayerEndGame},
             };
             Console.WriteLine("Initialized packets.");
         }

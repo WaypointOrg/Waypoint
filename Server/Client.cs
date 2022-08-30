@@ -190,7 +190,7 @@ namespace GameServer
 
         public void SendIntoGame(string _playerName)
         {
-            player = new Player(id, _playerName, Constants.WAITING_ROOM_SPAWN);
+            player = new Player(id, _playerName);
 
             foreach (Client _client in Server.clients.Values)
             {
@@ -223,6 +223,7 @@ namespace GameServer
             tcp.Disconnect();
             udp.Disconnect();
 
+            // TODO: Tell clients a player disconnected
             Server.connectedPlayers -= 1;
         }
     }

@@ -12,6 +12,7 @@ namespace GameServer
 
         public Vector2 position;
         public float rotation;
+        public bool isInWaitingRoom;
 
         public Gun currentGun = Constants.guns[0];
         public int myAmmo = Constants.guns[0].ammo;
@@ -33,12 +34,14 @@ namespace GameServer
         public int invicibilityTime = (int)(1.5 * Constants.TICKS_PER_SEC);
         public int invicibilityTimer;
 
-        public Player(int _id, string _username, Vector2 _spawnPosition)
+        public Player(int _id, string _username)
         {
             id = _id;
             username = _username;
-            position = _spawnPosition;
+
+            position = Constants.WAITING_ROOM_SPAWN;
             rotation = 0f;
+            isInWaitingRoom = true;
 
             inputs = new bool[4];
 
@@ -189,6 +192,17 @@ namespace GameServer
             rotation = _rotation;
         }
 
+        public void EndedGame()
+        {
+            // FIXME
+            isInWaitingRoom = true;
+            Teleport(Constants.WAITING_ROOM_SPAWN);
+
+            // TODO: Infinite Ammo in waiting room ?
+            myAmmo = 10;
+            ServerSend.PlayerAmmo(this);
+        }
+
         public void Shoot()
         { 
             if(!canShoot)
@@ -252,7 +266,6 @@ namespace GameServer
 
             if (Server.projectiles.TryAdd(id_, new Projectile()))
             {
-                // TODO: shoot correct projectile type
                 Projectile _projectile = Server.projectiles[id_];
                 _projectile.Spawn(
                     id_,

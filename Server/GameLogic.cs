@@ -82,11 +82,8 @@ namespace GameServer
             {
                 if (_client.player == null) continue;
                 _client.player.currentGun = Constants.guns[0];
-                _client.player.myAmmo = 10;
+                _client.player.myAmmo = 0;
                 ServerSend.PlayerAmmo(_client.player);
-
-                // FIXME
-                _client.player.Teleport(Constants.WAITING_ROOM_SPAWN);
             }
         }
 
@@ -118,6 +115,7 @@ namespace GameServer
                     _position = Utilities.RandomFreeCirclePositionInMap(_client.player.radius);
                 }
 
+                _client.player.isInWaitingRoom = false;
                 _client.player.Teleport(_position);
             }
         }
@@ -130,12 +128,11 @@ namespace GameServer
             foreach (Client _client in Server.clients.Values)
             {
                 if (_client.player == null) continue;
-
-                if (!_client.player.collider.CheckCollision(Server.currentMap.trigger))
-                {
-                    return false;
-                }
+                if (!_client.player.collider.CheckCollision(Server.currentMap.trigger)) return false;
+                if (!_client.player.isInWaitingRoom) return false;
             }
+
+            Console.WriteLine("Starting Conditions Met");
             return true;
         }
     }

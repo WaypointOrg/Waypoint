@@ -49,12 +49,17 @@ namespace GameServer
             //    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
 
             // probably should check if player == null
-            Server.clients[_fromClient].player.SetInput(_inputs, _rotation);
+            if (!(Server.clients[_fromClient].player == null)) Server.clients[_fromClient].player.SetInput(_inputs, _rotation);
         }
 
         public static void PlayerShoot(int _fromClient, Packet _packet)
         {
             Server.clients[_fromClient].player.Shoot();
+        }
+
+        public static void PlayerEndGame(int _fromClient, Packet _packet)
+        {
+            Server.clients[_fromClient].player.EndedGame();
         }
     }
 }

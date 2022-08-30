@@ -32,6 +32,7 @@ namespace GameServer
         playerName,
         playerMovement,
         playerShoot,
+        playerEndGame,
     }
 
     public class Packet : IDisposable

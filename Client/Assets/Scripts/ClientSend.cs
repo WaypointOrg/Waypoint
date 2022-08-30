@@ -61,5 +61,15 @@ public class ClientSend : MonoBehaviour
             SendUDPData(_packet);
         }
     }
+
+    // When Continue is pressed
+    public static void EndGame()
+    {
+        using (Packet _packet = new Packet((int)ClientPackets.playerEndGame))
+        {
+            SendUDPData(_packet);
+        }
+    }
+
     #endregion
 }

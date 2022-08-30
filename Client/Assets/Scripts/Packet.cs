@@ -31,6 +31,7 @@ public enum ClientPackets
     playerName,
     playerMovement,
     playerShoot,
+    playerEndGame,
 }
 
 public class Packet : IDisposable
