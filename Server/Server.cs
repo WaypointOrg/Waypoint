@@ -16,7 +16,7 @@ namespace GameServer
         public static Dictionary<int, PacketHandler> packetHandlers;
         private static TcpListener tcpListener;
         private static UdpClient udpListener;
-        
+
         // Logic
         public static int connectedPlayers = 0;
         public static int minPlayers = 1; // Minimum amount of players needed to start the game
@@ -27,7 +27,7 @@ namespace GameServer
 
         // Scene
         public static string scenesPath = "Scenes";
-        public static Map currentMap;
+        public static int currentMapId;
         public static Dictionary<int, Map> maps = new Dictionary<int, Map>();
         // public static Map waitingRoomMap;
         // TODO: When checking collisions, if player not in game, check against waitingroom
@@ -151,7 +151,7 @@ namespace GameServer
             }
             string waitingRoomMapPath = Path.Join(scenesPath, "WaitingRoom.unity");
             maps[0] = new Map(waitingRoomMapPath);
-            currentMap = maps[0];
+            currentMapId = 0;
             // waitingRoomMap = new Map(waitingRoomMapPath);
       
             Console.WriteLine("Imported maps.");

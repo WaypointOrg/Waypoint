@@ -1,13 +1,28 @@
 ﻿using System.Numerics;
+using System.Collections.Generic;
 
 namespace GameServer
 {
     class Constants
     {
+
+        public static List<string> defaultNames = new List<string>() {
+            "Alice",
+            "Bob",
+            "Vroumm",
+            "Theel",
+            "Rothkir",
+            "Daru",
+            "Tractor",
+            "Hendrick",
+            "DeltaX",
+            "TMS"
+        };
+
         public const int TICKS_PER_SEC = 30;
         public const float MS_PER_TICK = 1000f / TICKS_PER_SEC;
 
-        public const float WIDTH = 16.0F;   
+        public const float WIDTH = 16.0F;
         public const float HEIGHT = 9.0F;
 
         public static Vector2 WAITING_ROOM_SPAWN = new Vector2(5, 3);
@@ -16,10 +31,10 @@ namespace GameServer
 
         public enum Trajectories
         {
-           Straight,
-           Wavy,
-           Random,
-           Spyral
+            Straight,
+            Wavy,
+            Random,
+            Spyral
         }
 
         public static Gun[] guns = new Gun[]

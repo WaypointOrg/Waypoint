@@ -188,10 +188,26 @@ namespace GameServer
             }
         }
 
-        public void SendIntoGame(string _playerName)
+        public void SendIntoGame()
         {
-            player = new Player(id, _playerName);
+            string _playerName = Constants.defaultNames[id];
 
+            player = new Player(id, _playerName);
+            
+            // Tell all players of new player
+            foreach (Client _client in Server.clients.Values)
+            {
+                if (_client.player != null)
+                {
+                    ServerSend.SpawnPlayer(_client.id, player);
+                }
+            }
+            Server.connectedPlayers += 1;
+        }
+
+        public void SendGameState()
+        {
+            // Tell new player of all players
             foreach (Client _client in Server.clients.Values)
             {
                 if (_client.player != null)
@@ -203,15 +219,25 @@ namespace GameServer
                 }
             }
 
-            foreach (Client _client in Server.clients.Values)
+            // Set map and time
+            if (Server.gameStarted)
             {
-                if (_client.player != null)
-                {
-                    ServerSend.SpawnPlayer(_client.id, player);
-                }
+                ServerSend.StartGame(Server.gameTime / Constants.TICKS_PER_SEC, Server.currentMapId);
             }
 
-            Server.connectedPlayers += 1;
+            // Send all items
+            foreach (Item _item in Server.items.Values)
+            {
+                ServerSend.ItemSpawned(_item, id);
+            }
+
+            // Send all projectiles
+            foreach (Projectile _projectile in Server.projectiles.Values)
+            {
+                ServerSend.ProjectileSpawned(_projectile, id);
+            }
+
+            // TODO: Reset ammo of spectator
         }
 
         private void Disconnect()

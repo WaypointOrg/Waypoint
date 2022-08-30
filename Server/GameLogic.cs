@@ -72,7 +72,7 @@ namespace GameServer
         {
             Console.WriteLine("Game ended");
             Server.gameStarted = false;
-            Server.currentMap = Server.maps[0];
+            Server.currentMapId = 0;
             ServerSend.EndGame();
 
             Server.items.Clear();
@@ -94,12 +94,11 @@ namespace GameServer
             Server.nextItemTime = Server.itemSpawnDelay;
 
             // -1 to not include the waiting room, +1 because maps start at 1
-            int randomMapId = Utilities.RandomInt(Server.maps.Count - 1) + 1;
-            Server.currentMap = Server.maps[randomMapId];
-            ServerSend.StartGame(Server.gameDuration / Constants.TICKS_PER_SEC, randomMapId);
+            Server.currentMapId = Utilities.RandomInt(Server.maps.Count - 1) + 1;
+            ServerSend.StartGame(Server.gameDuration / Constants.TICKS_PER_SEC, Server.currentMapId);
 
             List<int> possibilites = new List<int>();
-            for(int i = 0; i < Server.currentMap.mapSpawns.Count; i++)  possibilites.Add(i);
+            for(int i = 0; i < Server.maps[Server.currentMapId].mapSpawns.Count; i++)  possibilites.Add(i);
 
             foreach (Client _client in Server.clients.Values)
             {
@@ -109,7 +108,7 @@ namespace GameServer
                 if (possibilites.Count != 0)
                 {
                     int _index = Utilities.RandomInt(possibilites.Count);
-                    _position = Server.currentMap.mapSpawns[possibilites[_index]];
+                    _position = Server.maps[Server.currentMapId].mapSpawns[possibilites[_index]];
                     possibilites.RemoveAt(_index);
                 } else {
                     _position = Utilities.RandomFreeCirclePositionInMap(_client.player.radius);
@@ -128,7 +127,7 @@ namespace GameServer
             foreach (Client _client in Server.clients.Values)
             {
                 if (_client.player == null) continue;
-                if (!_client.player.collider.CheckCollision(Server.currentMap.trigger)) return false;
+                if (!_client.player.collider.CheckCollision(Server.maps[Server.currentMapId].trigger)) return false;
                 if (!_client.player.isInWaitingRoom) return false;
             }
 

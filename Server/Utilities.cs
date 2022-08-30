@@ -70,7 +70,7 @@ namespace GameServer
 
         public static bool IsCollidingWithObstacles(RectCollider collider)
         {
-            foreach (RectCollider obstacle in Server.currentMap.obstacles)
+            foreach (RectCollider obstacle in Server.maps[Server.currentMapId].obstacles)
             {
                 if (collider.CheckCollision(obstacle))
                 {
@@ -82,7 +82,7 @@ namespace GameServer
 
         public static bool IsCollidingWithObstacles(CircleCollider collider)
         {
-            foreach (RectCollider obstacle in Server.currentMap.obstacles)
+            foreach (RectCollider obstacle in Server.maps[Server.currentMapId].obstacles)
             {
                 if (collider.CheckCollision(obstacle))
                 {

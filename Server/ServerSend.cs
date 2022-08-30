@@ -92,14 +92,19 @@ namespace GameServer
             }
         }
 
-        public static void StartGame(float _duration, int _mapId)
+        public static void StartGame(float _duration, int _mapId, int? _toClient = null)
         {
             using (Packet _packet = new Packet((int)ServerPackets.startGame))
             {
                 _packet.Write(_duration);
                 _packet.Write(_mapId);
 
-                SendTCPDataToAll(_packet);
+                if (_toClient == null)
+                {
+                    SendTCPDataToAll(_packet);
+                } else {
+                    SendTCPData((int) _toClient, _packet);
+                }
             }
         }
 
@@ -164,7 +169,7 @@ namespace GameServer
             }
         }
 
-        public static void ItemSpawned(Item _item)
+        public static void ItemSpawned(Item _item, int? _toClient = null)
         {
             using (Packet _packet = new Packet((int)ServerPackets.itemSpawned))
             {
@@ -172,7 +177,12 @@ namespace GameServer
                 _packet.Write(_item.position);
                 _packet.Write((int)_item.type);
 
-                SendTCPDataToAll(_packet);
+                if (_toClient == null)
+                {
+                    SendTCPDataToAll(_packet);
+                } else {
+                    SendTCPData((int) _toClient, _packet);
+                }
             }
         }
 
@@ -187,7 +197,7 @@ namespace GameServer
             }
         }
 
-        public static void ProjectileSpawned(Projectile _projectile)
+        public static void ProjectileSpawned(Projectile _projectile, int? _toClient = null)
         {
             using (Packet _packet = new Packet((int)ServerPackets.projectileSpawned))
             {
@@ -195,7 +205,12 @@ namespace GameServer
                 _packet.Write(_projectile.position);
                 _packet.Write((int) _projectile.type);
 
-                SendTCPDataToAll(_packet);
+                if (_toClient == null)
+                {
+                    SendTCPDataToAll(_packet);
+                } else {
+                    SendTCPData((int) _toClient, _packet);
+                }
             }
         }
 
