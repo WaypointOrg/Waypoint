@@ -10,6 +10,7 @@ namespace GameServer
     {
         welcome = 1,
         spawnPlayer,
+        disconnectPlayer,
         setName,
         startGame,
         endGame,

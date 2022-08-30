@@ -81,6 +81,16 @@ namespace GameServer
             }
         }
 
+        public static void DisconnectPlayer(Player _player)
+        {
+            using (Packet _packet = new Packet((int)ServerPackets.disconnectPlayer))
+            {
+                _packet.Write(_player.id);
+
+                SendTCPDataToAll(_packet);
+            }
+        }
+
         public static void SetName(Player _player)
         {
             using (Packet _packet = new Packet((int)ServerPackets.setName))

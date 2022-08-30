@@ -27,6 +27,16 @@ public class ClientHandle : MonoBehaviour
         GameManager.instance.SpawnPlayer(_id, _username, _position, _rotation);
     }
 
+    public static void DisconnectPlayer(Packet _packet)
+    {
+        int _id = _packet.ReadInt();
+
+        Debug.Log($"Player with id {_id} has disconnected.");
+
+        Destroy(GameManager.players[_id].gameObject);
+        GameManager.players.Remove(_id);
+    }
+
     public static void SetName(Packet _packet)
     {
         int _id = _packet.ReadInt();

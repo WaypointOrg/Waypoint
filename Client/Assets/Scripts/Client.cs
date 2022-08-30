@@ -289,6 +289,7 @@ public class Client : MonoBehaviour
         {
             { (int)ServerPackets.welcome, ClientHandle.Welcome },
             { (int)ServerPackets.spawnPlayer, ClientHandle.SpawnPlayer },
+            { (int)ServerPackets.disconnectPlayer, ClientHandle.DisconnectPlayer },
             { (int)ServerPackets.setName, ClientHandle.SetName },
             { (int)ServerPackets.startGame, ClientHandle.StartGame},
             { (int)ServerPackets.endGame, ClientHandle.EndGame},

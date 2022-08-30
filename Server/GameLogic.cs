@@ -68,7 +68,7 @@ namespace GameServer
             Server.nextItemTime = Server.itemSpawnDelay;
         }
 
-        private static void EndGame()
+        public static void EndGame()
         {
             Console.WriteLine("Game ended");
             Server.gameStarted = false;

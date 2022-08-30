@@ -244,13 +244,17 @@ namespace GameServer
         {
             Console.WriteLine($"{tcp.socket.Client.RemoteEndPoint} has disconnected.");
 
+            ServerSend.DisconnectPlayer(player);
+            Server.connectedPlayers -= 1;
+
+            if (Server.connectedPlayers <= 1){
+                GameLogic.EndGame();
+            }
+
             player = null;
 
             tcp.Disconnect();
             udp.Disconnect();
-
-            // TODO: Tell clients a player disconnected
-            Server.connectedPlayers -= 1;
         }
     }
 }
