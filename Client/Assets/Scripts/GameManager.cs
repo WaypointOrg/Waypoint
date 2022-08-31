@@ -82,8 +82,7 @@ public class GameManager : MonoBehaviour
     {
         LoadEndScreen();
         gameUI.SetActive(false);
-
-        Camera.main.GetComponent<CameraSC>().setTarget(null);
+        Camera.main.GetComponent<CameraSC>().ResetMP();
 
         leaderboard.Clear();
 
