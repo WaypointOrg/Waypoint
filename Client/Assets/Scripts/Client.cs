@@ -65,6 +65,30 @@ public class Client : MonoBehaviour
         tcp.Connect();
     }
 
+    public bool TryChangeIp(string _ip)
+    {
+        IPAddress ip;
+        if (IPAddress.TryParse(_ip, out ip))
+        {
+            instance.ip = _ip;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public bool TryChangePort(string _port)
+    {
+        int port;
+        if (int.TryParse(_port, out port) && port > 1 && port < 65535)
+        {
+            instance.port = port;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public class TCP
     {
         public TcpClient socket;
