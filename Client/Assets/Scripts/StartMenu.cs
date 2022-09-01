@@ -7,6 +7,7 @@ public class StartMenu : MonoBehaviour
 {
     public GameObject startMenu;
     public GameObject optionMenu;
+    public GameObject waitingRoomMenu;
 
     public GameObject invalidIpText;
     public GameObject invalidPortText;
@@ -67,5 +68,10 @@ public class StartMenu : MonoBehaviour
             invalidPortText.gameObject.SetActive(true);
             validPort = false;
         }
+    }
+
+    public void ChangeName(string _name)
+    {
+        ClientSend.NameChanged(_name);
     }
 }

@@ -19,19 +19,6 @@ public class Client : MonoBehaviour
     private delegate void PacketHandler(Packet _packet);
     private static Dictionary<int, PacketHandler> packetHandlers;
 
-    // public List<string> defaultNames = new List<string>() {
-    //     "Alice",
-    //     "Bob",
-    //     "Vroumm",
-    //     "Theel",
-    //     "Rothkir",
-    //     "Daru",
-    //     "Tractor",
-    //     "Hendrick",
-    //     "DeltaX",
-    //     "TMS"
-    // };
-
     private void Awake()
     {
         if (instance == null)

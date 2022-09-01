@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
     public Text gameTimeText;
 
     public GameObject gameUI;
+    public GameObject waitingRoomUI;
 
     private void Awake()
     {
@@ -52,23 +53,25 @@ public class GameManager : MonoBehaviour
     public void LoadWaitingRoom()
     {
         SceneManager.LoadScene("WaitingRoom");
+        waitingRoomUI.SetActive(true);
     }
 
     public void LoadEndScreen()
     {
         SceneManager.LoadScene("End Screen");
+        gameUI.SetActive(false);
     }
 
     public void LoadMap(int _mapId)
     {
         SceneManager.LoadScene("Map" + _mapId.ToString());
+        waitingRoomUI.SetActive(false);
+        gameUI.SetActive(true);
     }
     
     public void StartGame(float _duration, int _mapId)
     {
         LoadMap(_mapId);
-
-        gameUI.SetActive(true);
 
         leaderboard.AddPlayers(players);
 
@@ -81,7 +84,6 @@ public class GameManager : MonoBehaviour
     public void EndGame()
     {
         LoadEndScreen();
-        gameUI.SetActive(false);
         Camera.main.GetComponent<CameraSC>().ResetMP();
 
         leaderboard.Clear();
@@ -99,11 +101,6 @@ public class GameManager : MonoBehaviour
 
         gameStarted = false;
         gameTimeText.gameObject.SetActive(false);
-    }
-
-    public void NameChanged(InputField input)
-    {
-        ClientSend.NameChanged(input.text);
     }
 
     public void UpdateAmmo(int ammo_)
