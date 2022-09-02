@@ -28,6 +28,8 @@ public class GameManager : MonoBehaviour
     public GameObject gameUI;
     public GameObject waitingRoomUI;
 
+    public Animator transition;
+
     private void Awake()
     {
         if (instance == null)
@@ -60,19 +62,40 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene("WaitingRoom");
         waitingRoomUI.SetActive(true);
+        transition.SetBool("open", true);
     }
 
     public void LoadEndScreen()
     {
+        transition.SetBool("open", false);
+        StartCoroutine(LoadES());
+    }
+
+    IEnumerator LoadES()
+    {
+        yield return new WaitForSeconds(2);
+
         SceneManager.LoadScene("End Screen");
         gameUI.SetActive(false);
+
+        transition.SetBool("open", true);
     }
 
     public void LoadMap(int _mapId)
     {
+        transition.SetBool("open", false);
+        StartCoroutine(LoadM(_mapId));
+    }
+
+    IEnumerator LoadM(int _mapId)
+    {
+        yield return new WaitForSeconds(2);
+
         SceneManager.LoadScene("Map" + _mapId.ToString());
         waitingRoomUI.SetActive(false);
         gameUI.SetActive(true);
+
+        transition.SetBool("open", true);
     }
 
     public void StartGame(float _duration, int _mapId)
