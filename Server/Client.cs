@@ -247,7 +247,7 @@ namespace GameServer
             ServerSend.DisconnectPlayer(player);
             Server.connectedPlayers -= 1;
 
-            if (Server.connectedPlayers <= 1){
+            if (Server.connectedPlayers <= 1 && Server.gameStarted){
                 GameLogic.EndGame();
             }
 

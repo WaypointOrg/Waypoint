@@ -132,7 +132,10 @@ public class ClientHandle : MonoBehaviour
         Vector2 _position = _packet.ReadVector2();
         int _type = _packet.ReadInt();
 
-        GameManager.instance.ProjectileSpawned(_projectileId, _position, _type);
+        if (!GameManager.instance.endUI.activeSelf)
+        {
+            GameManager.instance.ProjectileSpawned(_projectileId, _position, _type);
+        }
     }
 
     public static void ProjectilePosition(Packet _packet)
@@ -140,7 +143,7 @@ public class ClientHandle : MonoBehaviour
         int _projectileId = _packet.ReadInt();
         Vector2 _position = _packet.ReadVector2();
 
-        if (GameManager.projectiles.ContainsKey(_projectileId))
+        if (GameManager.projectiles.ContainsKey(_projectileId) && !GameManager.instance.endUI.activeSelf)
         {
             GameManager.projectiles[_projectileId].transform.position = _position;
         }
@@ -148,8 +151,11 @@ public class ClientHandle : MonoBehaviour
 
     public static void ProjectileDestroy(Packet _packet)
     {
-        int _projectileId = _packet.ReadInt();
-        GameManager.projectiles[_projectileId].Destroy();
-        GameManager.projectiles.Remove(_projectileId);
+        if (!GameManager.instance.endUI.activeSelf)
+        {
+            int _projectileId = _packet.ReadInt();
+            GameManager.projectiles[_projectileId].Destroy();
+            GameManager.projectiles.Remove(_projectileId);
+        }
     }
 }

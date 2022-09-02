@@ -27,6 +27,8 @@ public class GameManager : MonoBehaviour
 
     public GameObject gameUI;
     public GameObject waitingRoomUI;
+    public GameObject endUI;
+
 
     public Animator transition;
 
@@ -69,6 +71,7 @@ public class GameManager : MonoBehaviour
     {
         transition.SetBool("open", false);
         StartCoroutine(LoadES());
+        endUI.SetActive(true);
     }
 
     IEnumerator LoadES()

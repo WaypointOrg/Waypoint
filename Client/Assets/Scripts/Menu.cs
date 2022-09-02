@@ -90,4 +90,17 @@ public class Menu : MonoBehaviour
         startMenu.SetActive(true);
         GameManager.instance.Disconnect();
     }
+
+    public void Continue()
+    {
+        ClientSend.EndGame();
+
+        foreach (KeyValuePair<int, PlayerManager> player in GameManager.players)
+        {
+            player.Value.gameObject.SetActive(true);
+            player.Value.kills = 0;
+        }
+
+        GameManager.instance.LoadWaitingRoom();
+    }
 }

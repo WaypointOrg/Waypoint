@@ -31,6 +31,7 @@ public class PlayerManager : MonoBehaviour
 
     public void Respawn()
     {
+        if (!GameManager.instance.gameStarted) return;
         // TODO: Respawn animation + Invincibility anims
         gameObject.SetActive(true);
         Debug.Log($"Player {id} respawned");
