@@ -18,6 +18,8 @@ public class StartMenu : MonoBehaviour
     bool validIp;
     bool validPort;
 
+    public Animator transition;
+
     void Start()
     {
         ipField.text = PlayerPrefs.GetString("Ip", "127.0.0.1");
@@ -27,7 +29,7 @@ public class StartMenu : MonoBehaviour
     // Triggered when pressing play from start menu or continue from end screen
     public void ToWaitingRoom()
     {
-        startMenu.SetActive(false);
+        transition.SetBool("open", false);
 
         if (!validIp && !validPort)
         {
@@ -35,8 +37,16 @@ public class StartMenu : MonoBehaviour
             return;
         }
 
+        StartCoroutine(LoadWR());
+    }
+
+    IEnumerator LoadWR()
+    {
+        yield return new WaitForSeconds(2);
+
         Client.instance.ConnectToServer();
 
+        startMenu.SetActive(false);
         GameManager.instance.LoadWaitingRoom();
     }
 
