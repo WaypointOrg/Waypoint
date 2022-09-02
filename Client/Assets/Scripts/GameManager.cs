@@ -50,6 +50,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void LoadEmpty()
+    {
+        gameUI.SetActive(false);
+        SceneManager.LoadScene("Empty");
+    }
+
     public void LoadWaitingRoom()
     {
         SceneManager.LoadScene("WaitingRoom");
@@ -68,7 +74,7 @@ public class GameManager : MonoBehaviour
         waitingRoomUI.SetActive(false);
         gameUI.SetActive(true);
     }
-    
+
     public void StartGame(float _duration, int _mapId)
     {
         LoadMap(_mapId);
@@ -98,6 +104,45 @@ public class GameManager : MonoBehaviour
             Destroy(item.Value.gameObject);
         }
         items.Clear();
+
+        foreach (KeyValuePair<int, Projectile> projectile in projectiles)
+        {
+            Destroy(projectile.Value.gameObject);
+        }
+        projectiles.Clear();
+
+        gameStarted = false;
+        gameTimeText.gameObject.SetActive(false);
+    }
+
+    public void Disconnect()
+    {
+        Client.instance.Disconnect();
+
+        LoadEmpty();
+        waitingRoomUI.SetActive(false);
+        
+        Camera.main.GetComponent<CameraSC>().ResetMP();
+
+        leaderboard.Clear();
+
+        foreach (KeyValuePair<int, PlayerManager> player in players)
+        {
+            Destroy(player.Value.gameObject);
+        }
+        players.Clear();
+
+        foreach (KeyValuePair<int, Item> item in items)
+        {
+            Destroy(item.Value.gameObject);
+        }
+        items.Clear();
+
+        foreach (KeyValuePair<int, Projectile> projectile in projectiles)
+        {
+            Destroy(projectile.Value.gameObject);
+        }
+        projectiles.Clear();
 
         gameStarted = false;
         gameTimeText.gameObject.SetActive(false);

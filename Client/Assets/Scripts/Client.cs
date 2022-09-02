@@ -294,8 +294,10 @@ public class Client : MonoBehaviour
         {
             instance.Disconnect();
 
-            endPoint = null;
+            // endPoint = null;
             socket = null;
+
+            Debug.Log("null endpoint");
         }
     }
     
@@ -323,7 +325,7 @@ public class Client : MonoBehaviour
         Debug.Log("Initialized packets.");
     }
 
-    private void Disconnect()
+    public void Disconnect()
     {
         if (isConnected)
         {
