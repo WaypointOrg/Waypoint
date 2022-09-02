@@ -63,7 +63,10 @@ public class ClientHandle : MonoBehaviour
         int _id = _packet.ReadInt();
         Vector2 _position = _packet.ReadVector2();
 
-        GameManager.players[_id].transform.position = _position;
+        if (GameManager.players.ContainsKey(_id))
+        {
+            GameManager.players[_id].transform.position = _position;
+        }
     }
 
     // Only received from other players.
@@ -71,7 +74,11 @@ public class ClientHandle : MonoBehaviour
     {
         int _id = _packet.ReadInt();
         float _rotation = _packet.ReadFloat();
-        GameManager.players[_id].gun.rotation = Quaternion.Euler(0f, 0f, _rotation);
+
+        if (GameManager.players.ContainsKey(_id))
+        {
+            GameManager.players[_id].gun.rotation = Quaternion.Euler(0f, 0f, _rotation);
+        }
     }
 
     public static void PlayerRespawned(Packet _packet)
@@ -133,7 +140,10 @@ public class ClientHandle : MonoBehaviour
         int _projectileId = _packet.ReadInt();
         Vector2 _position = _packet.ReadVector2();
 
-        GameManager.projectiles[_projectileId].transform.position = _position;
+        if (GameManager.projectiles.ContainsKey(_projectileId))
+        {
+            GameManager.projectiles[_projectileId].transform.position = _position;
+        }
     }
 
     public static void ProjectileDestroy(Packet _packet)

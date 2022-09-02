@@ -9,8 +9,8 @@ public class Client : MonoBehaviour
     public static Client instance;
     public static int dataBufferSize = 4096;
 
-    public string ip = "127.0.0.1";
-    public int port = 26950;
+    public string ip;
+    public int port;
     public int myId = 0;
     public TCP tcp;
     public UDP udp;
@@ -18,19 +18,6 @@ public class Client : MonoBehaviour
     public bool isConnected = false;
     private delegate void PacketHandler(Packet _packet);
     private static Dictionary<int, PacketHandler> packetHandlers;
-
-    // public List<string> defaultNames = new List<string>() {
-    //     "Alice",
-    //     "Bob",
-    //     "Vroumm",
-    //     "Theel",
-    //     "Rothkir",
-    //     "Daru",
-    //     "Tractor",
-    //     "Hendrick",
-    //     "DeltaX",
-    //     "TMS"
-    // };
 
     private void Awake()
     {
@@ -47,6 +34,9 @@ public class Client : MonoBehaviour
 
     private void Start()
     {
+        ip = PlayerPrefs.GetString("Ip", "127.0.0.1");
+        port = PlayerPrefs.GetInt("Port", 26950);
+
         tcp = new TCP();
         udp = new UDP();
     }
@@ -63,6 +53,32 @@ public class Client : MonoBehaviour
         
         isConnected = true;
         tcp.Connect();
+    }
+
+    public bool TryChangeIp(string _ip)
+    {
+        IPAddress ip;
+        if (IPAddress.TryParse(_ip, out ip))
+        {
+            instance.ip = _ip;
+            PlayerPrefs.SetString("Ip", _ip);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public bool TryChangePort(string _port)
+    {        
+        int port;
+        if (int.TryParse(_port, out port) && port > 1 && port < 65535)
+        {
+            instance.port = port;
+            PlayerPrefs.SetInt("Port", port);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public class TCP

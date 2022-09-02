@@ -9,19 +9,18 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        GameObject _gameobject = GameObject.Find("InputField");
-        // inputField = _gameobject.GetComponent<InputField>();
+        GameObject _gameobject = GameObject.Find("UsernameTextField");
+        inputField = _gameobject.GetComponent<InputField>();
     }
 
     private void FixedUpdate()
     {
         LookAtMouse();
 
-        // FIXME
-        // if (!inputField.isFocused)
-        // {
-        SendInputToServer();
-        // }
+        if (!inputField.isFocused)
+        {
+            SendInputToServer();
+        }
     }
 
     void Update()
