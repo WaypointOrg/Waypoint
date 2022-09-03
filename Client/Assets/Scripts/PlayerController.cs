@@ -5,19 +5,24 @@ public class PlayerController : MonoBehaviour
 {
     public float rotation;
     public Transform gun;
-    public InputField inputField;
+    public InputField usernameField;
+
+    private GameObject pauseMenu;
 
     void Start()
     {
         GameObject _gameobject = GameObject.Find("UsernameTextField");
-        inputField = _gameobject.GetComponent<InputField>();
+        usernameField = _gameobject.GetComponent<InputField>();
+                
+        _gameobject = GameObject.Find("MenusUI");
+        pauseMenu = _gameobject.GetComponent<Menu>().pauseMenu;
     }
 
     private void FixedUpdate()
     {
         LookAtMouse();
 
-        if (!inputField.isFocused)
+        if (!usernameField.isFocused && !pauseMenu.activeSelf)
         {
             SendInputToServer();
         }
@@ -25,7 +30,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !pauseMenu.activeSelf)
         {
             //StartCoroutine(Camera.main.GetComponent<CameraShake>().Shake(0.1f, 0.5f));
             ClientSend.Shoot();

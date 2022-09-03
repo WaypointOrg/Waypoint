@@ -293,11 +293,10 @@ public class Client : MonoBehaviour
         private void Disconnect()
         {
             instance.Disconnect();
-
+            
+            // Removed this line to handle disconnections
             // endPoint = null;
             socket = null;
-
-            Debug.Log("null endpoint");
         }
     }
     
