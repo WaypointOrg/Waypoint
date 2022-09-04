@@ -71,13 +71,13 @@ public class GameManager : MonoBehaviour
     {
         transition.SetBool("open", false);
         StartCoroutine(LoadES());
-        endUI.SetActive(true);
     }
 
     IEnumerator LoadES()
     {
         yield return new WaitForSeconds(2);
 
+        endUI.SetActive(true);
         SceneManager.LoadScene("End Screen");
         gameUI.SetActive(false);
 
@@ -86,23 +86,21 @@ public class GameManager : MonoBehaviour
 
     public void LoadMap(int _mapId)
     {
-        transition.SetBool("open", false);
-        StartCoroutine(LoadM(_mapId));
-    }
-
-    IEnumerator LoadM(int _mapId)
-    {
-        yield return new WaitForSeconds(2);
-
         SceneManager.LoadScene("Map" + _mapId.ToString());
         waitingRoomUI.SetActive(false);
         gameUI.SetActive(true);
-
-        transition.SetBool("open", true);
     }
 
     public void StartGame(float _duration, int _mapId)
     {
+        transition.SetBool("open", false);
+        StartCoroutine(StartG(_duration, _mapId));
+    }
+
+    IEnumerator StartG(float _duration, int _mapId)
+    {
+        yield return new WaitForSeconds(2);
+
         LoadMap(_mapId);
 
         leaderboard.AddPlayers(players);
@@ -111,9 +109,19 @@ public class GameManager : MonoBehaviour
         gameTime = _duration;
         gameTimeText.gameObject.SetActive(true);
         Camera.main.GetComponent<CameraSC>().SetMainPlayer(players[Client.instance.myId].gameObject.transform);
+
+        yield return new WaitForSeconds(1);
+
+        transition.SetBool("open", true);
     }
 
     public void EndGame()
+    {
+        transition.SetBool("open", false);
+        StartCoroutine(EndG());
+    }
+
+    IEnumerator EndG()
     {
         LoadEndScreen();
         Camera.main.GetComponent<CameraSC>().ResetMP();
@@ -139,6 +147,10 @@ public class GameManager : MonoBehaviour
 
         gameStarted = false;
         gameTimeText.gameObject.SetActive(false);
+
+        yield return new WaitForSeconds(2);
+
+        transition.SetBool("open", true);
     }
 
     public void Disconnect()
