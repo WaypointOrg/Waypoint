@@ -14,7 +14,7 @@ namespace GameServer
             "Rothkir",
             "Daru",
             "Tractor",
-            "Hendrick",
+            "YOURSELF",
             "DeltaX",
             "TMS"
         };
@@ -48,7 +48,8 @@ namespace GameServer
         new Gun("blowgun", 0, 21, 0.5f, 3f, 3),
         new Gun("randomer", 3, 2, 1, 1f, 10),
         new Gun("cahos", 3, 36, 1, 1f, 1),
-        new Gun("diagunal", 4, 1, 2, 0.1f, 20)};
+        new Gun("diagunal", 4, 1, 2, 0.5f, 20),
+        new Gun("miz", 0, 2, 3, 0.5f, 10)};
     }
 
     public class Gun

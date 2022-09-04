@@ -2307,6 +2307,8 @@ MonoBehaviour:
   - {fileID: 258411825994838532, guid: ab2711f0ea65e42d49162aa783bcf07c, type: 3}
   - {fileID: 2249250767768142850, guid: 11725fd48b6adc183987777b30b42554, type: 3}
   - {fileID: 1396250628144989861, guid: 238dd2b9ae602e6ffa8d408ca243635c, type: 3}
+  - {fileID: 4633688043536676296, guid: 831e91e8c82d30d1a9b32a02f0a01eac, type: 3}
+  - {fileID: 6347980299387279078, guid: 0833ef9ebd9fa01c78ea95c641a76d02, type: 3}
   projectilePrefab: {fileID: 997374906591739097, guid: fab0494cac13888aaba7658dc097d983, type: 3}
   leaderboard: {fileID: 1210559575}
   ammoText: {fileID: 1823417753}

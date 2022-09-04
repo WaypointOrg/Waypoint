@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour
         if (gameStarted)
         {
             gameTime -= Time.deltaTime;
-            gameTimeText.text = Mathf.CeilToInt(gameTime).ToString();
+            gameTimeText.text = Mathf.FloorToInt(gameTime).ToString();
         }
     }
 
