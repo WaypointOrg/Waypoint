@@ -53,17 +53,10 @@ namespace GameServer
 
         private static void AddItem()
         {
-            // TODO: Method to add value to first integer key.
-            int _index = 0;
-            while (true)
-            {
-                if (Server.items.TryAdd(_index, new Item()))
-                {
-                    Server.items[_index].Spawn(_index);
-                    break;
-                }
-                _index += 1;
-            }
+            int _id = Utilities.GetID();
+            Server.items.Add(_id, new Item());
+
+            Server.items[_id].Spawn(_id);
 
             Server.nextItemTime = Server.itemSpawnDelay;
         }
@@ -98,7 +91,7 @@ namespace GameServer
             ServerSend.StartGame(Server.gameDuration / Constants.TICKS_PER_SEC, Server.currentMapId);
 
             List<int> possibilites = new List<int>();
-            for(int i = 0; i < Server.maps[Server.currentMapId].mapSpawns.Count; i++)  possibilites.Add(i);
+            for (int i = 0; i < Server.maps[Server.currentMapId].mapSpawns.Count; i++) possibilites.Add(i);
 
             foreach (Client _client in Server.clients.Values)
             {
@@ -110,7 +103,9 @@ namespace GameServer
                     int _index = Utilities.RandomInt(possibilites.Count);
                     _position = Server.maps[Server.currentMapId].mapSpawns[possibilites[_index]];
                     possibilites.RemoveAt(_index);
-                } else {
+                }
+                else
+                {
                     _position = Utilities.RandomFreeGoodPosition(_client.player.radius);
                 }
 

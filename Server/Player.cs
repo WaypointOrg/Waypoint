@@ -99,12 +99,12 @@ namespace GameServer
                 isRespawning = false;
             }
 
-            if(!canShoot)
+            if (!canShoot)
             {
                 shootDelay -= 1;
             }
 
-            if(shootDelay <= 0)
+            if (shootDelay <= 0)
             {
                 shootDelay = currentGun.cooldown * Constants.TICKS_PER_SEC;
                 canShoot = true;
@@ -130,7 +130,7 @@ namespace GameServer
             {
                 movement += movement_x;
             }
-            
+
             // Console.WriteLine(movement_y);
             collider.Move(position + movement_y);
             if (!Utilities.IsCollidingWithObstacles(collider))
@@ -166,19 +166,20 @@ namespace GameServer
                     Server.items.Remove(item.itemId);
 
                     //BIG TODO
-                    if(Constants.guns[item.type]._name == currentGun._name)
+                    if (Constants.guns[item.type]._name == currentGun._name)
                     {
                         myAmmo += Constants.guns[item.type].ammo;
-                    }else
+                    }
+                    else
                     {
                         currentGun = Constants.guns[item.type];
                         myAmmo = currentGun.ammo;
                         shootDelay = currentGun.cooldown * Constants.TICKS_PER_SEC;
                         canShoot = true;
                     }
-                    
+
                     ServerSend.PlayerAmmo(this);
-            
+
                     Console.WriteLine(username + " now has a " + currentGun._name);
 
                     ServerSend.ItemPickedUp(item, this);
@@ -204,19 +205,21 @@ namespace GameServer
         }
 
         public void Shoot()
-        { 
-            if(!canShoot)
+        {
+            if (!canShoot)
             {
                 return;
-            }else
+            }
+            else
             {
                 canShoot = false;
             }
 
-            if(myAmmo <= 0)
+            if (myAmmo <= 0)
             {
                 return;
-            }else
+            }
+            else
             {
                 myAmmo -= 1;
                 ServerSend.PlayerAmmo(this);
@@ -264,18 +267,16 @@ namespace GameServer
         {
             int id_ = Utilities.GetID();
 
-            if (Server.projectiles.TryAdd(id_, new Projectile()))
-            {
-                Projectile _projectile = Server.projectiles[id_];
-                _projectile.Spawn(
-                    id_,
-                    position + direction * (radius + _projectile.radius),
-                    direction,
-                    currentGun.trajectory,
-                    currentGun.bulletSpeed,
-                    this);
-                ServerSend.ProjectileSpawned(_projectile);
-            }
+            Server.projectiles.Add(id_, new Projectile());
+            Projectile _projectile = Server.projectiles[id_];
+            _projectile.Spawn(
+                id_,
+                position + direction * (radius + _projectile.radius),
+                direction,
+                currentGun.trajectory,
+                currentGun.bulletSpeed,
+                this);
+            ServerSend.ProjectileSpawned(_projectile);
         }
 
 

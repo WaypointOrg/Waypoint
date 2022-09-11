@@ -131,20 +131,23 @@ public class GameManager : MonoBehaviour
 
         leaderboard.Clear();
 
-        foreach (KeyValuePair<int, PlayerManager> player in players)
+        foreach (PlayerManager player in players.Values)
         {
-            player.Value.gameObject.SetActive(false);
+            if (player == null) continue;
+            player.gameObject.SetActive(false);
         }
 
-        foreach (KeyValuePair<int, Item> item in items)
+        foreach (Item item in items.Values)
         {
-            Destroy(item.Value.gameObject);
+            if (item == null) continue;
+            Destroy(item.gameObject);
         }
         items.Clear();
 
-        foreach (KeyValuePair<int, Projectile> projectile in projectiles)
+        foreach (Projectile projectile in projectiles.Values)
         {
-            Destroy(projectile.Value.gameObject);
+            if (projectile == null) continue;
+            Destroy(projectile.gameObject);
         }
         projectiles.Clear();
 
@@ -167,21 +170,24 @@ public class GameManager : MonoBehaviour
 
         leaderboard.Clear();
 
-        foreach (KeyValuePair<int, PlayerManager> player in players)
+        foreach (PlayerManager player in players.Values)
         {
-            Destroy(player.Value.gameObject);
+            if (player == null) continue;
+            Destroy(player.gameObject);
         }
         players.Clear();
 
-        foreach (KeyValuePair<int, Item> item in items)
+        foreach (Item item in items.Values)
         {
-            Destroy(item.Value.gameObject);
+            if (item == null) continue;
+            Destroy(item.gameObject);
         }
         items.Clear();
 
-        foreach (KeyValuePair<int, Projectile> projectile in projectiles)
+        foreach (Projectile projectile in projectiles.Values)
         {
-            Destroy(projectile.Value.gameObject);
+            if (projectile == null) continue;
+            Destroy(projectile.gameObject);
         }
         projectiles.Clear();
 
