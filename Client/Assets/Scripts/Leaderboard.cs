@@ -24,10 +24,6 @@ public class Leaderboard : MonoBehaviour
             entry.username.text = pair.Value.username;
             entry.kills.text = "0";
 
-            // float y = -entry.rectTransform.rect.height / 2 - entries.Count * entry.rectTransform.rect.height;
-            // entry.targetPosition = new Vector2(0, y);
-            // entry.rectTransform.anchoredPosition = new Vector2(0, y);
-
             entries[pair.Key] = entry;
         }
         
@@ -36,9 +32,9 @@ public class Leaderboard : MonoBehaviour
 
     public void Clear()
     {
-        foreach (KeyValuePair<int, LeaderboardEntry> entry in entries)
+        foreach (LeaderboardEntry entry in entries.Values)
         {
-            Destroy(entry.Value.gameObject);
+            Destroy(entry.gameObject);
         }
         entries.Clear();
     }

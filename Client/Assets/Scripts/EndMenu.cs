@@ -8,9 +8,9 @@ public class EndMenu : MonoBehaviour
     {
         ClientSend.EndGame();
 
-        foreach (KeyValuePair<int, PlayerManager> player in GameManager.players)
+        foreach (PlayerManager player in GameManager.players.Values)
         {
-            player.Value.gameObject.SetActive(true);
+            player.gameObject.SetActive(true);
         }
 
         GameManager.instance.LoadWaitingRoom();

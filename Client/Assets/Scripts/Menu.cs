@@ -107,10 +107,10 @@ public class Menu : MonoBehaviour
     {
         ClientSend.EndGame();
 
-        foreach (KeyValuePair<int, PlayerManager> player in GameManager.players)
+        foreach (PlayerManager player in GameManager.players.Values)
         {
-            player.Value.gameObject.SetActive(true);
-            player.Value.kills = 0;
+            player.gameObject.SetActive(true);
+            player.kills = 0;
         }
 
         GameManager.instance.LoadWaitingRoom();
