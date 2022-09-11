@@ -16,7 +16,9 @@ public class GameManager : MonoBehaviour
     public GameObject localPlayerPrefab;
     public GameObject playerPrefab;
     public List<GameObject> itemsPrefab;
-    public GameObject projectilePrefab;
+
+    public GameObject friendlyProjectilePrefab;
+    public GameObject ennemyProjectilePrefab;
 
     public Leaderboard leaderboard;
     public Text ammoText;
@@ -28,6 +30,7 @@ public class GameManager : MonoBehaviour
     public GameObject gameUI;
     public GameObject waitingRoomUI;
     public GameObject endUI;
+    public InputField usernameField;
 
 
     public Animator transition;
@@ -207,6 +210,7 @@ public class GameManager : MonoBehaviour
         _playerManager.Initialize(_id, _username);
 
         players.Add(_id, _playerManager);
+        usernameField.text = _username;
     }
 
     public void ItemSpawned(int _itemId, Vector2 _position, int _type)
@@ -218,10 +222,19 @@ public class GameManager : MonoBehaviour
         items.Add(_itemId, _item.GetComponent<Item>());
     }
 
-    public void ProjectileSpawned(int _projectileId, Vector2 _position, int _type)
+    public void ProjectileSpawned(int _projectileId, Vector2 _position, int _ownerId)
     {
-        GameObject _projectile = Instantiate(projectilePrefab, _position, projectilePrefab.transform.rotation);
-        _projectile.GetComponent<Projectile>().Initialize(_projectileId, _type);
+        GameObject _projectile;
+        if (_ownerId == Client.instance.myId)
+        {
+            _projectile = Instantiate(friendlyProjectilePrefab, _position, friendlyProjectilePrefab.transform.rotation);
+        } 
+        else 
+        {
+            _projectile = Instantiate(ennemyProjectilePrefab, _position, ennemyProjectilePrefab.transform.rotation);
+        }
+
+        _projectile.GetComponent<Projectile>().Initialize(_projectileId);
         projectiles.Add(_projectileId, _projectile.GetComponent<Projectile>());
     }
 }

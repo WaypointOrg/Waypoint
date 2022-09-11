@@ -29,6 +29,7 @@ namespace GameServer
         // TODO: Use waiting room spawn points
         // void SendToWaitingRoom() ?
 
+        // TODO: Clean up this 
         public enum Trajectories
         {
             Straight,

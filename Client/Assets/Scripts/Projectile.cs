@@ -5,14 +5,12 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     public int projectileId;
-    public int type;
     public GameObject explosionPrefab;
 
 
-    public void Initialize(int _projectileId, int _type)
+    public void Initialize(int _projectileId)
     {
         projectileId = _projectileId;
-        type = _type;
     }
 
     public void Destroy()

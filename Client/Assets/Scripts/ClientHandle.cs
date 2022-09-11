@@ -130,11 +130,11 @@ public class ClientHandle : MonoBehaviour
     {
         int _projectileId = _packet.ReadInt();
         Vector2 _position = _packet.ReadVector2();
-        int _type = _packet.ReadInt();
+        int _ownerId = _packet.ReadInt();
 
         if (!GameManager.instance.endUI.activeSelf)
         {
-            GameManager.instance.ProjectileSpawned(_projectileId, _position, _type);
+            GameManager.instance.ProjectileSpawned(_projectileId, _position, _ownerId);
         }
     }
 
