@@ -18,7 +18,7 @@ namespace GameServer
         {
             itemId = _itemId;
             type = (int)Utilities.RandomInt(Constants.guns.Length);          
-            position = Utilities.RandomFreeCirclePositionInMap(radius);
+            position = Utilities.RandomFreeGoodPosition(radius);
             collider = new CircleCollider(position, radius);
             ServerSend.ItemSpawned(this);
         }

@@ -92,7 +92,7 @@ namespace GameServer
                 ServerSend.PlayerRespawned(this);
 
                 // TODO: Respawn on respawn point ?
-                Vector2 _position = Utilities.RandomFreeCirclePositionInMap(radius);
+                Vector2 _position = Utilities.RandomFreeGoodPosition(radius);
                 Teleport(_position);
 
                 invicibilityTimer = invicibilityTime;

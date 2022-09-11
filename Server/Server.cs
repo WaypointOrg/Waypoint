@@ -37,8 +37,8 @@ namespace GameServer
         // Items
         public static Dictionary<int, Item> items = new Dictionary<int, Item>();
         public static int maxItems = 5;
-        public static int itemSpawnDelay = 5 * Constants.TICKS_PER_SEC; // Delay between items, in ticks.
-        public static int nextItemTime = itemSpawnDelay;
+        public static float itemSpawnDelay = (float) 5 * Constants.TICKS_PER_SEC; // Delay between items, in ticks.
+        public static float nextItemTime = itemSpawnDelay;
 
         // Projectiles
         public static Dictionary<int, Projectile> projectiles = new Dictionary<int, Projectile>();

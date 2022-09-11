@@ -111,7 +111,7 @@ namespace GameServer
                     _position = Server.maps[Server.currentMapId].mapSpawns[possibilites[_index]];
                     possibilites.RemoveAt(_index);
                 } else {
-                    _position = Utilities.RandomFreeCirclePositionInMap(_client.player.radius);
+                    _position = Utilities.RandomFreeGoodPosition(_client.player.radius);
                 }
 
                 _client.player.isInWaitingRoom = false;
