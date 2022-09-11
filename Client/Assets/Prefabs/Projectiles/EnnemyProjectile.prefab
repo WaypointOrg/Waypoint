@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectileId: 0
-  explosionPrefab: {fileID: 3054179495669604345, guid: c3d89132451525076a2068f34dc0b268, type: 3}
+  explosionPrefab: {fileID: 3054179495669604345, guid: 68c739032adf53bf59fb6d7aefd3ecb8, type: 3}
 --- !u!96 &5566384908743959687
 TrailRenderer:
   serializedVersion: 2
