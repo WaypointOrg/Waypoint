@@ -29,10 +29,6 @@ namespace GameServer
         public static string scenesPath = "Scenes";
         public static int currentMapId;
         public static Dictionary<int, Map> maps = new Dictionary<int, Map>();
-        // public static Map waitingRoomMap;
-        // TODO: When checking collisions, if player not in game, check against waitingroom
-        // => When coordinates, bool isinwaitingroom
-        // For now, joining in the middle of a game spawns you in the game
 
         // Items
         public static Dictionary<int, Item> items = new Dictionary<int, Item>();
