@@ -20,7 +20,7 @@ namespace GameServer
         float shootDelay = Constants.guns[0].cooldown * Constants.TICKS_PER_SEC;
         //public float dmg;
 
-        private float moveSpeed = 4f / Constants.TICKS_PER_SEC;
+        private float moveSpeed = 6f / Constants.TICKS_PER_SEC;
         private bool[] inputs;
 
         public CircleCollider collider;
@@ -235,14 +235,14 @@ namespace GameServer
                 //the number is odd
                 float side = MathF.Floor(number / 2);
 
-                SummonProjectile(_direction);
+                SummonProjectile(_direction, 1);
 
                 for (int i = 0; i < side; i++)
                 {
                     Vector2 deltaDir1 = new Vector2((float)Math.Cos((rotation + angle * (i + 1)) * (Math.PI / 180)), (float)Math.Sin((rotation + angle * (i + 1)) * (Math.PI / 180)));
                     Vector2 deltaDir2 = new Vector2((float)Math.Cos((rotation - angle * (i + 1)) * (Math.PI / 180)), (float)Math.Sin((rotation - angle * (i + 1)) * (Math.PI / 180)));
-                    SummonProjectile(deltaDir1);
-                    SummonProjectile(deltaDir2);
+                    SummonProjectile(deltaDir1, i);
+                    SummonProjectile(deltaDir2, i);
                 }
             }
             else
@@ -254,13 +254,13 @@ namespace GameServer
                 {
                     Vector2 deltaDir1 = new Vector2((float)Math.Cos((rotation + angle * (i + 1)) * (Math.PI / 180)), (float)Math.Sin((rotation + angle * (i + 1)) * (Math.PI / 180)));
                     Vector2 deltaDir2 = new Vector2((float)Math.Cos((rotation - angle * (i + 1)) * (Math.PI / 180)), (float)Math.Sin((rotation - angle * (i + 1)) * (Math.PI / 180)));
-                    SummonProjectile(deltaDir1);
-                    SummonProjectile(deltaDir2);
+                    SummonProjectile(deltaDir1, i);
+                    SummonProjectile(deltaDir2, i);
                 }
             }
         }
 
-        void SummonProjectile(Vector2 direction)
+        void SummonProjectile(Vector2 direction, int inst)
         {
             int id_ = Utilities.GetID();
 
@@ -273,6 +273,7 @@ namespace GameServer
                     direction,
                     currentGun.trajectory,
                     currentGun.bulletSpeed,
+                    inst,
                     this);
                 ServerSend.ProjectileSpawned(_projectile);
             }

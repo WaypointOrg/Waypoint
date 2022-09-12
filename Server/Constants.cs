@@ -49,7 +49,9 @@ namespace GameServer
         new Gun("randomer", 3, 2, 1, 1f, 10),
         new Gun("cahos", 3, 36, 1, 1f, 1),
         new Gun("diagunal", 4, 1, 2, 0.5f, 20),
-        new Gun("miz", 0, 2, 3, 0.5f, 10)};
+        new Gun("miz", 0, 2, 3, 0.5f, 10),
+        new Gun("crown", 5, 10, 0.5f, 1f, 3),
+        new Gun("crossfire", 6, 4, 0.5f, 1f, 5)};
     }
 
     public class Gun
