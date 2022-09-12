@@ -22,23 +22,19 @@ namespace GameServer
         public static int minPlayers = 1; // Minimum amount of players needed to start the game
         public static bool gameStarted = false;
 
-        public static int gameDuration = 60  * Constants.TICKS_PER_SEC; // Duration of a game, in ticks.
+        public static int gameDuration = 120  * Constants.TICKS_PER_SEC; // Duration of a game, in ticks.
         public static int gameTime = gameDuration; // Time left of the game, in ticks.
 
         // Scene
         public static string scenesPath = "Scenes";
         public static int currentMapId;
         public static Dictionary<int, Map> maps = new Dictionary<int, Map>();
-        // public static Map waitingRoomMap;
-        // TODO: When checking collisions, if player not in game, check against waitingroom
-        // => When coordinates, bool isinwaitingroom
-        // For now, joining in the middle of a game spawns you in the game
 
         // Items
         public static Dictionary<int, Item> items = new Dictionary<int, Item>();
         public static int maxItems = 5;
-        public static int itemSpawnDelay = 5 * Constants.TICKS_PER_SEC; // Delay between items, in ticks.
-        public static int nextItemTime = itemSpawnDelay;
+        public static float itemSpawnDelay = (float) 5 * Constants.TICKS_PER_SEC; // Delay between items, in ticks.
+        public static float nextItemTime = itemSpawnDelay;
 
         // Projectiles
         public static Dictionary<int, Projectile> projectiles = new Dictionary<int, Projectile>();

@@ -642,7 +642,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &187897931
@@ -2309,9 +2309,8 @@ MonoBehaviour:
   - {fileID: 1396250628144989861, guid: 238dd2b9ae602e6ffa8d408ca243635c, type: 3}
   - {fileID: 4633688043536676296, guid: 831e91e8c82d30d1a9b32a02f0a01eac, type: 3}
   - {fileID: 6347980299387279078, guid: 0833ef9ebd9fa01c78ea95c641a76d02, type: 3}
-  - {fileID: 488347557929751483, guid: 0dc478ec12791a8718798a018b95316f, type: 3}
-  - {fileID: 1019527761567035810, guid: be0f954ff6a87451ca4347e9848332f4, type: 3}
-  projectilePrefab: {fileID: 997374906591739097, guid: fab0494cac13888aaba7658dc097d983, type: 3}
+  friendlyProjectilePrefab: {fileID: 997374906591739097, guid: 90bc44a89cfee65e193dbad0f23a041d, type: 3}
+  ennemyProjectilePrefab: {fileID: 997374906591739097, guid: fab0494cac13888aaba7658dc097d983, type: 3}
   leaderboard: {fileID: 1210559575}
   ammoText: {fileID: 1823417753}
   gameStarted: 0
@@ -2320,6 +2319,7 @@ MonoBehaviour:
   gameUI: {fileID: 665789477}
   waitingRoomUI: {fileID: 587810901}
   endUI: {fileID: 1682089029}
+  usernameField: {fileID: 1236654062}
   transition: {fileID: 766437148}
 --- !u!4 &485103470
 Transform:
@@ -2912,7 +2912,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Enter text...
+  m_Text: Username...
 --- !u!222 &586380980
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3465,7 +3465,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 11
   m_TargetDisplay: 0
 --- !u!224 &665789481
 RectTransform:
@@ -3748,7 +3748,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &734075697
@@ -5433,7 +5433,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &1040781906
@@ -5921,7 +5921,7 @@ MonoBehaviour:
   m_CaretColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_CustomCaretColor: 0
   m_SelectionColor: {r: 0.65882355, g: 0.80784315, b: 1, a: 0.7529412}
-  m_Text: Bob
+  m_Text: 
   m_CaretBlinkRate: 0.85
   m_CaretWidth: 1
   m_ReadOnly: 0
@@ -7004,7 +7004,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &1510351151

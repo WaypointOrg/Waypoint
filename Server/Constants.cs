@@ -22,13 +22,14 @@ namespace GameServer
         public const int TICKS_PER_SEC = 30;
         public const float MS_PER_TICK = 1000f / TICKS_PER_SEC;
 
-        public const float WIDTH = 16.0F;
-        public const float HEIGHT = 9.0F;
+        public const float WIDTH = 25f;
+        public const float HEIGHT = 18f;
 
         public static Vector2 WAITING_ROOM_SPAWN = new Vector2(5, 3);
         // TODO: Use waiting room spawn points
         // void SendToWaitingRoom() ?
 
+        // TODO: Clean up this 
         public enum Trajectories
         {
             Straight,

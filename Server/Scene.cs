@@ -49,7 +49,7 @@ namespace GameServer
             objects = new Dictionary<string, dynamic>();
             foreach (var f in files)
             {
-                string[] splits = f.Split(Environment.NewLine, 2);
+                string[] splits = f.Split("\n", 2);
                 string header = splits[0];
                 string document = splits[1];
                 string object_id = header.Split("&")[1];

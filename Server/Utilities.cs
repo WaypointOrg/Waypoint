@@ -52,6 +52,35 @@ namespace GameServer
             }
         }
 
+        // Returns position the furthest away from all items and players among 20 random free positions
+        public static Vector2 RandomFreeGoodPosition(float _radius)
+        {
+            Vector2 bestPosition = Vector2.Zero;
+            float bestDistance = 0f;
+            for (int i = 0; i < 20; i++)
+            {
+                Vector2 _position = RandomFreeCirclePositionInMap(_radius);
+                float smallestDistance = 10000f;
+                foreach (Item item in Server.items.Values)
+                {
+                    float distance = Vector2.Distance(item.position, _position);
+                    smallestDistance = MathF.Min(smallestDistance, distance);
+                }
+                foreach (Client client in Server.clients.Values)
+                {
+                    if (client.player == null) continue;
+                    float distance = Vector2.Distance(client.player.position, _position);
+                    smallestDistance = MathF.Min(smallestDistance, distance);
+                }
+                if (bestDistance < smallestDistance)
+                {
+                    bestDistance = smallestDistance;
+                    bestPosition = _position;
+                }
+            }
+            return bestPosition;
+        }
+
         public static Vector2 RandomFreeCirclePositionInMap(float _radius)
         {
             Vector2 position = new Vector2();
@@ -62,7 +91,6 @@ namespace GameServer
                 CircleCollider _collider = new CircleCollider(position, _radius);
 
                 _placeable = !IsCollidingWithObstacles(_collider);
-                // TODO: Not spawn close to players
             }
             return position;
         }

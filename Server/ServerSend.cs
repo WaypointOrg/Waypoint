@@ -213,7 +213,7 @@ namespace GameServer
             {
                 _packet.Write(_projectile.projectileId);
                 _packet.Write(_projectile.position);
-                _packet.Write((int) _projectile.type);
+                _packet.Write(_projectile.owner.id);
 
                 if (_toClient == null)
                 {

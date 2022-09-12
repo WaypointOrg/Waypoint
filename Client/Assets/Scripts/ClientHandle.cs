@@ -106,11 +106,11 @@ public class ClientHandle : MonoBehaviour
 
     public static void ItemSpawned(Packet _packet)
     {
-        int itemId = _packet.ReadInt();
+        int _itemId = _packet.ReadInt();
         Vector2 _position = _packet.ReadVector2();
         int _type = _packet.ReadInt();
 
-        GameManager.instance.ItemSpawned(itemId, _position, _type);
+        GameManager.instance.ItemSpawned(_itemId, _position, _type);
     }
 
     public static void ItemPickedUp(Packet _packet)
@@ -118,8 +118,7 @@ public class ClientHandle : MonoBehaviour
         int _itemId = _packet.ReadInt();
         int _byPlayer = _packet.ReadInt();
 
-        // TODO: Add item to player.
-        if(GameManager.items.ContainsKey(_itemId))
+        if(GameManager.items.ContainsKey(_itemId) && GameManager.items[_itemId] != null)
         {
             Destroy(GameManager.items[_itemId].gameObject);
             GameManager.items.Remove(_itemId);
@@ -130,11 +129,11 @@ public class ClientHandle : MonoBehaviour
     {
         int _projectileId = _packet.ReadInt();
         Vector2 _position = _packet.ReadVector2();
-        int _type = _packet.ReadInt();
+        int _ownerId = _packet.ReadInt();
 
         if (!GameManager.instance.endUI.activeSelf)
         {
-            GameManager.instance.ProjectileSpawned(_projectileId, _position, _type);
+            GameManager.instance.ProjectileSpawned(_projectileId, _position, _ownerId);
         }
     }
 
