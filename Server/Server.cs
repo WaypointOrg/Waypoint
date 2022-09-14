@@ -45,7 +45,7 @@ namespace GameServer
             MaxPlayers = _maxPlayers;
             Port = _port;
 
-            Console.WriteLine("Testing auto deployment");
+            Console.WriteLine("Testing auto deployment.");
             Console.WriteLine("Starting server...");
             InitializeServerData();
 
