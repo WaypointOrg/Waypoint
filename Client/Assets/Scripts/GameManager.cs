@@ -102,7 +102,17 @@ public class GameManager : MonoBehaviour
 
     IEnumerator StartG(float _duration, int _mapId)
     {
+        foreach (KeyValuePair<int,PlayerManager> player_ in players)
+        {
+            player_.Value.gameObject.SetActive(false);
+        }
+
         yield return new WaitForSeconds(2);
+
+        foreach (KeyValuePair<int,PlayerManager> player_ in players)
+        {
+            player_.Value.gameObject.SetActive(true);
+        }
 
         LoadMap(_mapId);
 
