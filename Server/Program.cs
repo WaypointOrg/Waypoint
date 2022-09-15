@@ -12,10 +12,10 @@ namespace GameServer
             Console.Title = "Game Server";
             isRunning = true;
 
+            Server.Start(50, 26950);
+
             Thread mainThread = new Thread(new ThreadStart(MainThread));
             mainThread.Start();
-
-            Server.Start(50, 26950);
         }
 
         private static void MainThread()
