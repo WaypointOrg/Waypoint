@@ -63,7 +63,8 @@ namespace GameServer
 
         public static void EndGame()
         {
-            Console.WriteLine("Game ended");
+            Utilities.Log("Ending game");
+            
             Server.gameStarted = false;
             Server.currentMapId = 0;
             ServerSend.EndGame();
@@ -82,6 +83,8 @@ namespace GameServer
 
         private static void StartGame()
         {
+            Utilities.Log("Starting game");
+
             Server.gameStarted = true;
             Server.gameTime = Server.gameDuration;
             Server.nextItemTime = Server.itemSpawnDelay;
@@ -126,7 +129,6 @@ namespace GameServer
                 if (!_client.player.isInWaitingRoom) return false;
             }
 
-            Console.WriteLine("Starting Conditions Met");
             return true;
         }
     }

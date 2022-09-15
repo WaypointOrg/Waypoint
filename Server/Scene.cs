@@ -23,7 +23,7 @@ namespace GameServer
         public Map(string _path)
         {
             path = _path;
-            Console.WriteLine("Loading scene " + path);
+            Utilities.Log("Loading scene " + path);
             LoadFromFile();
         }
 

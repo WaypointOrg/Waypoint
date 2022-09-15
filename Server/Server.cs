@@ -45,8 +45,8 @@ namespace GameServer
             MaxPlayers = _maxPlayers;
             Port = _port;
 
-            Console.WriteLine("Testing auto deployment.");
-            Console.WriteLine("Starting server...");
+            Utilities.Log("Starting server...");
+
             InitializeServerData();
 
             tcpListener = new TcpListener(IPAddress.Any, Port);
@@ -56,14 +56,14 @@ namespace GameServer
             udpListener = new UdpClient(Port);
             udpListener.BeginReceive(UDPReceiveCallback, null);
 
-            Console.WriteLine($"Server started on port {Port}.");
+            Utilities.Log($"Server started on port {Port}.");
         }
 
         private static void TCPConnectCallback(IAsyncResult _result)
         {
             TcpClient _client = tcpListener.EndAcceptTcpClient(_result);
             tcpListener.BeginAcceptTcpClient(TCPConnectCallback, null);
-            Console.WriteLine($"Incoming connection from {_client.Client.RemoteEndPoint}...");
+            Utilities.Log($"Incoming connection from {_client.Client.RemoteEndPoint}...");
 
             for (int i = 1; i <= MaxPlayers; i++)
             {
@@ -74,7 +74,7 @@ namespace GameServer
                 }
             }
 
-            Console.WriteLine($"{_client.Client.RemoteEndPoint} failed to connect: Server full!");
+            Utilities.Log($"{_client.Client.RemoteEndPoint} failed to connect: Server full!");
         }
 
         private static void UDPReceiveCallback(IAsyncResult _result)
@@ -113,7 +113,7 @@ namespace GameServer
             }
             catch (Exception _ex)
             {
-                Console.WriteLine($"Error receiving UDP data: {_ex}");
+                Utilities.Log($"Error receiving UDP data: {_ex}");
             }
         }
 
@@ -128,7 +128,7 @@ namespace GameServer
             }
             catch (Exception _ex)
             {
-                Console.WriteLine($"Error sending data to {_clientEndPoint} via UDP: {_ex}");
+                Utilities.Log($"Error sending data to {_clientEndPoint} via UDP: {_ex}");
             }
         }
 
@@ -139,7 +139,7 @@ namespace GameServer
                 clients.Add(i, new Client(i));
             }
 
-            Console.WriteLine("Importing maps...");
+            Utilities.Log("Importing maps...");
 
             string mapsPath = Path.Join(scenesPath, "Maps");
             foreach (string path in Directory.GetFiles(mapsPath)) {
@@ -149,9 +149,8 @@ namespace GameServer
             string waitingRoomMapPath = Path.Join(scenesPath, "WaitingRoom.unity");
             maps[0] = new Map(waitingRoomMapPath);
             currentMapId = 0;
-            // waitingRoomMap = new Map(waitingRoomMapPath);
       
-            Console.WriteLine("Imported maps.");
+            Utilities.Log("Imported maps.");
 
             packetHandlers = new Dictionary<int, PacketHandler>()
             {
@@ -161,7 +160,7 @@ namespace GameServer
                 { (int)ClientPackets.playerShoot,  ServerHandle.PlayerShoot},
                 { (int)ClientPackets.playerEndGame,  ServerHandle.PlayerEndGame},
             };
-            Console.WriteLine("Initialized packets.");
+            Utilities.Log("Initialized packets.");
         }
     }
 }

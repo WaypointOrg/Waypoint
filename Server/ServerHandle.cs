@@ -10,17 +10,17 @@ namespace GameServer
         {
             int _clientIdCheck = _packet.ReadInt();
 
-            Console.WriteLine($"{Server.clients[_fromClient].tcp.socket.Client.RemoteEndPoint} connected successfully and is now player {_fromClient}.");
+            Utilities.Log($"{Server.clients[_fromClient].tcp.socket.Client.RemoteEndPoint} connected successfully and is now player {_fromClient}.");
             if (_fromClient != _clientIdCheck)
             {
-                Console.WriteLine($"Player (ID: {_fromClient}) has assumed the wrong client ID ({_clientIdCheck})!");
+                Utilities.Log($"Player (ID: {_fromClient}) has assumed the wrong client ID ({_clientIdCheck})!");
             }
 
             if (!Server.gameStarted)
             {
                 Server.clients[_fromClient].SendIntoGame();
             } else {
-                Console.WriteLine($"Player (ID: {_fromClient}) is spectating!");
+                Utilities.Log($"Player (ID: {_fromClient}) is spectating!");
             }
             
             Server.clients[_fromClient].SendGameState();

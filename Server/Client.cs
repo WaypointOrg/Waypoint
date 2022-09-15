@@ -62,7 +62,7 @@ namespace GameServer
                 }
                 catch (Exception _ex)
                 {
-                    Console.WriteLine($"Error sending data to player {id} via TCP: {_ex}");
+                    Utilities.Log($"Error sending data to player {id} via TCP: {_ex}");
                 }
             }
 
@@ -85,7 +85,7 @@ namespace GameServer
                 }
                 catch (Exception _ex)
                 {
-                    Console.WriteLine($"Error receiving TCP data: {_ex}");
+                    Utilities.Log($"Error receiving TCP data: {_ex}");
                     Server.clients[id].Disconnect();
                 }
             }
@@ -242,12 +242,14 @@ namespace GameServer
 
         private void Disconnect()
         {
-            Console.WriteLine($"{tcp.socket.Client.RemoteEndPoint} has disconnected.");
+            Utilities.Log($"{tcp.socket.Client.RemoteEndPoint} has disconnected.");
 
             ServerSend.DisconnectPlayer(player);
             Server.connectedPlayers -= 1;
 
-            if (Server.connectedPlayers <= 1 && Server.gameStarted){
+            if (Server.connectedPlayers <= 1 && Server.gameStarted)
+            {
+                Utilities.Log($"Ending game because only one player is left.");
                 GameLogic.EndGame();
             }
 

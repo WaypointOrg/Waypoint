@@ -1,6 +1,7 @@
 using System;
 using System.Numerics;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace GameServer
 {
@@ -96,6 +97,7 @@ namespace GameServer
         }
         #endregion
 
+        #region Collisions
         public static bool IsCollidingWithObstacles(RectCollider collider)
         {
             foreach (RectCollider obstacle in Server.maps[Server.currentMapId].obstacles)
@@ -136,5 +138,15 @@ namespace GameServer
         //         }
         //         _index += 1;
         // }
+        #endregion
+
+        #region Logging
+        public static void Log(string value)
+        {
+            var culture = new CultureInfo("en-GB");
+            string time = DateTime.Now.ToString(culture);
+            Console.WriteLine($"[{time}]: {value}");
+        }
+        #endregion
     }
 }

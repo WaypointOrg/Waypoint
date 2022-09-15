@@ -131,7 +131,6 @@ namespace GameServer
                 movement += movement_x;
             }
 
-            // Console.WriteLine(movement_y);
             collider.Move(position + movement_y);
             if (!Utilities.IsCollidingWithObstacles(collider))
             {
@@ -180,7 +179,7 @@ namespace GameServer
 
                     ServerSend.PlayerAmmo(this);
 
-                    Console.WriteLine(username + " now has a " + currentGun._name);
+                    Utilities.Log(username + " now has a " + currentGun._name);
 
                     ServerSend.ItemPickedUp(item, this);
                 }
