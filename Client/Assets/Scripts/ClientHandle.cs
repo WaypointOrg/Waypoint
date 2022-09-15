@@ -58,6 +58,12 @@ public class ClientHandle : MonoBehaviour
         GameManager.instance.EndGame();
     }
 
+    public static void GameTime(Packet _packet)
+    {
+        int _time = _packet.ReadInt();
+        GameManager.instance.gameTimeText.text = _time.ToString();
+    }
+
     public static void PlayerPosition(Packet _packet)
     {
         int _id = _packet.ReadInt();

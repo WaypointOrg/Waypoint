@@ -126,6 +126,16 @@ namespace GameServer
             }
         }
 
+        public static void GameTime(int _time)
+        {
+            using (Packet _packet = new Packet((int) ServerPackets.gameTime))
+            {
+                _packet.Write(_time);
+
+                SendUDPDataToAll(_packet);
+            }
+        }
+
         public static void PlayerPosition(Player _player)
         {
             using (Packet _packet = new Packet((int)ServerPackets.playerPosition))

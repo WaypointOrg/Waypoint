@@ -48,15 +48,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-        if (gameStarted)
-        {
-            gameTime -= Time.deltaTime;
-            gameTimeText.text = Mathf.FloorToInt(gameTime).ToString();
-        }
-    }
-
     public void LoadEmpty()
     {
         gameUI.SetActive(false);

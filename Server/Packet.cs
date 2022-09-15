@@ -14,6 +14,7 @@ namespace GameServer
         setName,
         startGame,
         endGame,
+        gameTime,
         playerPosition,
         playerRotation,
         playerHit,

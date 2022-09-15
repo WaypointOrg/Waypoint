@@ -13,6 +13,7 @@ public enum ServerPackets
     setName,
     startGame,
     endGame,
+    gameTime,
     playerPosition,
     playerRotation,
     playerHit,

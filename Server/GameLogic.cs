@@ -14,7 +14,7 @@ namespace GameServer
                 StartGame();
             }
 
-            // Ending
+            // Time
             if (Server.gameStarted)
             {
                 Server.gameTime -= 1;
@@ -22,6 +22,7 @@ namespace GameServer
                 {
                     EndGame();
                 }
+                ServerSend.GameTime(Server.gameTime / Constants.TICKS_PER_SEC + 1);
             }
 
             // Update clients
