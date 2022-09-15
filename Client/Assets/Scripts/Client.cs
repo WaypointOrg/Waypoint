@@ -50,8 +50,6 @@ public class Client : MonoBehaviour
     public void ConnectToServer()
     {
         InitializeClientData();
-        
-        isConnected = true;
         tcp.Connect();
     }
 
@@ -327,13 +325,9 @@ public class Client : MonoBehaviour
 
     public void Disconnect()
     {
-        if (isConnected)
-        {
-            isConnected = false;
-            tcp.socket.Close();
-            udp.socket.Close();
+        if (tcp.socket.Connected) tcp.socket.Close();
+        if (udp.socket != null) udp.socket.Close();
 
-            Debug.Log("Disconnected from server.");
-        }
+        Debug.Log("Disconnected from server.");
     }
 }
