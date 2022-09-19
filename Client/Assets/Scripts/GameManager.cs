@@ -207,6 +207,7 @@ public class GameManager : MonoBehaviour
         if (_id == Client.instance.myId)
         {
             _player = Instantiate(localPlayerPrefab, _position, localPlayerPrefab.transform.rotation);
+            usernameField.text = _username;
         }
         else
         {
@@ -217,7 +218,6 @@ public class GameManager : MonoBehaviour
         _playerManager.Initialize(_id, _username);
 
         players.Add(_id, _playerManager);
-        usernameField.text = _username;
     }
 
     public void ItemSpawned(int _itemId, Vector2 _position, int _type)

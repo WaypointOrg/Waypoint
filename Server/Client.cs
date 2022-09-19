@@ -190,7 +190,7 @@ namespace GameServer
 
         public void SendIntoGame()
         {
-            string _playerName = Constants.defaultNames[id];
+            string _playerName = Constants.defaultNames[Utilities.RandomInt(Constants.defaultNames.Count)];
 
             player = new Player(id, _playerName);
             

@@ -16,7 +16,20 @@ namespace GameServer
             "Tractor",
             "YOURSELF",
             "DeltaX",
-            "TMS"
+            "TMS",
+            "Blaster",
+            "Neo",
+            "Trinity",
+            "Morpheus",
+            "bim",
+            "Alpha",
+            "Gamma",
+            "Delta",
+            "Epsilon",
+            "Zeta",
+            "Sigma",
+            "Omega",
+            "Zeus",
         };
 
         public const int TICKS_PER_SEC = 30;
