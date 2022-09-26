@@ -8,13 +8,6 @@ import subprocess
 from matplotlib import pyplot as plt
 import numpy as np
 
-def update_repo():
-    if os.path.exists(REPO_PATH):
-        os.chdir(REPO_PATH)
-        os.system("git pull")
-    else:
-        os.system(f"git clone {CLONE_URL} {REPO_PATH}")
-        os.chdir(REPO_PATH)
 
 def list_commits():
     result = subprocess.check_output("git rev-list master", shell=True).decode()
@@ -40,12 +33,11 @@ def get_contributors():
         contributors.append(parts[1])
     return contributors
 
-
-CLONE_URL = "https://github.com/DanielRoulin/Waypoint.git"
-REPO_PATH =  os.path.join(os.path.dirname(os.path.realpath(__file__)), "Waypoint")
+REPO_PATH =  os.path.join(os.path.dirname(os.path.realpath(__file__)), "../../Waypoint")
 
 if __name__ == "__main__":
-    update_repo()
+    os.chdir(REPO_PATH)
+
     contributors = get_contributors()
     contributors_dates_of_commit = {contributor: [] for contributor in contributors}
     for commit in list_commits():

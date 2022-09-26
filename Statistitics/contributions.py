@@ -6,14 +6,6 @@ import os
 import subprocess
 from matplotlib import pyplot as plt
 
-def update_repo():
-    if os.path.exists(REPO_PATH):
-        os.chdir(REPO_PATH)
-        os.system("git pull")
-    else:
-        os.system(f"git clone {CLONE_URL} {REPO_PATH}")
-        os.chdir(REPO_PATH)
-
 def switch_to_commit(ref):
     os.system(f"git checkout {ref}")
 
@@ -29,11 +21,11 @@ def get_contributions():
         contributors.append(parts[1])
     return contributors, contributions
 
-CLONE_URL = "https://github.com/DanielRoulin/Waypoint.git"
-REPO_PATH =  os.path.join(os.path.dirname(os.path.realpath(__file__)), "Waypoint")
+REPO_PATH =  os.path.join(os.path.dirname(os.path.realpath(__file__)), "../../Waypoint")
 
 if __name__ == "__main__":
-    update_repo()
+    os.chdir(REPO_PATH)
+
     contributors, contributions = get_contributions()
     contributors.append("Total")
     contributions.append(sum(contributions))
