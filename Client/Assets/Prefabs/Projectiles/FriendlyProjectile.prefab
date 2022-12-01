@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 997374906591739096}
   - component: {fileID: 5566384908743959687}
   m_Layer: 0
-  m_Name: Projectile
+  m_Name: FriendlyProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -97,7 +97,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectileId: 0
-  type: 0
   explosionPrefab: {fileID: 3054179495669604345, guid: c3d89132451525076a2068f34dc0b268, type: 3}
 --- !u!96 &5566384908743959687
 TrailRenderer:
