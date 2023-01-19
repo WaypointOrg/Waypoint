@@ -14,6 +14,18 @@
             "problemMatcher": "$msCompile"
         },
         {
+            "label": "build-macos",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/GameServer.csproj",
+                "-r", "osx-x64",
+                "-o", "${workspaceFolder}/bin/MacOS/"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
             "label": "build-raspberry",
             "command": "dotnet",
             "type": "process",
